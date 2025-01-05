@@ -1,0 +1,287 @@
+{
+    "unit": "Unit 6: Characteristics",
+    "vocab": [
+        {
+            "kana": "あたま",
+            "kanji": "頭",
+            "romaji": "atama",
+            "english": "head"
+        },
+        {
+            "kana": "かお",
+            "kanji": "",
+            "romaji": "kao",
+            "english": "face"
+        },
+        {
+            "kana": "くび",
+            "kanji": "",
+            "romaji": "kubi",
+            "english": "neck"
+        },    
+        {
+            "kana": "のど",
+            "kanji": "",
+            "romaji": "nodo",
+            "english": "throat"
+        },    
+        {
+            "kana": "からだ",
+            "kanji": "",
+            "romaji": "karada",
+            "english": "body"
+        },    
+        {
+            "kana": "かみのけ",
+            "kanji": "",
+            "romaji": "kaminoke",
+            "english": "hair"
+        },    
+        {
+            "kana": "うで",
+            "kanji": "",
+            "romaji": "ude",
+            "english": "arm"
+        },    
+        {
+            "kana": "て",
+            "kanji": "手",
+            "romaji": "te",
+            "english": "hand"
+        },    
+        {
+            "kana": "ゆび",
+            "kanji": "",
+            "romaji": "yubi",
+            "english": "finger"
+        },    
+        {
+            "kana": "おなか",
+            "kanji": "",
+            "romaji": "onaka",
+            "english": "stomach"
+        },    
+        {
+            "kana": "あし",
+            "kanji": "足",
+            "romaji": "ashi",
+            "english": "foot, leg"
+        },    
+        {
+            "kana": "みみ",
+            "kanji": "耳",
+            "romaji": "mimi",
+            "english": "ear"
+        },    
+        {
+            "kana": "はな",
+            "kanji": "鼻",
+            "romaji": "hana",
+            "english": "nose"
+        },    
+        {
+            "kana": "め",
+            "kanji": "目",
+            "romaji": "me",
+            "english": "eye"
+        },    
+        {
+            "kana": "くち",
+            "kanji": "口",
+            "romaji": "kuchi",
+            "english": "mouth"
+        },    
+        {
+            "kana": "は",
+            "kanji": "",
+            "romaji": "ha",
+            "english": "tooth"
+        },    
+        {
+            "kana": "せ　（い）",
+            "kanji": "",
+            "romaji": "se(i)",
+            "english": "height"
+        },    
+        {
+            "kana": "こころ",
+            "kanji": "心",
+            "romaji": "kokoro",
+            "english": "heart, spirit"
+        },    
+        {
+            "kana": "こえ",
+            "kanji": "",
+            "romaji": "koe",
+            "english": "voice"
+        },    
+        {
+            "kana": "たかい",
+            "kanji": "高い",
+            "romaji": "takai",
+            "english": "tall"
+        },    
+        {
+            "kana": "ひくい",
+            "kanji": "",
+            "romaji": "hikui",
+            "english": "short (height), low"
+        },    
+        {
+            "kana": "いい、よい",
+            "kanji": "",
+            "romaji": "ii, yoi",
+            "english": "good"
+        },    
+        {
+            "kana": "わるい",
+            "kanji": "悪い",
+            "romaji": "warui",
+            "english": "bad"
+        },    
+        {
+            "kana": "おおき",
+            "kanji": "大き",
+            "romaji": "ooki",
+            "english": "big"
+        },    
+        {
+            "kana": "ちいさい",
+            "kanji": "小さい",
+            "romaji": "chiisai",
+            "english": "small"
+        },    
+        {
+            "kana": "ながい",
+            "kanji": "長い",
+            "romaji": "nagai",
+            "english": "long"
+        },    
+        {
+            "kana": "みじかい",
+            "kanji": "",
+            "romaji": "mijikai",
+            "english": "short (not for height)"
+        },    
+        {
+            "kana": "あかい",
+            "kanji": "赤い",
+            "romaji": "akai",
+            "english": "red (adj)"
+        },    
+        {
+            "kana": "青い",
+            "kanji": "",
+            "romaji": "aoi",
+            "english": "blue (adj)"
+        },    
+        {
+            "kana": "しろい",
+            "kanji": "白い",
+            "romaji": "shiroi",
+            "english": "white (adj)"
+        },    
+        {
+            "kana": "くろい",
+            "kanji": "黒い",
+            "romaji": "kuroi",
+            "english": "black (adj)"
+        },    
+        {
+            "kana": "きいろい",
+            "kanji": "黄色い",
+            "romaji": "kiiroi",
+            "english": "yellow (adj)"
+        },    
+        {
+            "kana": "ちゃいろい",
+            "kanji": "茶色い",
+            "romaji": "chairoi",
+            "english": "brown (adj)"
+        },    
+        {
+            "kana": "ふとってています",
+            "kanji": "太っています",
+            "romaji": "futotte imasu",
+            "english": "is fat, heavy"
+        },    
+        {
+            "kana": "やせています",
+            "kanji": "",
+            "romaji": "yasete imasu",
+            "english": "is thin"
+        },    
+        {
+            "kana": "わかい",
+            "kanji": "",
+            "romaji": "wakai",
+            "english": "youthful, young, energetic (adults and older)"
+        },    
+        {
+            "kana": "としをとっています",
+            "kanji": "",
+            "romaji": "toshiwo totte imasu",
+            "english": "is old (age)"
+        },    
+        {
+            "kana": "きびしい",
+            "kanji": "",
+            "romaji": "kibishii",
+            "english": "strict"
+        },
+        {
+            "kana": "やさしい",
+            "kanji": "",
+            "romaji": "yasashii",
+            "english": "nice, kind"
+        },    
+        {
+            "kana": "きれい",
+            "kanji": "",
+            "romaji": "kirei",
+            "english": "pretty, clean, neat, nice"
+        },    
+        {
+            "kana": "きたない",
+            "kanji": "",
+            "romaji": "kitanai",
+            "english": "dirty, messy"
+        },    
+        {
+            "kana": "かわいい",
+            "kanji": "可愛い",
+            "romaji": "kawaii",
+            "english": "cute"
+        },    
+        {
+            "kana": "しずか",
+            "kanji": "",
+            "romaji": "shizuka",
+            "english": "quiet"
+        },    
+        {
+            "kana": "うるさい",
+            "kanji": "",
+            "romaji": "urusai",
+            "english": "annoying, noisy"
+        },    
+        {
+            "kana": "じゃま",
+            "kanji": "",
+            "romaji": "jama",
+            "english": "nuisance, a hindrance, in the way"
+        },    
+        {
+            "kana": "いいですね〜",
+            "kanji": "",
+            "romaji": "iidesune",
+            "english": "it is good, isn’t it. "
+        },    
+        {
+            "kana": "いいですよ～",
+            "kanji": "",
+            "romaji": "iidesuyo",
+            "english": "it is good, you know."
+        }
+    ]
+}  

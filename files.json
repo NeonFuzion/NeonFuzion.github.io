@@ -1,0 +1,28 @@
+{
+    "classes":[
+        {
+            "class": "Japanese1/Japanese 1",
+            "year": 1,
+            "chapters": [ "Self-Introduction", "Classroom", "Family", "Everyday Life", "Hobbies", "Characteristics", "Saturday", "School", "School Subjects", "How are you?", "Shopping" ],
+            "sections": [ "Vocab/Vocabulary", "ExtraVocab/Additional Vocabulary" ],
+            "specialSection": "Counters/Counters", 
+            "specialChapters": [ 1, 2, 3, 8 ]
+        },
+        {
+            "class": "Japanese2/Japanese 2",
+            "year": 2,
+            "chapters": [ "Japanese Cooking", "My mother's hobby is traveling" ],
+            "sections": [ "Vocab/Vocabulary" ],
+            "specialSection": "",
+            "specialChapters": []
+        },
+        {
+            "class": "Japanese3/Japanese 3",
+            "year": 3,
+            "chapters": [ "Study Abroad", "Study of the Japanese Language", "Japanese Entertainment", "The Japanese Home", "A Japanese Meal", "Global Citizen", "Travelling in Tokyo", "Hiroshima, Nagasaki, Okinawa" ],
+            "sections": [ "VocabA/Section A", "VocabB/Section B", "ExtraVocab/Additional Vocabulary" ],
+            "specialSection": "",
+            "specialChapters": [ ]
+        }
+    ]
+}

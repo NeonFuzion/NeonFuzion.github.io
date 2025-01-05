@@ -1,0 +1,341 @@
+{
+	"unit": "Unit 5: Hobbies",
+	"vocab": [
+		{
+			"kana": "しゅみ",
+			"kanji": "",
+			"romaji": "shumi",
+			"english": "hobby"
+		},
+		{
+			"kana": "スポーツ",
+			"kanji": "",
+			"romaji": "supootsu",
+			"english": "sports"
+		},
+		{
+			"kana": "ダンス",
+			"kanji": "",
+			"romaji": "dansu",
+			"english": "dance, dancing"
+		},
+		{
+			"kana": "うた",
+			"kanji": "",
+			"romaji": "uta",
+			"english": "song, singing"
+		},
+		{
+			"kana": "えいが",
+			"kanji": "",
+			"romaji": "eiga",
+			"english": "movies"
+		},
+		{
+			"kana": "テレビ　ゲーム",
+			"kanji": "",
+			"romaji": "terebi geemu",
+			"english": "video game"
+		},
+		{
+			"kana": "トランプ",
+			"kanji": "",
+			"romaji": "toranpu",
+			"english": "playing cards"
+		},
+		{
+			"kana": "ピアノ",
+			"kanji": "",
+			"romaji": "piano",
+			"english": "piano"
+		},
+		{
+			"kana": "ギタア",
+			"kanji": "",
+			"romaji": "gitaa",
+			"english": "guitar"
+		},
+		{
+			"kana": "ジョギング",
+			"kanji": "",
+			"romaji": "jogingu",
+			"english": "jogging"
+		},
+		{
+			"kana": "すいえい",
+			"kanji": "水えい",
+			"romaji": "suiei",
+			"english": "swimming"
+		},
+		{
+			"kana": "どくしょ",
+			"kanji": "",
+			"romaji": "dokusho",
+			"english": "reading"
+		},
+		{
+			"kana": "え",
+			"kanji": "",
+			"romaji": "e",
+			"english": "painting, drawing"
+		},
+		{
+			"kana": "そうですねえ。。。",
+			"kanji": "",
+			"romaji": "soudesunee",
+			"english": "let me see…"
+		},
+		{
+			"kana": "すき",
+			"kanji": "好き",
+			"romaji": "suki",
+			"english": "like"
+		},
+		{
+			"kana": "だいすき",
+			"kanji": "大好き",
+			"romaji": "daisuki",
+			"english": "like very much, love"
+		},
+		{
+			"kana": "きらい",
+			"kanji": "",
+			"romaji": "kirai",
+			"english": "dislike"
+		},
+		{
+			"kana": "だいきらい",
+			"kanji": "大きらい",
+			"romaji": "daikirai",
+			"english": "dislike a lot, hate"
+		},
+		{
+			"kana": "どんあ",
+			"kanji": "",
+			"romaji": "donna~",
+			"english": "what kind of~?"
+		},
+		{
+			"kana": "もの",
+			"kanji": "",
+			"romaji": "mono",
+			"english": "tangible things"
+		},
+		{
+			"kana": "たべもの",
+			"kanji": "食べもの",
+			"romaji": "tabemono",
+			"english": "food"
+		},
+		{
+			"kana": "のみもの",
+			"kanji": "",
+			"romaji": "nomimono",
+			"english": "beverage, drinks"
+		},
+		{
+			"kana": "（お）すし",
+			"kanji": "",
+			"romaji": "(o)sushi",
+			"english": "sushi"
+		},
+		{
+			"kana": "さしみ",
+			"kanji": "",
+			"romaji": "sashimi",
+			"english": "raw fish, sashimi"
+		},
+		{
+			"kana": "てんぷら",
+			"kanji": "天ぷら",
+			"romaji": "tempura",
+			"english": "tempura"
+		},
+		{
+			"kana": "じょうず",
+			"kanji": "上手",
+			"romaji": "joozu",
+			"english": "skillful, be good at"
+		},
+		{
+			"kana": "へた",
+			"kanji": "下手",
+			"romaji": "heta",
+			"english": "unskillful, be poor at"
+		},
+		{
+			"kana": "とくい",
+			"kanji": "",
+			"romaji": "tokui",
+			"english": "be strong in, can do well"
+		},
+		{
+			"kana": "にがて",
+			"kanji": "にが手",
+			"romaji": "nigate",
+			"english": "be weak in, don’t do well in"
+		},
+		{
+			"kana": "どこ",
+			"kanji": "",
+			"romaji": "doko",
+			"english": "intangible thing"
+		},
+		{
+			"kana": "フットボール",
+			"kanji": "",
+			"romaji": "futtobooru",
+			"english": "football"
+		},
+		{
+			"kana": "やきゅう",
+			"kanji": "",
+			"romaji": "yakyuu",
+			"english": "baseball"
+		},
+		{
+			"kana": "バスケットボール",
+			"kanji": "",
+			"romaji": "basukettobooru",
+			"english": "basketball"
+		},
+		{
+			"kana": "バレーボール",
+			"kanji": "",
+			"romaji": "bareebooru",
+			"english": "volleyball"
+		},
+		{
+			"kana": "サッカー",
+			"kanji": "",
+			"romaji": "sakkaa",
+			"english": "soccer"
+		},
+		{
+			"kana": "テニス",
+			"kanji": "",
+			"romaji": "tenisu",
+			"english": "tennis"
+		},
+		{
+			"kana": "ゴルフ",
+			"kanji": "",
+			"romaji": "gorufu",
+			"english": "golf"
+		},
+		{
+			"kana": "いろ",
+			"kanji": "色",
+			"romaji": "iro",
+			"english": "color"
+		},
+		{
+			"kana": "なににろ",
+			"kanji": "何色",
+			"romaji": "nani iro",
+			"english": "what color?"
+		},
+		{
+			"kana": "あか",
+			"kanji": "",
+			"romaji": "aka",
+			"english": "red"
+		},
+		{
+			"kana": "しろ",
+			"kanji": "白",
+			"romaji": "shiro",
+			"english": "white"
+		},
+		{
+			"kana": "くろ",
+			"kanji": "黒",
+			"romaji": "kuro",
+			"english": "black"
+		},
+		{
+			"kana": "あお",
+			"kanji": "青",
+			"romaji": "ao",
+			"english": "blue"
+		},
+		{
+			"kana": "きいろ",
+			"kanji": "黄色",
+			"romaji": "kiiro",
+			"english": "yellow"
+		},
+		{
+			"kana": "ちゃいろ",
+			"kanji": "茶色",
+			"romaji": "chairo",
+			"english": "brown"
+		},
+		{
+			"kana": "みどり",
+			"kanji": "緑色",
+			"romaji": "midori",
+			"english": "green"
+		},
+		{
+			"kana": "むらさき",
+			"kanji": "",
+			"romaji": "murasaki",
+			"english": "purple"
+		},
+		{
+			"kana": "ピンク",
+			"kanji": "",
+			"romaji": "pinku",
+			"english": "pink"
+		},
+		{
+			"kana": "オレンジ色",
+			"kanji": "",
+			"romaji": "orenji (iro)",
+			"english": "orange"
+		},
+		{
+			"kana": "グレえ",
+			"kanji": "",
+			"romaji": "guree",
+			"english": "grey"
+		},
+		{
+			"kana": "きんいろ",
+			"kanji": "金色",
+			"romaji": "kiniro",
+			"english": "gold"
+		},
+		{
+			"kana": "ぎんいろ",
+			"kanji": "",
+			"romaji": "giniro",
+			"english": "silver"
+		},
+		{
+			"kana": "とても〜",
+			"kanji": "",
+			"romaji": "totemo + affirmative predicate",
+			"english": "very"
+		},
+		{
+			"kana": "まあまあ〜",
+			"kanji": "",
+			"romaji": "maamaa + affirmative predicate",
+			"english": "so-so"
+		},
+		{
+			"kana": "あまり〜",
+			"kanji": "",
+			"romaji": "amari + negative predicate",
+			"english": "not very"
+		},
+		{
+			"kana": "ぜんぜん〜",
+			"kanji": "",
+			"romaji": "zenzen + negative predicate",
+			"english": "not at all"
+		}
+	]
+}

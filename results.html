@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Japanese Quizzer 2 - Results</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script>
+            function showScore()
+            {
+                let statString = sessionStorage.getItem("stats");
+                if (statString == null) mainMenu();
+
+                let stats = JSON.parse(statString);
+
+                document.getElementById("class").innerHTML = sessionStorage.getItem("className");
+                document.getElementById("unit").innerHTML = stats.unit;
+
+                let total = sessionStorage.getItem("total");
+                let endStats = 
+                    stats.correct +
+                    '/' +
+                    total +
+                    ' (' +
+                    (total !== 0 ? (stats.correct / total) * 100 : 0).toFixed(2) +
+                    '%)';
+                document.getElementById("score").innerHTML = endStats;
+
+                let xValues = [ "Correct", "Incorrect" ];
+                let yValues = [ stats.correct, total - stats.correct ];
+                let barColors = [ "green", "red" ];
+                let chart = new Chart("myChart", {
+                    type: "doughnut",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Score"
+                        }
+                    }
+                });
+
+                let wordsA = document.getElementById("proficient");
+                let wordsB = document.getElementById("decent");
+                let wordsC = document.getElementById("struggling");
+                stats.words.forEach(word => {
+                    let wordText = document.createElement("div");
+                    wordText.setAttribute("class", "word");
+
+                    let text = word.word.kanji !== '' ? word.word.kanji : word.word.kana;
+                    wordText.innerHTML = `${text}: ${word.correct}/${word.total}`;
+
+                    let proficiency = word.correct / word.total;
+                    if (proficiency > 0.85) wordsA.append(wordText);
+                    else if (proficiency > 0.6) wordsB.append(wordText);
+                    else wordsC.append(wordText);
+                });
+
+                if (wordsA.children.length == 0) wordsA.style.display = "none";
+                if (wordsB.children.length == 0) wordsB.style.display = "none";
+                if (wordsC.children.length == 0) wordsC.style.display = "none";
+
+                document.getElementById("end").onclick = function() { mainMenu(); };
+            }
+
+            function mainMenu()
+            {
+                sessionStorage.clear();
+                window.location.href = 'index.html';
+            }
+        </script>
+    </head>
+
+    <body onload="showScore()">
+        <div id="class"></div>
+        <div id="unit"></div>
+        <div id="score"></div>
+        <div id="canvasContainer">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div id="words">
+            <div id="proficient" class="proficiency">Proficient</div>
+            <div id="decent" class="proficiency">Decent</div>
+            <div id="struggling" class="proficiency">Struggling</div>
+        </div>
+        <button type="button" id="end">Main menu</button>
+    </body>
+</html>

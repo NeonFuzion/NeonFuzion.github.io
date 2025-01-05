@@ -1,0 +1,29 @@
+{
+	"unit": "Unit 2: Study of the Japanese Language - Additional Vocabulary",
+	"vocab": [
+		{
+            "kana": "そうしん",
+            "kanji": "送信",
+            "romaji": "",
+            "english": "send"
+        },
+        {
+            "kana": "へんしん",
+            "kanji": "返信",
+            "romaji": "",
+            "english": "reply"
+        },
+        {
+            "kana": "てんそう",
+            "kanji": "転送",
+            "romaji": "",
+            "english": "forward"
+        },
+        {
+            "kana": "てんぷ",
+            "kanji": "添付",
+            "romaji": "",
+            "english": "attachment"
+        }
+    ]
+}

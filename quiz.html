@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Japanese Quizzer 2 - Quiz</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script>
+      function loadFile()
+      {
+        let pathsString = sessionStorage.getItem('filePaths');
+        if (pathsString == null) window.location.href = 'index.html';
+
+        let filePaths = pathsString.split(",");
+        let masterJson = {
+          unit: "",
+          vocab: []
+        };
+
+        processMasterJSON(filePaths, masterJson, 0);
+      }
+
+      function processMasterJSON(filePaths, masterJson, index)
+      {
+        let path = 'JSON/' + filePaths[index] + '.json';
+        fetch(path).then(response => response.text()).then(string => {
+          let json = JSON.parse(string);
+          masterJson.unit += (masterJson.unit != "" ? "/" : "") + json.unit;
+          masterJson.vocab = masterJson.vocab.concat(json.vocab);
+
+          if (index + 1 >= filePaths.length)
+          {
+            let unitString = masterJson.unit.split("/");
+            if (unitString.length != 1)
+            {
+              let newUnit = "Unit ";
+              unitString.forEach(unit => {
+                if (unit == "") return;
+                let unitSplice = unit.split(" ");
+                newUnit += unitSplice[1].substring(0, unitSplice[1].length - 1) + ", ";
+              });
+              newUnit = newUnit.substring(0, newUnit.length - 2);
+              masterJson.unit = newUnit;
+            }
+            
+
+            loadQuiz(masterJson);
+          }
+          else
+          {
+            processMasterJSON(filePaths, masterJson, index + 1);
+          }
+        });
+      }
+
+      function loadQuiz(json) {
+        let className = sessionStorage.getItem("className");
+        document.getElementById('class').innerHTML = className;
+        document.getElementById('unit').innerHTML = json.unit;
+        quiz(json);
+      }
+
+      function quiz(quiz) {
+        let questions = shuffle(quiz.vocab);
+        let questionMode = sessionStorage.getItem("mode");
+        let stats = {
+          mode: questionMode,
+          index: questions.length - 1,
+          length: questions.length,
+          correct: 0,
+          words: [],
+          newWords: quiz.vocab,
+          unit: quiz.unit
+        };
+
+        let progress = document.getElementById("progress");
+        if (questionMode == "quiz")
+        {
+          progress.setAttribute('max', questions.length);
+          progress.setAttribute('value', 0);
+        }
+        else
+        {
+          progress.style.display = "none";
+        }
+
+        generateQuestion(questions, stats);
+      }
+
+      function generateQuestion(quiz, stats) {
+        if (stats.index === -1 && stats.mode == "quiz") endQuiz(stats);
+
+        let answer = stats.mode == "blitz" ? generateBlitzQuestion(quiz, stats) : generateQuizQuestion(quiz, stats);
+        remove(stats.newWords, answer);
+
+        let wrong = shuffle([...quiz]);
+        remove(wrong, answer);
+        
+        let options = [wrong[0], wrong[1], wrong[2], wrong[3]];
+        if (options.indexOf(answer) === -1) {
+          let rand = Math.trunc(Math.random() * 4);
+          options[rand] = answer;
+        }
+
+        let questionDiv = document.getElementById("question");
+        let rand = Math.random() >= 0.5;
+        let japanese = answer.kana;
+        if (answer.kanji !== '') japanese = answer.kanji;
+        let question = 'Translate: ' +
+          (rand ? japanese : answer.english);
+        questionDiv.innerHTML = question;
+
+        let buttons = document.getElementsByClassName("option");
+        options.forEach((option, index) => {
+          let button = buttons[index];
+          japanese = option.kana;
+          if (option.kanji !== '') japanese = option.kanji;
+          let text = rand ? option.english : japanese;
+          button.innerHTML = text;
+          button.onclick = function () {
+            checkAnswer(option, answer, quiz, stats, button);
+          };
+
+          let progress = document.getElementById('progress');
+          progress.setAttribute('value', quiz.length - stats.index - 1);
+        });
+
+        document.getElementById("end").onclick = function() { endQuiz(stats); };
+      }
+     
+      function generateBlitzQuestion(quiz, stats)
+      {
+        let possibleQuestions = [];
+        let questionInfoDiv = document.getElementById("questionInfo");
+        let questionInfo = `#${quiz.length - stats.index} - `;
+
+        stats.words.forEach(vocabWord => {
+          if (vocabWord.correct / vocabWord.total < 0.65)
+            possibleQuestions.push(
+              {
+                word: vocabWord.word,
+                questionType: "Relearn"
+              }
+            );
+        });
+          
+        let greatestAge = 0;
+        stats.words.forEach(word => {
+          if (word.age > greatestAge) greatestAge = word.age;
+        });
+        stats.words.forEach(vocabWord => {
+          if (vocabWord.age == greatestAge)
+            possibleQuestions.push(
+              {
+                word: vocabWord.word,
+                questionType: "Review"
+              }
+            );
+        });
+        
+        let shuffled = shuffle(stats.newWords);
+        let max = possibleQuestions.length + 1;
+        if (max > quiz.length) max = quiz.length;
+        for (let i = 0; i < max; i++)
+        {
+          let word = shuffled[i];
+          
+          possibleQuestions.push(
+            {
+              word: word,
+              questionType: "New Vocab"
+            }
+          );
+        }
+        
+        if (possibleQuestions.length == 0)
+          quiz.forEach(word => {
+            possibleQuestions.push(
+              {
+                word: word,
+                questionType: "Endless"
+              }
+            );
+          });
+
+        let index = Math.trunc(Math.random() * possibleQuestions.length);
+        let question = possibleQuestions[index];
+        questionInfoDiv.innerHTML = questionInfo + question.questionType;
+        return question.word;
+      }
+
+      function generateQuizQuestion(quiz, stats)
+      {
+        let answer = quiz[stats.index];
+        let questionInfoDiv = document.getElementById("questionInfo");
+        let questionInfo = `#${quiz.length - stats.index}`;
+        questionInfoDiv.innerHTML = questionInfo;
+        return answer;
+      }
+
+      function endQuiz(stats) {
+        sessionStorage.setItem("stats", JSON.stringify(stats));
+        sessionStorage.setItem("total", stats.length - stats.index - 1);
+        window.location.href = 'results.html';
+      }
+
+      function checkAnswer(option, answer, quiz, stats, button) {
+        let div = document.getElementById('quiz');
+        let ans = document.getElementById("answer");
+        let result = document.getElementById("result");
+        let incorrectDiv = document.getElementById("incorrect");
+        let correctDiv = document.getElementById("correct");
+        let isCorrect = option === answer;
+        stats.index--;
+
+        let found = false;
+        let correctCount = isCorrect ? 1 : 0;
+        stats.correct += correctCount;
+        stats.words.forEach(word => {
+          if (word.word == answer)
+          {
+            found = true;
+            word.total++;
+            word.age = 0;
+            word.correct += correctCount;
+          }
+          else
+          {
+            word.age++;
+          }
+        });
+        if (!found)
+        {
+          stats.words.push({
+            age: 0,
+            word: answer,
+            total: 1,
+            correct: correctCount
+          })
+        }
+
+        if (!isCorrect)
+        {
+          let english = document.getElementById("incorrectEnglish");
+          let kana = document.getElementById("incorrectKana");
+          let furigana = document.getElementById("incorrectFurigana");
+          if (option.kanji !== '') {
+            kana.innerHTML = option.kanji;
+            furigana.innerHTML = option.kana;
+          } else {
+            kana.innerHTML = option.kana;
+          }
+          english.innerHTML = option.english;
+          incorrectDiv.style.display = "block";
+        }
+        else
+        {
+          incorrectDiv.style.display = "none";
+        }
+        
+        let english = document.getElementById("correctEnglish");
+        let kana = document.getElementById("correctKana");
+        let furigana = document.getElementById("correctFurigana");
+        if (answer.kanji !== '') {
+          kana.innerHTML = answer.kanji;
+          furigana.innerHTML = answer.kana;
+        } else {
+          kana.innerHTML = answer.kana;
+        }
+        english.innerHTML = answer.english;
+        
+        let cont = document.getElementById("continue");
+        cont.onclick = function () {
+          if (ans.style.display == "none") return;
+          ans.style.display = "none";
+          generateQuestion(quiz, stats);
+        };
+
+        ans.style.display = "block";
+      }
+
+      function shuffle(array) {
+        let curIndex = array.length;
+        let arr = [...array];
+
+        while (curIndex !== 0) {
+          let randIndex = Math.floor(Math.random() * curIndex);
+          curIndex--;
+          [arr[curIndex], arr[randIndex]] = [arr[randIndex], arr[curIndex]];
+        }
+        return arr;
+      }
+
+      function remove(array, target)
+      {
+        let index = array.indexOf(target);
+        array.splice(index, 1);
+      }
+    </script>
+  </head>
+
+  <body onload="loadFile()">
+    <div id="class"></div>
+    <div id="unit"></div>
+    <progress id="progress"></progress>
+    <div id="quiz">
+      <div id="questionInfo"></div>
+      <div id="question"></div>
+      <div id="options">
+        <button class = "option" type="button"></button>
+        <button class = "option" type="button"></button>
+        <button class = "option" type="button"></button>
+        <button class = "option" type="button"></button>
+      </div>
+    </div>
+    <div id="answer">
+      <div id="results">
+        <div id="correct" class="correctness">
+          Correct
+          <div id="correctEnglish"></div>
+          <ruby>
+            <div id="correctKana"></div>
+            <rt id="correctFurigana"></rt>
+          </ruby>
+          <div id="details">
+          </div>
+        </div>
+        <div id="incorrect" class="correctness">
+          Incorrect
+          <div id="incorrectEnglish"></div>
+          <ruby>
+            <div id="incorrectKana"></div>
+            <rt id="incorrectFurigana"></rt>
+          </ruby>
+          <div id="details">
+          </div>
+        </div>
+      </div>
+      <button type="button" id="continue">Continue</button>
+    </div>
+    <div id="extra">
+      <button id="end" type="button">End</button>
+    </div>
+  </body>
+</html>

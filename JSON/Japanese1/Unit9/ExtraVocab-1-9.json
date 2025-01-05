@@ -1,0 +1,173 @@
+{
+	"unit": "Unit 9: School Subjects - Additional Vocabulary",
+	"vocab": [
+		{
+				"kana": "~を　とっています",
+				"kanji": "",
+				"romaji": "~ wo totteimasu",
+				"english": "is taking ~"
+		},
+        {
+				"kana": "れきし",
+				"kanji": "",
+				"romaji": "rekishi",
+				"english": "history"
+		},
+        {
+				"kana": "あめりかし",
+				"kanji": "",
+				"romaji": "amerikashi",
+				"english": "American History"
+		},
+        {
+				"kana": "あじあし",
+				"kanji": "",
+				"romaji": "ajiashi",
+				"english": "Asian History"
+		},
+        {
+				"kana": "ヨーロッパし",
+				"kanji": "",
+				"romaji": "yooroppashi",
+				"english": "European History"
+		},
+        {
+				"kana": "けいざい",
+				"kanji": "",
+				"romaji": "keizai",
+				"english": "economics"
+		},
+        {
+				"kana": "せいぶつ",
+				"kanji": "生物",
+				"romaji": "seibutsu",
+				"english": "biology"
+		},
+        {
+				"kana": "ぶつり",
+				"kanji": "物り",
+				"romaji": "butsuri",
+				"english": "physics"
+		},
+        {
+				"kana": "かがく",
+				"kanji": "",
+				"romaji": "kagaku",
+				"english": "chemistry"
+		},
+        {
+				"kana": "だいすう",
+				"kanji": "",
+				"romaji": "daisuu",
+				"english": "algebra"
+		},
+        {
+				"kana": "きか",
+				"kanji": "",
+				"romaji": "kika",
+				"english": "geometry"
+		},
+        {
+				"kana": "びぶんせきぶん",
+				"kanji": "",
+				"romaji": "bibunsekibun",
+				"english": "calculus"
+		},
+        {
+				"kana": "じしゅう",
+				"kanji": "",
+				"romaji": "jishuu",
+				"english": "study hall"
+		},
+        {
+				"kana": "いじわる",
+				"kanji": "意地悪",
+				"romaji": "ijiwaru",
+				"english": "mean"
+		},
+        {
+				"kana": "こわい",
+				"kanji": "",
+				"romaji": "kowai",
+				"english": "scary"
+		},
+        {
+				"kana": "へん",
+				"kanji": "",
+				"romaji": "hen",
+				"english": "weird, strange"
+		},
+        {
+				"kana": "おかしい",
+				"kanji": "可笑しい",
+				"romaji": "okashii",
+				"english": "funny (humorous), weird"
+		},
+        {
+				"kana": "いかがですか",
+				"kanji": "",
+				"romaji": "ikagadesuka",
+				"english": "how is it (polite version of doudesuka)"
+		},
+        {
+				"kana": "がっかりです",
+				"kanji": "",
+				"romaji": "gakkaridesu",
+				"english": "I am disappointed"
+		},
+        {
+				"kana": "こうへい",
+				"kanji": "",
+				"romaji": "kouhei",
+				"english": "is fair"
+		},
+        {
+				"kana": "ふほうへい",
+				"kanji": "",
+				"romaji": "fukouhei",
+				"english": "it not fair"
+		},
+        {
+				"kana": "ストレス",
+				"kanji": "",
+				"romaji": "sutoresu",
+				"english": "stress"
+		},
+        {
+				"kana": "オーケストラ",
+				"kanji": "",
+				"romaji": "ookesutora",
+				"english": "orchestra"
+		},
+        {
+				"kana": "バレー",
+				"kanji": "",
+				"romaji": "baree",
+				"english": "ballet"
+		},
+        {
+				"kana": "コーラス",
+				"kanji": "",
+				"romaji": "koorasu",
+				"english": "chorus"
+		},
+        {
+				"kana": "チアーリーデイング",
+				"kanji": "",
+				"romaji": "chiaariidingu",
+				"english": "cheerleading"
+		},
+        {
+				"kana": "ボランチイア",
+				"kanji": "",
+				"romaji": "borantia",
+				"english": "volunteer"
+		},
+        {
+				"kana": "アルバイト",
+				"kanji": "",
+				"romaji": "arubaito",
+				"english": "part-time job"
+		}
+    ]
+}

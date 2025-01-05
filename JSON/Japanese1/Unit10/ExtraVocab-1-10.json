@@ -1,0 +1,47 @@
+{
+	"unit": "Unit 10: How Are You? (Additional Vocabulary)",
+	"vocab": [
+		{
+				"kana": "（お）きのどくに",
+				"kanji": "（お）気の毒に",
+				"romaji": "(o)kinodokuni",
+				"english": "I’m sorry (formal expressions of sympathy)"
+		},
+        {
+				"kana": "かぜを　ひきました",
+				"kanji": "",
+				"romaji": "kazewo hikimashita",
+				"english": "I caught a cold"
+		},
+        {
+				"kana": "ねんざしました",
+				"kanji": "捻挫しました",
+				"romaji": "nenzashimashita",
+				"english": "I sprained (something)"
+		},
+        {
+				"kana": "ほねをおりました",
+				"kanji": "骨を折りました",
+				"romaji": "honewo orimashita",
+				"english": "I fractured my bone"
+		},
+        {
+				"kana": "ほけんしつ",
+				"kanji": "保健室",
+				"romaji": "hokenshitsu",
+				"english": "infirmary"
+		},
+        {
+				"kana": "アスピリン",
+				"kanji": "",
+				"romaji": "asupirin",
+				"english": "aspirin"
+		},
+        {
+				"kana": "トーナメント",
+				"kanji": "",
+				"romaji": "toonamento",
+				"english": "tournament"
+		}
+    ]
+}

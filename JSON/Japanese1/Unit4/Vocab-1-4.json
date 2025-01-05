@@ -1,0 +1,407 @@
+{
+    "unit": "Unit 4: Everyday Life",
+    "vocab": [
+        {
+          "kana": "はなします",
+          "kanji": "",
+          "romaji": "",
+          "english": "to speak; talk"
+        },
+        {
+          "kana": "にほんご",
+          "kanji": "",
+          "romaji": "",
+          "english": "Japanese"
+        },
+        {
+          "kana": "えいご",
+          "kanji": "",
+          "romaji": "",
+          "english": "English"
+        },
+        {
+          "kana": "うち",
+          "kanji": "",
+          "romaji": "",
+          "english": "house"
+        },
+        {
+          "kana": "ともだち",
+          "kanji": "",
+          "romaji": "",
+          "english": "friend"
+        },
+        {
+          "kana": "ちゅうごく",
+          "kanji": "",
+          "romaji": "",
+          "english": "Chinese language"
+        },
+        {
+          "kana": "かんこくご",
+          "kanji": "",
+          "romaji": "",
+          "english": "Korean language"
+        },
+        {
+          "kana": "スペインご",
+          "kanji": "",
+          "romaji": "",
+          "english": "Spanish language"
+        },
+        {
+          "kana": "フランスご",
+          "kanji": "",
+          "romaji": "",
+          "english": "French language"
+        },
+        {
+          "kana": "アラビアご",
+          "kanji": "",
+          "romaji": "",
+          "english": "Arabic language"
+        },
+        {
+          "kana": "タイご",
+          "kanji": "",
+          "romaji": "",
+          "english": "Thai language"
+        },
+        {
+          "kana": "なにご",
+          "kanji": "",
+          "romaji": "",
+          "english": "what language"
+        },
+        {
+          "kana": "(Place +) で(Place +)",
+          "kanji": "",
+          "romaji": "",
+          "english": "at/in(aplace)"
+        },
+        {
+          "kana": "よく",
+          "kanji": "",
+          "romaji": "",
+          "english": "well/often"
+        },
+        {
+          "kana": "すこし",
+          "kanji": "",
+          "romaji": "",
+          "english": "a little"
+        },
+        {
+          "kana": "ちょっと",
+          "kanji": "",
+          "romaji": "",
+          "english": "a little; a tad(More colloquial usage than すこしsukoshi.)"
+        },
+        {
+          "kana": "たべます［たべる］",
+          "kanji": "",
+          "romaji": "",
+          "english": "to eat"
+        },
+        {
+          "kana": "のみます［のむ］",
+          "kanji": "",
+          "romaji": "",
+          "english": "to drink"
+        },
+        {
+          "kana": "ごはん",
+          "kanji": "",
+          "romaji": "",
+          "english": "cooked rice"
+        },
+        {
+          "kana": "パン",
+          "kanji": "",
+          "romaji": "",
+          "english": "bread"
+        },
+        {
+          "kana": " (お)みず",
+          "kanji": "",
+          "romaji": "",
+          "english": "water"
+        },
+        {
+          "kana": "ジュース",
+          "kanji": "",
+          "romaji": "",
+          "english": "juice"
+        },
+        {
+          "kana": "ぎゅうにゅう or ミルク",
+          "kanji": "",
+          "romaji": "",
+          "english": "(cow’s) milk"
+        },
+        {
+          "kana": "コーラ",
+          "kanji": "",
+          "romaji": "",
+          "english": ""
+        },
+        {
+          "kana": "おちゃ",
+          "kanji": "",
+          "romaji": "",
+          "english": ""
+        },
+        {
+          "kana": "コーヒー",
+          "kanji": "",
+          "romaji": "",
+          "english": "coffee"
+        },
+        {
+          "kana": "まいにち",
+          "kanji": "",
+          "romaji": "",
+          "english": "every day"
+        },
+        {
+          "kana": "ときどき.tokidoki",
+          "kanji": "",
+          "romaji": "",
+          "english": "sometimes"
+        },
+        {
+          "kana": "たいてい",
+          "kanji": "",
+          "romaji": "",
+          "english": "usually"
+        },
+        {
+          "kana": "いつも",
+          "kanji": "",
+          "romaji": "",
+          "english": "always"
+        },
+        {
+          "kana": "きのう",
+          "kanji": "",
+          "romaji": "",
+          "english": "yesterday"
+        },
+        {
+          "kana": "きょう",
+          "kanji": "",
+          "romaji": "",
+          "english": "today"
+        },
+        {
+          "kana": "あした",
+          "kanji": "",
+          "romaji": "",
+          "english": "tomorrow"
+        },
+        {
+          "kana": "あさ",
+          "kanji": "",
+          "romaji": "",
+          "english": "morning"
+        },
+        {
+          "kana": " (お)ひる",
+          "kanji": "",
+          "romaji": "",
+          "english": "daytime"
+        },
+        {
+          "kana": "ばん",
+          "kanji": "",
+          "romaji": "",
+          "english": "evening or night"
+        },
+        {
+          "kana": "よる",
+          "kanji": "",
+          "romaji": "",
+          "english": "night"
+        },
+        {
+          "kana": "ゆうがた",
+          "kanji": "",
+          "romaji": "",
+          "english": "late afternoon or early evening"
+        },
+        {
+          "kana": "あさごはん",
+          "kanji": "",
+          "romaji": "",
+          "english": "breakfast"
+        },
+        {
+          "kana": "(お)ひる(ごはん)",
+          "kanji": "",
+          "romaji": "",
+          "english": "lunch"
+        },
+        {
+          "kana": "ばんごはん",
+          "kanji": "",
+          "romaji": "",
+          "english": "dinner or supper"
+        },
+        {
+          "kana": "なにも+ Neg.",
+          "kanji": "",
+          "romaji": "",
+          "english": "(not) anything; nothing"
+        },
+        {
+          "kana": "としょかん",
+          "kanji": "",
+          "romaji": "",
+          "english": "library"
+        },
+        {
+          "kana": "カフェテリア/しょくどう",
+          "kanji": "",
+          "romaji": "",
+          "english": "cafeteria"
+        },
+        {
+          "kana": "ばいてん",
+          "kanji": "",
+          "romaji": "",
+          "english": "snack bar/kiosk"
+        },
+        {
+          "kana": "Person + と(いっしょに)",
+          "kanji": "",
+          "romaji": "",
+          "english": "(together) with person"
+        },
+        {
+          "kana": "しんぶん",
+          "kanji": "",
+          "romaji": "",
+          "english": "newspaper"
+        },
+        {
+          "kana": "ざっし",
+          "kanji": "",
+          "romaji": "",
+          "english": "magazine"
+        },
+        {
+          "kana": "おんがく",
+          "kanji": "",
+          "romaji": "",
+          "english": "music"
+        },
+        {
+          "kana": "よみます[よむ]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to read"
+        },
+        {
+          "kana": "ききます [きく]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to listen/hear"
+        },
+        {
+          "kana": "します [する]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to do"
+        },
+        {
+          "kana": "べんきょう(を)します [べんきょう(を)する]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to study"
+        },
+        {
+          "kana": "みます[みる]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to watch/look/see"
+        },
+        {
+          "kana": "かきます[かく]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to write or draw"
+        },
+        {
+          "kana": "タイプ(を)します [タイプ(を)する]",
+          "kanji": "",
+          "romaji": "",
+          "english": "to type"
+        },
+        {
+          "kana": "テレビ  見ます",
+          "kanji": "",
+          "romaji": "",
+          "english": "TV"
+        },
+        {
+          "kana": "レポート",
+          "kanji": "",
+          "romaji": "",
+          "english": "report/paper"
+        },
+        {
+          "kana": "てがみ",
+          "kanji": "",
+          "romaji": "",
+          "english": "letter"
+        },
+        {
+          "kana": "ラジオ",
+          "kanji": "",
+          "romaji": "",
+          "english": "radio"
+        },
+        {
+          "kana": "でんわ",
+          "kanji": "",
+          "romaji": "",
+          "english": "telephone"
+        },
+        {
+          "kana": "パソコン",
+          "kanji": "",
+          "romaji": "",
+          "english": "personal computer"
+        },
+        {
+          "kana": "コンピューター",
+          "kanji": "",
+          "romaji": "",
+          "english": "computer"
+        },
+        {
+          "kana": "ケータイ",
+          "kanji": "",
+          "romaji": "",
+          "english": "cellular phone"
+        },
+        {
+          "kana": "スマートフォン/スマホ",
+          "kanji": "",
+          "romaji": "",
+          "english": "smartphone"
+        },
+        {
+          "kana": "tool + で",
+          "kanji": "",
+          "romaji": "",
+          "english": "by means of/with/on/in"
+        },
+        {
+          "kana": "DVD (ディーブイディー)",
+          "kanji": "",
+          "romaji": "",
+          "english": "DVD"
+        }
+    ]
+}

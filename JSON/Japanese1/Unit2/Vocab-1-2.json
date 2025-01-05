@@ -1,0 +1,395 @@
+{
+	"unit": "Unit 2: Classroom",
+	"vocab": [
+    {
+      "kana": "わかりますか",
+      "kanji": "分かりますか",
+      "romaji": "wakarimasuka",
+      "english": "Do you understand?"
+    },
+    {
+      "kana": "はい、わかります",
+      "kanji": "はい、分かりますか",
+      "romaji": "hai wakarimasu",
+      "english": "Yes I understand"
+    },
+    {
+      "kana": "いいえ、わかりません",
+      "kanji": "",
+      "romaji": "iie wakarimasen",
+      "english": "No I don't understand"
+    },
+    {
+      "kana": "しりません",
+      "kanji": "",
+      "romaji": "shirimasen",
+      "english": "I don't know"
+    },
+    {
+      "kana": "みえません",
+      "kanji": "",
+      "romaji": "miemasen",
+      "english": "I can't see"
+    },
+    {
+      "kana": "きこえません",
+      "kanji": "",
+      "romaji": "kikoemasen",
+      "english": "I can't hear"
+    },
+    {
+      "kana": "いいです",
+      "kanji": "",
+      "romaji": "ii desu",
+      "english": "It is good"
+    },
+    {
+      "kana": "だめです",
+      "kanji": "",
+      "romaji": "dame desu",
+      "english": "That is unacceptable"
+    },
+    {
+      "kana": "ええと.../あのお.../そうですねえ...",
+      "kanji": "",
+      "romaji": "eeto.../anoo.../soo desu nee...",
+      "english": " well..."
+    },
+    {
+      "kana": "treeは にほんごで なんと いいますか",
+      "kanji": "",
+      "romaji": "tree wa nihongo de nanto iimasuka",
+      "english": "How do you say \"tree\" in kana?"
+    },
+    {
+      "kana": "かいて ください",
+      "kanji": "",
+      "romaji": "kaite kudasai",
+      "english": "Please write"
+    },
+    {
+      "kana": "よんで ください",
+      "kanji": "",
+      "romaji": "yonde kudasai",
+      "english": "Please read"
+    },
+    {
+      "kana": "みて ください",
+      "kanji": "",
+      "romaji": "mite kudasai",
+      "english": "Please look"
+    },
+    {
+      "kana": "きいて ください",
+      "kanji": "",
+      "romaji": "kiite kudasai",
+      "english": "Please listen"
+    },
+    {
+      "kana": "すわって ください",
+      "kanji": "",
+      "romaji": "suwatte kudasai",
+      "english": "Please sit"
+    },
+    {
+      "kana": "たって ください",
+      "kanji": "",
+      "romaji": "tatte kudasai",
+      "english": "Please sit"
+    },
+    {
+      "kana": "だして ください",
+      "kanji": "",
+      "romaji": "dashite kudasai",
+      "english": "Please turn in(something)"
+    },
+    {
+      "kana": "みせて ください",
+      "kanji": "",
+      "romaji": "misete kudasai",
+      "english": "Please show me(something)"
+    },
+    {
+      "kana": "ドアを　あけて ください",
+      "kanji": "",
+      "romaji": "doa o akete kudasai",
+      "english": "Please open the door"
+    },
+    {
+      "kana": "ドアを　しめて ください",
+      "kanji": "",
+      "romaji": "doa o shimete kudasai",
+      "english": "Please close the door"
+    },
+    {
+      "kana": "しずかに　して ください",
+      "kanji": "",
+      "romaji": "shizuka ni shite kudasai",
+      "english": "Please be quiet"
+    },
+    {
+      "kana": "よくできました",
+      "kanji": "",
+      "romaji": "yoku dekimashita",
+      "english": "well done"
+    },
+    {
+      "kana": "えんぴつ",
+      "kanji": "",
+      "romaji": "enpitsu",
+      "english": "pencil"
+    },
+    {
+      "kana": "ボールペン",
+      "kanji": "",
+      "romaji": "boorupen",
+      "english": "ballpoint pen"
+    },
+    {
+      "kana": "けしゴム",
+      "kanji": "",
+      "romaji": "keshigomu",
+      "english": "rubber eraser"
+    },
+    {
+      "kana": "かみ",
+      "kanji": "",
+      "romaji": "kami",
+      "english": "paper"
+    },
+    {
+      "kana": "ほん",
+      "kanji": "本",
+      "romaji": "hon",
+      "english": "book"
+    },
+    {
+      "kana": "きょうかしょ/テクスト",
+      "kanji": "",
+      "romaji": "kyookasho/tekusuto",
+      "english": "textbook"
+    },
+    {
+      "kana": "じしょ",
+      "kanji": "",
+      "romaji": "jisho",
+      "english": "dictionary"
+    },
+    {
+      "kana": "ノート",
+      "kanji": "",
+      "romaji": "noto",
+      "english": "notebook"
+    },
+    {
+      "kana": "(お)かね",
+      "kanji": "(お)金",
+      "romaji": "(o)kane",
+      "english": "money"
+    },
+    {
+      "kana": "しゃしん",
+      "kanji": "",
+      "romaji": "shashin",
+      "english": "photo"
+    },
+    {
+      "kana": "リュック",
+      "kanji": "",
+      "romaji": "ryukku",
+      "english": "backpack"
+    },
+    {
+      "kana": "ぼうし",
+      "kanji": "",
+      "romaji": "booshi",
+      "english": "hat"
+    },
+    {
+      "kana": "ごみ",
+      "kanji": "",
+      "romaji": "gomi",
+      "english": "trash"
+    },
+    {
+      "kana": "この+noun",
+      "kanji": "",
+      "romaji": "kono+noun",
+      "english": "this~"
+    },
+    {
+      "kana": "その+noun",
+      "kanji": "",
+      "romaji": "sono+noun",
+      "english": "that~"
+    },
+    {
+      "kana": "あの+noun",
+      "kanji": "",
+      "romaji": "ano+noun",
+      "english": "that~over there"
+    },
+    {
+      "kana": "あなた",
+      "kanji": "",
+      "romaji": "anata",
+      "english": "you"
+    },
+    {
+      "kana": "わたしの",
+      "kanji": "",
+      "romaji": "watashino",
+      "english": "mine"
+    },
+    {
+      "kana": "あなたの",
+      "kanji": "",
+      "romaji": "anatano",
+      "english": "yours"
+    },
+    {
+      "kana": "ここ",
+      "kanji": "",
+      "romaji": "koko",
+      "english": "here"
+    },
+    {
+      "kana": "そこ",
+      "kanji": "",
+      "romaji": "soko",
+      "english": "there"
+    },
+    {
+      "kana": "あそこ",
+      "kanji": "",
+      "romaji": "asoko",
+      "english": "over there"
+    },
+    {
+      "kana": "ティッシ",
+      "kanji": "",
+      "romaji": "tisshu",
+      "english": "tissue"
+    },
+    {
+      "kana": "しゅくだい",
+      "kanji": "",
+      "romaji": "shukudai",
+      "english": "homework"
+    },
+    {
+      "kana": "しけん",
+      "kanji": "",
+      "romaji": "shiken",
+      "english": "exam"
+    },
+    {
+      "kana": "しょうテスト",
+      "kanji": "",
+      "romaji": "shootesuto",
+      "english": "quiz"
+    },
+    {
+      "kana": "ワークシート",
+      "kanji": "",
+      "romaji": "waakushiito",
+      "english": "worksheet"
+    },
+    {
+      "kana": "チョコレート",
+      "kanji": "",
+      "romaji": "chokoreeto",
+      "english": "chocolate"
+    },
+    {
+      "kana": "あめ or キャンディー",
+      "kanji": "",
+      "romaji": "ame or kyandii",
+      "english": "candy"
+    },
+    {
+      "kana": "~を ください",
+      "kanji": "",
+      "romaji": "~o kudasai",
+      "english": "give me please~"
+    },
+    {
+      "kana": "はい、どうぞ",
+      "kanji": "",
+      "romaji": "hai doozo",
+      "english": "here please"
+    },
+    {
+      "kana": "きょう",
+      "kanji": "",
+      "romaji": "kyoo",
+      "english": "today"
+    },
+    {
+      "kana": "いつ",
+      "kanji": "",
+      "romaji": "itsu",
+      "english": "when?"
+    },
+    {
+      "kana": "(お)たんじょうび",
+      "kanji": "",
+      "romaji": "(o)tanjoobi",
+      "english": "birthday"
+    },
+    {
+      "kana": "(お)たんじょうび おめでとう (ございます)",
+      "kanji": "",
+      "romaji": "(o)tanjoobi omedetoo (gozaimasu)",
+      "english": "happy birthday!"
+    },
+    {
+      "kana": "にちようび",
+      "kanji": "日曜日",
+      "romaji": "nichiyoobi",
+      "english": "sunday"
+    },
+    {
+      "kana": "げつようび",
+      "kanji": "月曜日",
+      "romaji": "getsuyoobi",
+      "english": "monday"
+    },
+    {
+      "kana": "かようび",
+      "kanji": "火曜日",
+      "romaji": "kayoobi",
+      "english": "tuesday"
+    },
+    {
+      "kana": "すいようび",
+      "kanji": "水曜日",
+      "romaji": "suiyoobi",
+      "english": "wednesday"
+    },
+    {
+      "kana": "もくようび",
+      "kanji": "木曜日",
+      "romaji": "mokuyoobi",
+      "english": "thursday"
+    },
+    {
+      "kana": "きんようび",
+      "kanji": "金曜日",
+      "romaji": "kinyoobi",
+      "english": "friday"
+    },
+    {
+      "kana": "どうようび",
+      "kanji": "土曜日",
+      "romaji": "doyoobi",
+      "english": "saturday"
+    },
+    {
+      "kana": "なんようび",
+      "kanji": "何曜日",
+      "romaji": "nanyoobi",
+      "english": "what day of the week?"
+    }
+  ]
+}

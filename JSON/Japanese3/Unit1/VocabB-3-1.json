@@ -1,0 +1,125 @@
+{
+  "unit": "Unit 1B: Study Abroad",
+  "vocab": [
+		{
+				"kana": "しりつ／こうりつ",
+				"kanji": "私立／公立",
+				"romaji": "",
+				"english": "private / public school"
+		},
+		{
+				"kana": "だんしこう／じょしこう",
+				"kanji": "男子校／女子校",
+				"romaji": "",
+				"english": "boys / girls school"
+		},
+		{
+				"kana": "(だんじょ)きょうがく",
+				"kanji": "(男女)共学",
+				"romaji": "",
+				"english": "coed school"
+		},
+		{
+				"kana": "きょういく",
+				"kanji": "教育",
+				"romaji": "",
+				"english": "education"
+		},
+		{
+				"kana": "じゅぎょうりょう",
+				"kanji": "授業料",
+				"romaji": "",
+				"english": "tuition"
+		},
+		{
+				"kana": "かよう",
+				"kanji": "通う",
+				"romaji": "",
+				"english": "[G1] to commute"
+		},
+		{
+				"kana": "ぎょうじ",
+				"kanji": "行事",
+				"romaji": "",
+				"english": "events"
+		},
+		{
+				"kana": "ぶかつ",
+				"kanji": "部活",
+				"romaji": "",
+				"english": "club activity"
+		},
+		{
+				"kana": "りゅうがくする",
+				"kanji": "留学する",
+				"romaji": "",
+				"english": "[G3] to study abroad"
+		},
+		{
+				"kana": "パーマをかける",
+				"kanji": "",
+				"romaji": "",
+				"english": "to perm"
+		},
+		{
+				"kana": "けしょうをする",
+				"kanji": "化粧をする",
+				"romaji": "",
+				"english": "[G3] to apply makeup"
+		},
+		{
+				"kana": "ぬぐ",
+				"kanji": "",
+				"romaji": "",
+				"english": "[G1] to remove"
+		},
+		{
+				"kana": "いじめる",
+				"kanji": "",
+				"romaji": "",
+				"english": "[G2] to bully"
+		},
+		{
+				"kana": "てん",
+				"kanji": "点",
+				"romaji": "",
+				"english": "point(s)/aspect(s)"
+		},
+		{
+				"kana": "がっき",
+				"kanji": "学期",
+				"romaji": "",
+				"english": "semester"
+		},
+		{
+				"kana": "そつぎょうしき",
+				"kanji": "卒業式",
+				"romaji": "",
+				"english": "graduation ceremony"
+		},
+		{
+				"kana": "ぶんか",
+				"kanji": "文化",
+				"romaji": "",
+				"english": "culture"
+		},
+		{
+				"kana": "かいがいりょこう",
+				"kanji": "海外旅行",
+				"romaji": "",
+				"english": "foreign travel"
+		},
+		{
+				"kana": "やめる",
+				"kanji": "",
+				"romaji": "",
+				"english": "[G2] to quit"
+		},
+		{
+				"kana": "しんせつ",
+				"kanji": "親切",
+				"romaji": "",
+				"english": "kind"
+		}
+  ]
+}

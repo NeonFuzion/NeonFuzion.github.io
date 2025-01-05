@@ -1,0 +1,299 @@
+{
+    "unit": "Unit 2: Classroom - Counters",
+    "vocab": [
+      {
+        "kana": "なんまい",
+        "kanji": "",
+        "romaji": "nanmai",
+        "english": "how many flat objects?"
+      },
+      {
+        "kana": "ひとつ",
+        "kanji": "",
+        "romaji": "hitotsu",
+        "english": "one round or unclassified object"
+      },
+      {
+        "kana": "ふたつ",
+        "kanji": "",
+        "romaji": "futatsu",
+        "english": "two round or unclassified object"
+      },
+      {
+        "kana": "みっつ",
+        "kanji": "",
+        "romaji": "mittsu",
+        "english": "three round or unclassified object"
+      },
+      {
+        "kana": "よっつ",
+        "kanji": "",
+        "romaji": "yottsu",
+        "english": "four round or unclassified object"
+      },
+      {
+        "kana": "いつつ",
+        "kanji": "",
+        "romaji": "itsutsu",
+        "english": "five round or unclassified object"
+      },
+      {
+        "kana": "むっつ",
+        "kanji": "",
+        "romaji": "muttsu",
+        "english": "six round or unclassified object"
+      },
+      {
+        "kana": "ななつ",
+        "kanji": "",
+        "romaji": "nanatsu",
+        "english": "seven round or unclassified object"
+      },
+      {
+        "kana": "やっつ",
+        "kanji": "",
+        "romaji": "yattsu",
+        "english": "eight round or unclassified object"
+      },
+      {
+        "kana": "ここのつ",
+        "kanji": "",
+        "romaji": "kokonotsu",
+        "english": "nine round or unclassified object"
+      },
+      {
+        "kana": "とう",
+        "kanji": "",
+        "romaji": "tou",
+        "english": "ten round or unclassified object"
+      },
+      {
+        "kana": "いくつ",
+        "kanji": "",
+        "romaji": "ikutsu",
+        "english": "how many round or unclassified objects"
+      },
+      {
+        "kana": "いちがつ",
+        "kanji": "一月",
+        "romaji": "ichi-gatsu",
+        "english": "one"
+      },
+      {
+        "kana": "にがつ",
+        "kanji": "二月",
+        "romaji": "ni-gatsu",
+        "english": "two"
+      },
+      {
+        "kana": "さんがつ",
+        "kanji": "三月",
+        "romaji": "san-gatsu",
+        "english": "three"
+      },
+      {
+        "kana": "しがつ",
+        "kanji": "四月",
+        "romaji": "shi-gatsu",
+        "english": "four"
+      },
+      {
+        "kana": "ごがつ",
+        "kanji": "五月",
+        "romaji": "go-gatsu",
+        "english": "five"
+      },
+      {
+        "kana": "ろくがつ",
+        "kanji": "六月",
+        "romaji": "roku-gatsu",
+        "english": "six"
+      },
+      {
+        "kana": "しちがつ",
+        "kanji": "七月",
+        "romaji": "shichi-gatsu",
+        "english": "seven"
+      },
+      {
+        "kana": "はちがつ",
+        "kanji": "八月",
+        "romaji": "hachi-gatsu",
+        "english": "eight"
+      },
+      {
+        "kana": "くがつ",
+        "kanji": "九月",
+        "romaji": "ku-gatsu",
+        "english": "nine"
+      },
+      {
+        "kana": "じゅうがつ",
+        "kanji": "十月",
+        "romaji": "juu-gatsu",
+        "english": "ten"
+      },
+      {
+        "kana": "なんがつ",
+        "kanji": "何月",
+        "romaji": "nangatsu",
+        "english": "what month"
+      },
+      {
+        "kana": "ついたち",
+        "kanji": "一日",
+        "romaji": "tsuitachi",
+        "english": "first day of the month"
+      },
+      {
+        "kana": "ふつか",
+        "kanji": "二日",
+        "romaji": "futsuka",
+        "english": "second day of the month"
+      },
+      {
+        "kana": "みっか",
+        "kanji": "三日",
+        "romaji": "mikka",
+        "english": "third day of the month"
+      },
+      {
+        "kana": "よっか",
+        "kanji": "四日",
+        "romaji": "yokka",
+        "english": "fourth day of the month"
+      },
+      {
+        "kana": "いつか",
+        "kanji": "五日",
+        "romaji": "itsuka",
+        "english": "fifth day of the month"
+      },
+      {
+        "kana": "むいか",
+        "kanji": "六日",
+        "romaji": "muika",
+        "english": "sixth day of the month"
+      },
+      {
+        "kana": "なのか",
+        "kanji": "七日",
+        "romaji": "nanoka",
+        "english": "seventh day of the month"
+      },
+      {
+        "kana": "ようか",
+        "kanji": "八日",
+        "romaji": "yooka",
+        "english": "eighth day of the month"
+      },
+      {
+        "kana": "ここのか",
+        "kanji": "九日",
+        "romaji": "kokonoka",
+        "english": "nineth day of the month"
+      },
+      {
+        "kana": "とうか",
+        "kanji": "十日",
+        "romaji": "tooka",
+        "english": "tenth day of the month"
+      },
+      {
+        "kana": "じゅうよっか",
+        "kanji": "十四日",
+        "romaji": "juuyokka",
+        "english": "fourteenth day of the month"
+      },
+      {
+        "kana": "はつか",
+        "kanji": "二十日",
+        "romaji": "hatsuka",
+        "english": "twentieth day of the month"
+      },
+      {
+        "kana": "にじゅうよっか",
+        "kanji": "二十四日",
+        "romaji": "nijuuyokka",
+        "english": "twenty-fourth day of the month"
+      },
+      {
+        "kana": "なんにち",
+        "kanji": "何日",
+        "romaji": "nannichi",
+        "english": "what day?"
+      },
+      {
+        "kana": "いちじ",
+        "kanji": "一時",
+        "romaji": "ichiji",
+        "english": "one o’clock"
+      },
+      {
+        "kana": "にじ",
+        "kanji": "二時",
+        "romaji": "niji",
+        "english": "two o’clock"
+      },
+      {
+        "kana": "さんじ",
+        "kanji": "三時",
+        "romaji": "sanji",
+        "english": "three o’clock"
+      },
+      {
+        "kana": "よじ",
+        "kanji": "四時",
+        "romaji": "yoji",
+        "english": "four o’clock"
+      },
+      {
+        "kana": "ごじ",
+        "kanji": "五時",
+        "romaji": "goji",
+        "english": "five o’clock"
+      },
+      {
+        "kana": "ろくじ",
+        "kanji": "六時",
+        "romaji": "rokuji",
+        "english": "six o’clock"
+      },
+      {
+        "kana": "しちじ",
+        "kanji": "七時",
+        "romaji": "shichiji",
+        "english": "seven o’clock"
+      },
+      {
+        "kana": "はちじ",
+        "kanji": "八時",
+        "romaji": "hachiji",
+        "english": "eight o’clock"
+      },
+      {
+        "kana": "くじ",
+        "kanji": "九時",
+        "romaji": "kuji",
+        "english": "nine o’clock"
+      },
+      {
+        "kana": "じゅうじ",
+        "kanji": "十時",
+        "romaji": "juuji",
+        "english": "ten o’clock"
+      },
+      {
+        "kana": "じゅういちじ",
+        "kanji": "十一時",
+        "romaji": "juuichiji",
+        "english": "eleven o’clock"
+      },
+      {
+        "kana": "じゅうにじ",
+        "kanji": "十二時",
+        "romaji": "juuniji",
+        "english": "twelve o’clock"
+      }
+    ]
+  }

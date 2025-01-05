@@ -1,0 +1,371 @@
+{
+    "unit": "Unit 3: Family",
+    "vocab": [
+        {
+          "kana": "ちち",
+          "kanji": "",
+          "romaji": "",
+          "english": "father(my)"
+        },
+        {
+          "kana": "はは",
+          "kanji": "",
+          "romaji": "",
+          "english": "mother(my)"
+        },
+        {
+          "kana": "あに",
+          "kanji": "",
+          "romaji": "",
+          "english": "older brother(my)"
+        },
+        {
+          "kana": "あね",
+          "kanji": "",
+          "romaji": "",
+          "english": "older sister(my)"
+        },
+        {
+          "kana": "おとうと",
+          "kanji": "",
+          "romaji": "",
+          "english": "younger brother(my)"
+        },
+        {
+          "kana": "いもうと",
+          "kanji": "",
+          "romaji": "",
+          "english": "younger sister"
+        },
+        {
+          "kana": "かぞく",
+          "kanji": "",
+          "romaji": "",
+          "english": "(my) family"
+        },
+        {
+          "kana": "きょうだい",
+          "kanji": "",
+          "romaji": "",
+          "english": "(my) sibling(s)"
+        },
+        {
+          "kana": "だれ",
+          "kanji": "",
+          "romaji": "",
+          "english": "who?"
+        },
+        {
+          "kana": "なまえ",
+          "kanji": "",
+          "romaji": "",
+          "english": "name"
+        },
+        {
+          "kana": "そうですか。",
+          "kanji": "",
+          "romaji": "",
+          "english": "Is that so?"
+        },
+        {
+          "kana": "ほんとうですか。",
+          "kanji": "",
+          "romaji": "",
+          "english": "Is that true?/Really?"
+        },
+        {
+          "kana": "の",
+          "kanji": "",
+          "romaji": "",
+          "english": "A possessive and descriptive particle."
+        },
+        {
+          "kana": "おとうさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s) father"
+        },
+        {
+          "kana": "おかあさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s) mother"
+        },
+        {
+          "kana": "おじいさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "grandfather or elderly man"
+        },
+        {
+          "kana": "おばあさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "grandmother or elderly woman"
+        },
+        {
+          "kana": "おにいさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)older brother"
+        },
+        {
+          "kana": "おねえさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)older sister"
+        },
+        {
+          "kana": "おとうとさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)younger brother"
+        },
+        {
+          "kana": "いもうとさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)younger sister"
+        },
+        {
+          "kana": "と",
+          "kanji": "",
+          "romaji": "",
+          "english": "and"
+        },
+        {
+          "kana": "ごかぞく",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)family"
+        },
+        {
+          "kana": "おなまえ",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)name"
+        },
+        {
+          "kana": "そして",
+          "kanji": "",
+          "romaji": "",
+          "english": "soshite or And(used only at the beginning of a sentence)"
+        },
+        {
+          "kana": "おじさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s) uncle"
+        },
+        {
+          "kana": "おばさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "(someone’s)aunt"
+        },
+        {
+          "kana": "いとこ",
+          "kanji": "",
+          "romaji": "",
+          "english": "(own) cousin"
+        },
+        {
+          "kana": "がっこう",
+          "kanji": "",
+          "romaji": "",
+          "english": "school"
+        },
+        {
+          "kana": "せいと",
+          "kanji": "",
+          "romaji": "",
+          "english": "(not yet college) student"
+        },
+        {
+          "kana": "がくせい",
+          "kanji": "",
+          "romaji": "",
+          "english": "college student"
+        },
+        {
+          "kana": "ちゅうがく",
+          "kanji": "",
+          "romaji": "",
+          "english": "intermediate school (U.S. middleschool orJr. high)"
+        },
+        {
+          "kana": "こうこう",
+          "kanji": "",
+          "romaji": "",
+          "english": "high school"
+        },
+        {
+          "kana": "ちゅうがくせい",
+          "kanji": "",
+          "romaji": "",
+          "english": "intermediate school student"
+        },
+        {
+          "kana": "こうこうせい",
+          "kanji": "",
+          "romaji": "",
+          "english": "high school student"
+        },
+        {
+          "kana": "～も",
+          "kanji": "",
+          "romaji": "",
+          "english": "too or also"
+        },
+        {
+          "kana": "どこ",
+          "kanji": "",
+          "romaji": "",
+          "english": "where?"
+        },
+        {
+          "kana": "こちら",
+          "kanji": "",
+          "romaji": "",
+          "english": "this one(Polite form of これ)"
+        },
+        {
+          "kana": "にほん",
+          "kanji": "",
+          "romaji": "",
+          "english": "Japan"
+        },
+        {
+          "kana": "にほんじん",
+          "kanji": "",
+          "romaji": "",
+          "english": "person.Japanese citizen"
+        },
+        {
+          "kana": "アメリカ",
+          "kanji": "",
+          "romaji": "",
+          "english": "U.S.A."
+        },
+        {
+          "kana": "アメリカじん",
+          "kanji": "",
+          "romaji": "",
+          "english": "U.S. citizen"
+        },
+        {
+          "kana": "ちゅうごく",
+          "kanji": "",
+          "romaji": "",
+          "english": "China"
+        },
+        {
+          "kana": "かんこく",
+          "kanji": "",
+          "romaji": "",
+          "english": "South Korea"
+        },
+        {
+          "kana": "フランス",
+          "kanji": "",
+          "romaji": "",
+          "english": "France"
+        },
+        {
+          "kana": "スペイン",
+          "kanji": "",
+          "romaji": "",
+          "english": "Spain"
+        },
+        {
+          "kana": "インド",
+          "kanji": "",
+          "romaji": "",
+          "english": "India"
+        },
+        {
+          "kana": "ブラジル",
+          "kanji": "",
+          "romaji": "",
+          "english": "Brazil"
+        },
+        {
+          "kana": "(お)しごと",
+          "kanji": "",
+          "romaji": "",
+          "english": "job"
+        },
+        {
+          "kana": "いしゃ",
+          "kanji": "",
+          "romaji": "",
+          "english": "medical doctor"
+        },
+        {
+          "kana": "おいしゃさん",
+          "kanji": "",
+          "romaji": "",
+          "english": "Polite form of medical doctor(isha)"
+        },
+        {
+          "kana": "びょういん",
+          "kanji": "",
+          "romaji": "",
+          "english": "hospital"
+        },
+        {
+          "kana": "べんごし",
+          "kanji": "",
+          "romaji": "",
+          "english": "lawyer"
+        },
+        {
+          "kana": "かいしゃいん",
+          "kanji": "",
+          "romaji": "",
+          "english": "company employee"
+        },
+        {
+          "kana": "しゅふ",
+          "kanji": "",
+          "romaji": "",
+          "english": "housewife"
+        },
+        {
+          "kana": "エンジニア",
+          "kanji": "",
+          "romaji": "",
+          "english": "engineer"
+        },
+        {
+          "kana": "けいかん",
+          "kanji": "",
+          "romaji": "",
+          "english": "police officer"
+        },
+        {
+          "kana": "しょうぼうし",
+          "kanji": "",
+          "romaji": "",
+          "english": "firefighter"
+        },
+        {
+          "kana": "ウェイター／ウェイトレス",
+          "kanji": "",
+          "romaji": "",
+          "english": "waiter/waitress"
+        },
+        {
+          "kana": "シェフ",
+          "kanji": "",
+          "romaji": "",
+          "english": "chef or cook"
+        },
+        {
+          "kana": "まえ",
+          "kanji": "",
+          "romaji": "",
+          "english": "before"
+        }
+    ]
+}

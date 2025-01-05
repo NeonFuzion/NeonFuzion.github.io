@@ -1,0 +1,222 @@
+html {
+    display: block;
+    padding: 0%;
+    margin: auto;
+    font-family: "Noto Sans CJK JP", "メイリオ", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Meiryo", sans-serif;
+    background-image: url("Sprites/TatamiBG.jpeg");
+    background-size: 100%;
+}
+
+details {
+    margin-bottom: 1%;
+}
+
+header {
+    font-size: 4vw;
+}
+
+button {
+    display: inline-block;
+    font-size: 1.75vw;
+    border-color: bisque;
+    background-color: beige;
+    border-radius: 1vw;
+}
+
+progress::-webkit-progress-bar {
+    background-color: white;
+    border-radius: 5vw;
+}
+
+progress::-webkit-progress-value {
+    background-color: green;
+    border-radius: 5vw;
+}
+
+button:hover {
+    background-color: blanchedalmond;
+}
+
+label {
+    background-color: beige;
+    padding: 1%;
+    border-radius: 1vw;
+    font-size: 1.5vw;
+}
+
+#quiz {
+    display: block;
+    text-align: center;
+}
+
+#question {
+    text-align: center;
+    font-size: 2vw;
+}
+
+#questionInfo {
+    text-align: center;
+}
+
+#answer {
+    display: none;
+    height: 0%;
+}
+
+#correct {
+    /*margin: 1% 2% 1% 9%;*/
+    background-color: green
+}
+
+#incorrect {
+    /*margin: 1% 9% 1% 2%;*/
+    background-color: red;
+}
+
+#unit {
+    text-align: center;
+    font-size: 2.5vw;
+}
+
+#extra {
+    text-align: center;
+}
+
+#class {
+    text-align: center;
+    font-size: 3vw;
+}
+
+#options {
+    display: inline;
+}
+
+#myChart {
+    width: 50%;
+    height: 50%;
+}
+
+#end {
+    display: block;
+}
+
+#score {
+    text-align: center;
+    font-size: 2.75vw;
+}
+
+#start {
+    width: 20%;
+    background-color: beige;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 1vw;
+    font-size: 2vw;
+}
+
+#progress {
+    margin: 0 40% 0 40%;
+    width: 20%;
+    background-color: green;
+    border-radius: 5vw;
+}
+
+#canvasContainer {
+    height: 50%;
+    width: 50%;
+    text-align: center;
+}
+
+#words {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+}
+
+#results {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 2% 8% 2% 8%;
+}
+
+.unit {
+    /*width: 50%;*/
+    margin: 0.25% 1% 0.25% 1%;
+    font-size: 1.75vw;
+    background-color: beige;
+    box-shadow: 5vw;
+    display: inline-block;
+    padding: 1%;
+    border-radius: 1vw;
+}
+
+.unit:hover {
+    background-color: blanchedalmond;
+}
+
+.section {
+    margin: 0 0 1% 2.5%;
+    padding: 0.5% 1% 0.5% 1%;
+    font-size: 1.75vw;
+    display: inline-block;
+    background-color: beige;
+    border-radius: 1vw;
+}
+
+.year {
+    width: 30%;
+    text-align: center;
+    font-size: 2vw;
+    background-color:  beige;
+    display: block;
+    padding: 1%;
+    border-radius: 1vw;
+    float: left;
+}
+
+.year:hover {
+    background-color: blanchedalmond;
+}
+
+.option {
+    padding: 2vw;
+    margin: 1vw;
+    display: inline-block;
+    font-size: 1.75vw;
+    width: 40%;
+    height: 30%;
+}
+
+.mode {
+    font-size: 2vm;
+}
+
+.proficiency {
+    font-size: 2vw;
+    background-color: beige;
+    border-radius: 1vw;
+    padding: 2%;
+    margin: 1%;
+}
+
+.yearDetail {
+    margin: auto;
+}
+
+.start {
+    width: 100%;
+    font-size: 2.5vw;
+}
+
+.correctness {
+    font-size: 2vw;
+    border-radius: 0.5vw;
+    display: block;
+    padding: 1%;
+    margin: 0 5% 0 5%;
+}
+
+.word {
+    display: block;
+    width: 100%;
+}

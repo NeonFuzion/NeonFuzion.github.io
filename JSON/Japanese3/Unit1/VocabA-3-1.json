@@ -1,0 +1,125 @@
+{
+	"unit": "Unit 1A: Study Abroad",
+	"vocab": [
+		{
+				"kana": "ことわざ",
+				"kanji": "",
+				"romaji": "",
+				"english": "proverb"
+		},
+		{
+				"kana": "そふ",
+				"kanji": "祖父",
+				"romaji": "",
+				"english": "(own) grandfather"
+		},
+		{
+				"kana": "そぼ",
+				"kanji": "祖母",
+				"romaji": "",
+				"english": "(own) grandmother"
+		},
+		{
+				"kana": "おじ",
+				"kanji": "叔父",
+				"romaji": "",
+				"english": "(own) uncle"
+		},
+		{
+				"kana": "おば",
+				"kanji": "叔母",
+				"romaji": "",
+				"english": "(own) aunt"
+		},
+		{
+				"kana": "ようちえん",
+				"kanji": "幼稚園",
+				"romaji": "",
+				"english": "kindergarten"
+		},
+		{
+				"kana": "ぶつり",
+				"kanji": "物理",
+				"romaji": "",
+				"english": "physics"
+		},
+		{
+				"kana": "かがく",
+				"kanji": "化学",
+				"romaji": "",
+				"english": "chemistry"
+		},
+		{
+				"kana": "ぶんがく",
+				"kanji": "文学",
+				"romaji": "",
+				"english": "literature"
+		},
+		{
+				"kana": "れきし",
+				"kanji": "歴史",
+				"romaji": "",
+				"english": "history"
+		},
+		{
+				"kana": "せんこうする",
+				"kanji": "専攻する",
+				"romaji": "",
+				"english": "[G3] to major in"
+		},
+		{
+				"kana": "そつぎょうする",
+				"kanji": "卒業する",
+				"romaji": "",
+				"english": "[G3] to graduate"
+		},
+		{
+				"kana": "こちらこそ",
+				"kanji": "",
+				"romaji": "",
+				"english": "It is I, (not you.)"
+		},
+		{
+				"kana": "おさきに",
+				"kanji": "お先に",
+				"romaji": "",
+				"english": "Excuse me for going/doing something before (you)"
+		},
+		{
+				"kana": "しつれいします",
+				"kanji": "失礼します",
+				"romaji": "",
+				"english": "Excuse me. / I must go now."
+		},
+		{
+				"kana": "しつれいしました",
+				"kanji": "失礼しました",
+				"romaji": "",
+				"english": "I am sorry to have inconvenienced you."
+		},
+		{
+				"kana": "かえる",
+				"kanji": "変える",
+				"romaji": "",
+				"english": "[G2] to change"
+		},
+		{
+				"kana": "ちょうしょく",
+				"kanji": "朝食",
+				"romaji": "",
+				"english": "breakfast"
+		},
+		{
+				"kana": "ちゅうしょく",
+				"kanji": "昼食",
+				"romaji": "",
+				"english": "lunch"
+		},
+		{
+				"kana": "ゆうしょく",
+				"kanji": "夕食",
+				"romaji": "",
+				"english": "dinner"
+		}
+  ]
+}

@@ -1,0 +1,143 @@
+{
+	"unit": "Unit 2A: Study of the Japanese Language",
+	"vocab": [
+		{
+            "kana": "ぶん",
+            "kanji": "文",
+            "romaji": "",
+            "english": "sentence"
+        },
+		{
+            "kana": "えいわじしょ",
+            "kanji": "英和辞書",
+            "romaji": "",
+            "english": "English-Japanese dictionary"
+        },
+		{
+            "kana": "わえいじしょ",
+            "kanji": "英和辞書",
+            "romaji": "",
+            "english": "Japanese-English dictionary"
+        },
+		{
+            "kana": "やくす",
+            "kanji": "訳す",
+            "romaji": "",
+            "english": "[G1] to translate"
+        },
+		{
+            "kana": "いみ",
+            "kanji": "意味",
+            "romaji": "",
+            "english": "meaning"
+        },
+		{
+            "kana": "どういういみですか",
+            "kanji": "どういう意味ですか",
+            "romaji": "",
+            "english": "What does it mean?"
+        },
+		{
+            "kana": "～といういみです",
+            "kanji": "～という意味です",
+            "romaji": "",
+            "english": "(It) means ~"
+        },
+		{
+            "kana": "さがす",
+            "kanji": "",
+            "romaji": "",
+            "english": "[G1] to look for"
+        },
+		{
+            "kana": "しらべる",
+            "kanji": "調べる",
+            "romaji": "",
+            "english": "[G2] to check"
+        },
+		{
+            "kana": "はつおん",
+            "kanji": "発音",
+            "romaji": "",
+            "english": "pronunciation"
+        },
+		{
+            "kana": "くんよみ",
+            "kanji": "訓読み",
+            "romaji": "",
+            "english": "Japanese reading"
+        },
+		{
+            "kana": "おんよみ",
+            "kanji": "音読み",
+            "romaji": "",
+            "english": "Chinese reading"
+        },
+		{
+            "kana": "しょきゅう",
+            "kanji": "初級",
+            "romaji": "",
+            "english": "beginner"
+        },
+		{
+            "kana": "たとえば、",
+            "kanji": "",
+            "romaji": "",
+            "english": "For example,"
+        },
+		{
+            "kana": "かんたん",
+            "kanji": "簡単",
+            "romaji": "",
+            "english": "simple"
+        },
+		{
+            "kana": "ふくざつ",
+            "kanji": "複雑",
+            "romaji": "",
+            "english": "complicated"
+        },
+		{
+            "kana": "かず",
+            "kanji": "数",
+            "romaji": "",
+            "english": "number/amount"
+        },
+		{
+            "kana": "かたち",
+            "kanji": "形",
+            "romaji": "",
+            "english": "shape"
+        },
+		{
+            "kana": "かきじゅん",
+            "kanji": "書き順",
+            "romaji": "",
+            "english": "stroke order"
+        },
+		{
+            "kana": "めちゃくちゃ",
+            "kanji": "",
+            "romaji": "",
+            "english": "messy"
+        },
+		{
+            "kana": "さいきん",
+            "kanji": "最近",
+            "romaji": "",
+            "english": "recently"
+        },
+		{
+            "kana": "なかなか",
+            "kanji": "",
+            "romaji": "",
+            "english": "somehow + negative"
+        },
+		{
+            "kana": "おもいだせない",
+            "kanji": "思い出せない",
+            "romaji": "",
+            "english": "[G1] cannot recall"
+        }
+    ]
+}

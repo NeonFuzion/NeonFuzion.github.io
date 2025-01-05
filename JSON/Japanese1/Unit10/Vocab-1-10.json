@@ -1,0 +1,275 @@
+{
+	"unit": "Unit 10: How Are You?",
+	"vocab": [
+		{
+				"kana": "どうしましたか",
+				"kanji": "",
+				"romaji": "doushimashitaka",
+				"english": "what happened?"
+		},
+        {
+				"kana": "びょうき",
+				"kanji": "病気",
+				"romaji": "byouki",
+				"english": "illness, sickness"
+		},
+        {
+				"kana": "びょうきです",
+				"kanji": "病気です",
+				"romaji": "byoukidesu",
+				"english": "I am sick"
+		},
+        {
+				"kana": "かぜ",
+				"kanji": "風",
+				"romaji": "kaze",
+				"english": "a cold"
+		},
+        {
+				"kana": "ねつ",
+				"kanji": "熱",
+				"romaji": "netsu",
+				"english": "fever"
+		},
+        {
+				"kana": "いたい",
+				"kanji": "痛い",
+				"romaji": "itai",
+				"english": "painful, sore"
+		},
+        {
+				"kana": "だいじょうぶ",
+				"kanji": "大丈夫",
+				"romaji": "daijoubu",
+				"english": "all right"
+		},
+        {
+				"kana": "しにます「しぬ」",
+				"kanji": "死にます「死ぬ」",
+				"romaji": "shinimasu [shinu]",
+				"english": "to die"
+		},
+        {
+				"kana": "かわいそうに",
+				"kanji": "可哀想に",
+				"romaji": "kawaisouni",
+				"english": "how pitiful"
+		},
+        {
+				"kana": "やすみます「やすむ」",
+				"kanji": "休むます「休む」",
+				"romaji": "yasumimasu [yasumu]",
+				"english": "to rest"
+		},
+        {
+				"kana": "（がっこうを）やすみます・やすむ",
+				"kanji": "（学校を）休みます「休む」",
+				"romaji": "(gakkouwo) yasumimasu [yasumu]",
+				"english": "to be absent (from school)"
+		},
+        {
+				"kana": "くすり（をのみます「のむ」）",
+				"kanji": "薬（をのいます「飲む」）",
+				"romaji": "kusuri (wonomimasu) [nomu]",
+				"english": "(to take) medicine"
+		},
+        {
+				"kana": "ゆうべ",
+				"kanji": "昨夜",
+				"romaji": "yuube",
+				"english": "last night"
+		},
+        {
+				"kana": "けさ",
+				"kanji": "今朝",
+				"romaji": "kesa",
+				"english": "this morning"
+		},
+        {
+				"kana": "こんばん",
+				"kanji": "",
+				"romaji": "konban",
+				"english": "tonight"
+		},
+        {
+				"kana": "ねむい",
+				"kanji": "眠い",
+				"romaji": "nemui",
+				"english": "sleepy"
+		},
+        {
+				"kana": "つかれています・つかれてました",
+				"kanji": "疲れています・疲れてました",
+				"romaji": "tsukarete imasu/ tsukaremashita",
+				"english": "is/got tired/"
+		},
+        {
+				"kana": "はやく",
+				"kanji": "早く",
+				"romaji": "hayaku",
+				"english": "early"
+		},
+        {
+				"kana": "おそく",
+				"kanji": "遅く",
+				"romaji": "osoku",
+				"english": "late"
+		},
+        {
+				"kana": "しあい",
+				"kanji": "試合",
+				"romaji": "shiai",
+				"english": "(sports) game"
+		},
+        {
+				"kana": "わたしたち",
+				"kanji": "私たち",
+				"romaji": "watashitachi",
+				"english": "we"
+		},
+        {
+				"kana": "ぼくたち",
+				"kanji": "僕たち",
+				"romaji": "bokutachi",
+				"english": "we (used by males)"
+		},
+        {
+				"kana": "チイム",
+				"kanji": "",
+				"romaji": "chiimu",
+				"english": "team"
+		},
+        {
+				"kana": "かちます「かつ」",
+				"kanji": "勝ちます「勝つ」",
+				"romaji": "kachimasu [katsu]",
+				"english": "to win"
+		},
+        {
+				"kana": "まけます「まける」",
+				"kanji": "負けます「負ける」",
+				"romaji": "makemasu [makeru]",
+				"english": "to lose"
+		},
+        {
+				"kana": "つよい",
+				"kanji": "強い",
+				"romaji": "tsuyoi",
+				"english": "strong"
+		},
+        {
+				"kana": "よわい",
+				"kanji": "弱い",
+				"romaji": "yowai",
+				"english": "weak"
+		},
+        {
+				"kana": "はる",
+				"kanji": "春",
+				"romaji": "haru",
+				"english": "spring"
+		},
+        {
+				"kana": "なつ",
+				"kanji": "夏",
+				"romaji": "natsu",
+				"english": "summer"
+		},
+        {
+				"kana": "あき",
+				"kanji": "秋",
+				"romaji": "aki",
+				"english": "autumn, fall"
+		},
+        {
+				"kana": "ふゆ",
+				"kanji": "冬",
+				"romaji": "fuyu",
+				"english": "winter"
+		},
+        {
+				"kana": "せんげつ",
+				"kanji": "先月",
+				"romaji": "sengetsu",
+				"english": "last month"
+		},
+        {
+				"kana": "こんげつ",
+				"kanji": "今月",
+				"romaji": "kongetsu",
+				"english": "this month"
+		},
+        {
+				"kana": "らいげつ",
+				"kanji": "来月",
+				"romaji": "raigetsu",
+				"english": "next month"
+		},
+        {
+				"kana": "まいげつ",
+				"kanji": "毎月",
+				"romaji": "maigetsu",
+				"english": "every month"
+		},
+        {
+				"kana": "だいじ",
+				"kanji": "大事",
+				"romaji": "daiji",
+				"english": "important"
+		},
+        {
+				"kana": "がんばって",
+				"kanji": "頑張って",
+				"romaji": "gambatte",
+				"english": "good luck/do your best"
+		},
+        {
+				"kana": "がんばります",
+				"kanji": "頑張ります",
+				"romaji": "gambarimasu",
+				"english": "I will do my best"
+		},
+        {
+				"kana": "だいがく",
+				"kanji": "大学",
+				"romaji": "daigaku",
+				"english": "college, university"
+		},
+        {
+				"kana": "だいがくせい",
+				"kanji": "大学生",
+				"romaji": "daigakusei",
+				"english": "college student"
+		},
+        {
+				"kana": "〜のまえに",
+				"kanji": "〜の前に",
+				"romaji": "~nomaeni",
+				"english": "before~"
+		},
+        {
+				"kana": "〜のあとで",
+				"kanji": "〜の後で",
+				"romaji": "~noatode",
+				"english": "after~"
+		},
+        {
+				"kana": "〜で　あります",
+				"kanji": "",
+				"romaji": "_de arimasu [aru]",
+				"english": "to meet at a place"
+		},
+        {
+				"kana": "れんしゅう（を）します「する」",
+				"kanji": "練習（を）します「する」",
+				"romaji": "renshuu (wo) shimasu [suru]",
+				"english": "to practice"
+		},
+        {
+				"kana": "はします「はしる」",
+				"kanji": "走ます「走る」",
+				"romaji": "hashimasu [hashiru]",
+				"english": "to run"
+		}
+    ]
+}

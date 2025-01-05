@@ -1,0 +1,113 @@
+{
+	"unit": "Unit 4B: The Japanese Home",
+	"vocab": [
+        {
+			"kana": "にかいだてのいえ",
+			"kanji": "二階建ての家",
+			"romaji": "nikaidate no ie",
+			"english": "two-story house"
+		},
+		{
+			"kana": "うちとそと",
+			"kanji": "内と外",
+			"romaji": "uchi to soto",
+			"english": "inside and outside"
+		},
+		{
+			"kana": "いえにあがる",
+			"kanji": "家に上がる",
+			"romaji": "ie ni agaru",
+			"english": "[G1] to step up inside (a home)"
+		},
+		{
+			"kana": "せいようてきなえとかんとうようてきなえ",
+			"kanji": "西洋的な絵と東洋的な絵",
+			"romaji": "seiyouteki na e to touyouteki na e",
+			"english": "a Western-style painting and an Asian-style painting"
+		},
+		{
+			"kana": "そぼのしんしつ",
+			"kanji": "祖母の寝室",
+			"romaji": "sobo no shinshitsu",
+			"english": "my grandmother's bedroom"
+		},
+		{
+			"kana": "はちじょうのたたみのへや",
+			"kanji": "八畳の畳の部屋",
+			"romaji": "hachijou no tatami no heya",
+			"english": "eight-mat tatami room"
+		},
+		{
+			"kana": "でんとうてきなにほんのにわ",
+			"kanji": "伝統的な日本の庭",
+			"romaji": "dentouteki na nihon no niwa",
+			"english": "traditional Japanese garden"
+		},
+		{
+			"kana": "うつくしいわしつ",
+			"kanji": "美しい和室",
+			"romaji": "utsukushii washitsu",
+			"english": "beautiful Japanese-style room"
+		},
+		{
+			"kana": "ようまをきゃくまにしてつかう",
+			"kanji": "洋間を客間にして使う",
+			"romaji": "youma o kyakuma ni shite tsukau",
+			"english": "to use a Western-style room as a guest room"
+		},
+		{
+			"kana": "しょうじをしめた。",
+			"kanji": "障子を閉めた。",
+			"romaji": "shouji o shimeta",
+			"english": "(I) closed the shouji (paper sliding) doors"
+		},
+		{
+			"kana": "うつくしいいけばな",
+			"kanji": "美しい生け花",
+			"romaji": "utsukushii ikebana",
+			"english": "beautiful flower arrangement"
+		},
+		{
+			"kana": "げんかんをかざる",
+			"kanji": "玄関を飾る",
+			"romaji": "genkan o kazaru",
+			"english": "[G1] to decorate the entrance"
+		},
+		{
+			"kana": "こころがおちつく",
+			"kanji": "心が落ち着く",
+			"romaji": "kokoro ga ochitsuku",
+			"english": "[G1] (my) spirit becomes calm (relaxed)"
+		},
+		{
+			"kana": "ざぶとんのうえにせいざする",
+			"kanji": "座布団の上に正座する",
+			"romaji": "zabuton no ue ni seiza suru",
+			"english": "[G3] to sit properly on a floor cushion"
+		},
+		{
+			"kana": "いえをたてる",
+			"kanji": "家を建てる",
+			"romaji": "ie o tateru",
+			"english": "[G2] to build a house"
+		},
+		{
+			"kana": "れいぞうこにたべものをいれた",
+			"kanji": "冷蔵庫に食べ物を入れた",
+			"romaji": "reizouko ni tabemono o ireta",
+			"english": "put food in the refrigerator"
+		},
+		{
+			"kana": "でんしレンジであつくする",
+			"kanji": "電子レンジで熱くする",
+			"romaji": "denshi renji de atsuku suru",
+			"english": "to heat with a microwave oven"
+		},
+		{
+			"kana": "べんりなでんきせいひん",
+			"kanji": "便利な電気製品",
+			"romaji": "benri na denki seihin",
+			"english": "convenient electrical appliances"
+		}
+    ]
+}

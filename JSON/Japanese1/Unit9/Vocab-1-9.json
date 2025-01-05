@@ -1,0 +1,317 @@
+{
+	"unit": "Unit 9: School Subjects",
+	"vocab": [
+		{
+				"kana": "しゃかい",
+				"kanji": "",
+				"romaji": "shakai",
+				"english": "social studies"
+		},
+        {
+				"kana": "かがく",
+				"kanji": "か学",
+				"romaji": "kagaku",
+				"english": "science"
+		},
+        {
+				"kana": "すうがく",
+				"kanji": "すう学",
+				"romaji": "suugaku",
+				"english": "math"
+		},
+        {
+				"kana": "えいご",
+				"kanji": "英語",
+				"romaji": "eigo",
+				"english": "english"
+		},
+        {
+				"kana": "がいこくご",
+				"kanji": "外国語",
+				"romaji": "gaikokugo",
+				"english": "foreign language"
+		},
+        {
+				"kana": "びじゅつ",
+				"kanji": "",
+				"romaji": "bijutsu",
+				"english": "art"
+		},
+        {
+				"kana": "たいいく",
+				"kanji": "",
+				"romaji": "taiiku",
+				"english": "physical education"
+		},
+        {
+				"kana": "ホームルーム",
+				"kanji": "",
+				"romaji": "hoomuruumu",
+				"english": "homeroom"
+		},
+        {
+				"kana": "やすみじかん",
+				"kanji": "休み時間",
+				"romaji": "yasumijikan",
+				"english": "a break"
+		},
+        {
+				"kana": "かもく",
+				"kanji": "か目",
+				"romaji": "kamoku",
+				"english": "subject(s)"
+		},
+        {
+				"kana": "じゅきょう、クラス",
+				"kanji": "",
+				"romaji": "jukyou, kurasu",
+				"english": "instruction, class"
+		},
+        {
+				"kana": "あります",
+				"kanji": "",
+				"romaji": "arimasu",
+				"english": "to have"
+		},
+        {
+				"kana": "つぎ",
+				"kanji": "",
+				"romaji": "tsugi",
+				"english": "next"
+		},
+        {
+				"kana": "むずかしい",
+				"kanji": "",
+				"romaji": "muzukashii",
+				"english": "difficult"
+		},
+        {
+				"kana": "やさしい",
+				"kanji": "",
+				"romaji": "yasashii",
+				"english": "easy"
+		},
+        {
+				"kana": "たのしい",
+				"kanji": "楽しい",
+				"romaji": "tanoshii",
+				"english": "fun, enjoyable"
+		},
+        {
+				"kana": "おもしろい",
+				"kanji": "",
+				"romaji": "omoshiroi",
+				"english": "interesting"
+		},
+        {
+				"kana": "たまっらない",
+				"kanji": "",
+				"romaji": "tamaranai",
+				"english": "not interesting, boring"
+		},
+        {
+				"kana": "なぜ、どうして",
+				"kanji": "",
+				"romaji": "naze, doushite",
+				"english": "why?"
+		},
+        {
+				"kana": "せいせき",
+				"kanji": "",
+				"romaji": "seiseki",
+				"english": "grade"
+		},
+        {
+				"kana": "ひどり",
+				"kanji": "",
+				"romaji": "hidori",
+				"english": "terrible"
+		},
+        {
+				"kana": "うれしい",
+				"kanji": "",
+				"romaji": "ureshii",
+				"english": "glad, happy"
+		},
+        {
+				"kana": "かなしい",
+				"kanji": "",
+				"romaji": "kanashii",
+				"english": "sad"
+		},
+        {
+				"kana": "おととい",
+				"kanji": "",
+				"romaji": "ototoi",
+				"english": "day before yesterday"
+		},
+        {
+				"kana": "あさって",
+				"kanji": "明後日",
+				"romaji": "asatte",
+				"english": "day after tomorrow"
+		},
+        {
+				"kana": "いいですねえ",
+				"kanji": "",
+				"romaji": "iidesunee",
+				"english": "how nice! (about an event in the future)"
+		},
+        {
+				"kana": "よかったですねえ",
+				"kanji": "",
+				"romaji": "yokattadesunee",
+				"english": "how nice! (about an event in the past)"
+		},
+        {
+				"kana": "ざんえんですねえ",
+				"kanji": "",
+				"romaji": "zannendesunee",
+				"english": "how disappointing, too bad (about something which won’t happen)"
+		},
+        {
+				"kana": "ざんえんでしたねえ",
+				"kanji": "",
+				"romaji": "zannendeshitanee",
+				"english": "how disappointing (about an unfortunate past event)"
+		},
+        {
+				"kana": "せんじゅう",
+				"kanji": "先じゅう",
+				"romaji": "senjuu",
+				"english": "last week"
+		},
+        {
+				"kana": "こんじゅう",
+				"kanji": "今じゅう",
+				"romaji": "konjuu",
+				"english": "this week"
+		},
+        {
+				"kana": "らいじゅう",
+				"kanji": "来じゅう",
+				"romaji": "raijuu",
+				"english": "next week"
+		},
+        {
+				"kana": "らいじゅう",
+				"kanji": "毎じゅう",
+				"romaji": "maijuu",
+				"english": "every week"
+		},
+        {
+				"kana": "じゅうまつ",
+				"kanji": "",
+				"romaji": "juumatsu",
+				"english": "weekend"
+		},
+        {
+				"kana": "おおい",
+				"kanji": "多い",
+				"romaji": "ooi",
+				"english": "are many, much"
+		},
+        {
+				"kana": "すくない",
+				"kanji": "少ない",
+				"romaji": "sukunai",
+				"english": "are few, little"
+		},
+        {
+				"kana": "がほしい",
+				"kanji": "",
+				"romaji": "gahoshii",
+				"english": "want something"
+		},
+        {
+				"kana": "たいへん",
+				"kanji": "大へん",
+				"romaji": "taihen",
+				"english": "hard, difficult"
+		},
+        {
+				"kana": "それに",
+				"kanji": "",
+				"romaji": "soreni",
+				"english": "moreover, besides"
+		},
+        {
+				"kana": "ほうかご",
+				"kanji": "放課後",
+				"romaji": "houkago",
+				"english": "after school"
+		},
+        {
+				"kana": "きょねん",
+				"kanji": "去年",
+				"romaji": "kyonen",
+				"english": "last year"
+		},
+        {
+				"kana": "ことし",
+				"kanji": "今年",
+				"romaji": "kotoshi",
+				"english": "this year"
+		},
+        {
+				"kana": "らいねん",
+				"kanji": "来年",
+				"romaji": "rainen",
+				"english": "next year"
+		},
+        {
+				"kana": "まいとし、まいねん",
+				"kanji": "毎年",
+				"romaji": "maitoshi, mainen",
+				"english": "every year"
+		},
+        {
+				"kana": "バンド",
+				"kanji": "",
+				"romaji": "bando",
+				"english": "band"
+		},
+        {
+				"kana": "れんじゅう",
+				"kanji": "",
+				"romaji": "renjuu",
+				"english": "practice"
+		},
+        {
+				"kana": "うたいます　「うたう」",
+				"kanji": "歌います「歌る」",
+				"romaji": "utaimasu [utau]",
+				"english": "to sing"
+		},
+        {
+				"kana": "およぎます「およぐ」",
+				"kanji": "泳ぎます「泳ぐ」",
+				"romaji": "oyogimasu [oyogu]",
+				"english": "to swim"
+		},
+        {
+				"kana": "あそびます",
+				"kanji": "遊びます",
+				"romaji": "asobimasu [asobu]",
+				"english": "to play, amuse"
+		},
+        {
+				"kana": "ゲームをします「する」",
+				"kanji": "",
+				"romaji": "geemu wo shimasu [suru]",
+				"english": "to play a game"
+		},
+        {
+				"kana": "や",
+				"kanji": "",
+				"romaji": "noun 1, ya, noun 2",
+				"english": "and"
+		},
+        {
+				"kana": "など",
+				"kanji": "",
+				"romaji": "nado",
+				"english": "etc"
+		}
+    ]
+}

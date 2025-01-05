@@ -1,0 +1,125 @@
+{
+	"unit": "Unit 4A: The Japanese Home",
+	"vocab": [
+		{
+			"kana": "ただいま。",
+			"kanji": "",
+			"romaji": "tadaima",
+			"english": "I'm home."
+		},
+		{
+			"kana": "おかえりなさい。",
+			"kanji": "お帰りなさい。",
+			"romaji": "okaerinasai",
+			"english": "Welcome home."
+		},
+		{
+			"kana": "いってきます。",
+			"kanji": "行って来ます。",
+			"romaji": "ittekimasu",
+			"english": "I'm off, see you later."
+		},
+		{
+			"kana": "いってらっしゃい。",
+			"kanji": "行ってらっしゃい。",
+			"romaji": "itterasshai",
+			"english": "Be careful, see you later."
+		},
+		{
+			"kana": "おやすみなさい。",
+			"kanji": "お休みなさい。",
+			"romaji": "oyasuminasai",
+			"english": "Good night."
+		},
+		{
+			"kana": "ごめんなさい。",
+			"kanji": "",
+			"romaji": "gomennasai",
+			"english": "I am sorry."
+		},
+		{
+			"kana": "げんかんに入る",
+			"kanji": "玄関に入る",
+			"romaji": "genkan ni hairu",
+			"english": "[G1] to enter the foyer"
+		},
+		{
+			"kana": "くつをドアの方に向ける",
+			"kanji": "靴をドアの方に向ける",
+			"romaji": "kutsu wo doa no hou ni mukeru",
+			"english": "[G2] to turn (one's) shoes toward the door"
+		},
+		{
+			"kana": "べんりなところ",
+			"kanji": "便利な所",
+			"romaji": "benri na tokoro",
+			"english": "convenient place"
+		},
+		{
+			"kana": "えきにふべん",
+			"kanji": "駅に不便",
+			"romaji": "eki ni fuben",
+			"english": "inconvenient to (get to) the station"
+		},
+		{
+			"kana": "はんたいのいけん",
+			"kanji": "反対の意見",
+			"romaji": "hantai no iken",
+			"english": "opposite opinion"
+		},
+		{
+			"kana": "ちちがちゅういした。",
+			"kanji": "父が注意した。",
+			"romaji": "chichi ga chuui shita",
+			"english": "[G3] My father warned me (about it)."
+		},
+		{
+			"kana": "おふろにはいる",
+			"kanji": "お風呂に入る",
+			"romaji": "ofuro ni hairu",
+			"english": "[G1] to take a bath (in a Japanese tub)"
+		},
+		{
+			"kana": "せっけんをつかう",
+			"kanji": "石けんを使う",
+			"romaji": "sekken wo tsukau",
+			"english": "to use soap"
+		},
+        {
+			"kana": "おゆをすてないで。",
+			"kanji": "お湯を捨てないで。",
+			"romaji": "oyu wo sutenaide",
+			"english": "Don't drain the hot water."
+		},
+		{
+			"kana": "そんなほんをよまないで。",
+			"kanji": "そんな本を読まないで。",
+			"romaji": "sonna hon wo yomanaide",
+			"english": "Don't read such a book."
+		},
+		{
+			"kana": "きがついたこと",
+			"kanji": "気がついたこと",
+			"romaji": "ki ga tsuita koto",
+			"english": "[G1] things I noticed"
+		},
+		{
+			"kana": "もんだいをはなしあおう。",
+			"kanji": "問題を話し合おう。",
+			"romaji": "mondai wo hanashiaou",
+			"english": "[G1] Let's discuss the problem."
+		},
+		{
+			"kana": "はずかしい",
+			"kanji": "",
+			"romaji": "hazukashii",
+			"english": "be ashamed, be embarrassed"
+		},
+		{
+			"kana": "にほんのしゅうかん",
+			"kanji": "日本の習慣",
+			"romaji": "nihon no shuukan",
+			"english": "Japanese customs"
+		}
+	]
+}

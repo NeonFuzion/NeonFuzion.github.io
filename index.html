@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Japanese Quizzer 2 - Select</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script>
+      function loadFileNames()
+      {
+        fetch('files.json')
+          .then(response => response.text())
+          .then(json => {
+            processFiles(JSON.parse(json));
+          });
+      }
+
+      function processFiles(json)
+      {
+        let quiz = document.getElementById("select");
+        let classDetails = document.getElementById("quizzes");
+        json.classes.forEach(year => {
+          let yearTab = document.createElement("button");
+          let classSplit = year.class.split("/");
+          yearTab.setAttribute("class", "year");
+          yearTab.innerHTML = year.class.split("/")[1];
+          quiz.append(yearTab);
+
+          let unitList = [];
+          year.chapters.forEach((unit, index) => {
+            let unitNum = index + 1;
+            let pathFront = `${classSplit[0]}/Unit${unitNum}/`;
+            let pathEnd = `-${year.year}-${unitNum}`;
+
+            let units = document.createElement("details");
+            classDetails.append(units);
+            unitList.push(units);
+            units.style.display = "none";
+            
+            let unitDropdown = document.createElement("summary");
+            unitDropdown.innerHTML = `Unit ${unitNum}: ${unit}`;
+            unitDropdown.setAttribute("class", "unit");
+            units.append(unitDropdown);
+            
+            let sections = year.sections;
+            if (year.specialChapters.includes(unitNum) && !sections.includes(year.specialSection)) sections.push(year.specialSection);
+            else if (!year.specialChapters.includes(unitNum) && sections.includes(year.specialSection)) sections.pop(year.specialSection);
+
+            sections.forEach(section => {
+              let sectionSplit = section.split("/");
+              let path = pathFront + sectionSplit[0] + pathEnd;
+              let buttonText = sectionSplit[1];
+
+              let checkbox = document.createElement("input");
+              checkbox.setAttribute("type", "checkbox");
+              checkbox.setAttribute("class", "section");
+              checkbox.setAttribute("id", path);
+
+              let label = document.createElement("label");
+              label.setAttribute("for", path);
+              label.innerHTML = buttonText;
+              /*button.onclick = function() { loadQuiz(path, year.class.split("/")[1]) }*/
+
+              units.append(checkbox);
+              units.append(label);
+            });
+          });
+
+          yearTab.onclick = function() {
+            sessionStorage.setItem("className", classSplit[1]);
+            let yearTabs = document.getElementById("select").children;
+            for (let i = 0; i < yearTabs.length; i++)
+            {
+              let year = yearTabs[i];
+              if (year == yearTab) year.style.backgroundColor = "bisque";
+              else year.style.backgroundColor = "beige";
+            }
+            
+            let units = document.getElementById("quizzes");
+            let children = units.children;
+            for (let i = 0; i < children.length; i++)
+            {
+              let unit = children[i];
+              if (unitList.includes(unit)) unit.style.display = "block";
+              else unit.style.display = "none";
+            }
+          }
+        });
+      }
+
+      function loadQuiz(quizMode)
+      {
+        let filePaths = [];
+        let units = document.getElementById("quizzes").children;
+        for (let i = 0; i < units.length; i++)
+        {
+          let unit = units[i];
+          if (unit.style.display == "none") continue;
+
+          let checkboxes = unit.children;
+          for (let j = 0; j < checkboxes.length; j++)
+          {
+            let checkbox = checkboxes[j];
+            if (checkbox.id == null || checkbox.id == "") continue;
+            if (!checkbox.checked) continue;
+            filePaths.push(checkbox.id);
+          }
+        }
+
+        if (filePaths.length == 0) return;
+        sessionStorage.setItem("filePaths", filePaths);
+        sessionStorage.setItem("mode", quizMode);
+        window.location.href = 'quiz.html';
+      }
+    </script>
+  </head>
+
+  <body onload="loadFileNames()">
+    <header>Japanese Quizzer</header>
+    <div id="select">
+      
+    </div>
+    <div id="quizzes">
+
+    </div>
+    <details id="start">
+      <summary>Start Quiz</summary>
+      <button class="start" onclick="loadQuiz('quiz')">Quiz</button>
+      <button class="start" onclick="loadQuiz('blitz')">Blitz</button>
+    </details>
+  </body>
+</html>

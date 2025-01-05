@@ -1,0 +1,59 @@
+{
+    "unit": "Unit 5: A Japanese Meal - Additional Vocabulary",
+    "vocab": [
+        {
+            "kana": "なっとう",
+            "kanji": "納豆",
+            "romaji": "nattou",
+            "english": "fermented soybeans"
+        },
+        {
+            "kana": "たくあん",
+            "kanji": "",
+            "romaji": "takuan",
+            "english": "pickled white radish"
+        },
+        {
+            "kana": "むしもの",
+            "kanji": "蒸し物",
+            "romaji": "mushimono",
+            "english": "steamed food"
+        },
+        {
+            "kana": "いっせきにちょう",
+            "kanji": "一石二鳥",
+            "romaji": "isseki nichou",
+            "english": "Kill two birds with one stone."
+        },
+        {
+            "kana": "いれもの",
+            "kanji": "入れ物",
+            "romaji": "iremono",
+            "english": "container"
+        },
+        {
+            "kana": "きすう、ぐうすう",
+            "kanji": "奇数、偶数",
+            "romaji": "kisuu, guusu",
+            "english": "odd/even number"
+        },
+        {
+            "kana": "いちだんしき、にだんしき",
+            "kanji": "一段式、二段式",
+            "romaji": "ichidan-shiki, nidanshouki",
+            "english": "one/two tier"
+        },
+        {
+            "kana": "ごはんをたく",
+            "kanji": "御飯を炊く",
+            "romaji": "gohan o taku",
+            "english": "[G1] to cook, boil rice"
+        },
+        {
+            "kana": "しかく",
+            "kanji": "四角",
+            "romaji": "shikaku",
+            "english": "square"
+        }
+    ]
+}

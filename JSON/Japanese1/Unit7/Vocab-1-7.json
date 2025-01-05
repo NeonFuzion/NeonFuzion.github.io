@@ -1,0 +1,431 @@
+{
+	"unit": "Unit 7: Saturday",
+	"vocab": [
+		{
+				"kana": "いっぷん",
+				"kanji": "１分",
+				"romaji": "ippun",
+				"english": "1 minute"
+		},
+		{
+				"kana": "にふん",
+				"kanji": "二分",
+				"romaji": "nifun",
+				"english": "2 minutes"
+		},
+		{
+				"kana": "さんぷん",
+				"kanji": "三分",
+				"romaji": "sanpun",
+				"english": "3 minutes"
+		},
+		{
+				"kana": "よんぷん",
+				"kanji": "四分",
+				"romaji": "yonpun",
+				"english": "4 minutes"
+		},
+		{
+				"kana": "ごふん",
+				"kanji": "五分",
+				"romaji": "gofun",
+				"english": "5 minutes"
+		},
+		{
+				"kana": "ろっぷん",
+				"kanji": "六分",
+				"romaji": "roppun",
+				"english": "6 minutes"
+		},
+		{
+				"kana": "ななふん",
+				"kanji": "七分",
+				"romaji": "nanafun",
+				"english": "7 minutes"
+		},
+		{
+				"kana": "はっぷん",
+				"kanji": "八分",
+				"romaji": "happun",
+				"english": "8 minutes"
+		},
+		{
+				"kana": "きゅうふん",
+				"kanji": "九分",
+				"romaji": "kyuufun",
+				"english": "9 minutes"
+		},
+		{
+				"kana": "じゅっぷん",
+				"kanji": "十分",
+				"romaji": "juppun",
+				"english": "10 minutes"
+		},
+		{
+				"kana": "じゅうごふん",
+				"kanji": "十五分",
+				"romaji": "juugofun",
+				"english": "15 minutes"
+		},
+		{
+				"kana": "にじゅっぷん",
+				"kanji": "二十分",
+				"romaji": "nijuppun",
+				"english": "20 minutes"
+		},
+		{
+				"kana": "にじゅうごふん",
+				"kanji": "二十五分",
+				"romaji": "nijuugofun",
+				"english": "25 minutes"
+		},
+		{
+				"kana": "さんじゅっぷん",
+				"kanji": "三十分",
+				"romaji": "sanjuppun",
+				"english": "30 minutes"
+		},
+		{
+				"kana": "なんぷん",
+				"kanji": "何分",
+				"romaji": "nanpun",
+				"english": "what time"
+		},
+		{
+				"kana": "_じ　まえ",
+				"kanji": "_時　まえ",
+				"romaji": "__ ji mae",
+				"english": "before *time*"
+		},
+		{
+				"kana": "＿じ　すぎ",
+				"kanji": "_時　すぎ",
+				"romaji": "__ ji sugi",
+				"english": "after *time*"
+		},
+		{
+				"kana": "＿じ　ごふんまえ",
+				"kanji": "_時　五分　まえ",
+				"romaji": "＿ji gofunmae ",
+				"english": "5 minutes before *time*"
+		},
+		{
+				"kana": "はやい",
+				"kanji": "早い",
+				"romaji": "hayai",
+				"english": "early"
+		},
+		{
+				"kana": "おそい",
+				"kanji": "",
+				"romaji": "osoi",
+				"english": "late"
+		},
+		{
+				"kana": "こんばん",
+				"kanji": "",
+				"romaji": "konban",
+				"english": "tonight"
+		},
+		{
+				"kana": "こんばんは",
+				"kanji": "",
+				"romaji": "konbanha",
+				"english": "good evening"
+		},
+		{
+				"kana": "ごぜん",
+				"kanji": "午前中",
+				"romaji": "gozen",
+				"english": "A.M."
+		},
+        {
+				"kana": "ごご",
+				"kanji": "午後",
+				"romaji": "gogo",
+				"english": "P.M."
+		},
+        {
+				"kana": "いきます・いく",
+				"kanji": "行きます・行く",
+				"romaji": "ikimasu/iku",
+				"english": "to go"
+		},
+        {
+				"kana": "きます・くる",
+				"kanji": "来ます・くる",
+				"romaji": "kimasu/kuru",
+				"english": "to come"
+		},
+        {
+				"kana": "かえります・かえる",
+				"kanji": "",
+				"romaji": "kaerimasu/kaeru",
+				"english": "to return (place) to go/come home"
+		},
+        {
+				"kana": "おきます・おきる",
+				"kanji": "起きます・起きる",
+				"romaji": "okimasu, okiru",
+				"english": "to wake up, get up"
+		},
+        {
+				"kana": "ねます・ねる",
+				"kanji": "寝ます・寝る",
+				"romaji": "nemasu, neru",
+				"english": "to sleep, go to bed"
+		},
+        {
+				"kana": "かいしゃ",
+				"kanji": "会社",
+				"romaji": "kaisha",
+				"english": "company"
+		},
+        {
+				"kana": "え・に",
+				"kanji": "",
+				"romaji": "place + e/ni + direction verb",
+				"english": "to (place"
+		},
+        {
+				"kana": "に",
+				"kanji": "",
+				"romaji": "activity + ni + direction verb",
+				"english": "to, for"
+		},
+        {
+				"kana": "そねから",
+				"kanji": "",
+				"romaji": "sentence 1. Sonekara, sentence 2",
+				"english": "sentence 1. And then, sentence 2"
+		},
+        {
+				"kana": "くろま・じどうしゃ",
+				"kanji": "車・自動車",
+				"romaji": "kuroma, jidoosha",
+				"english": "car, vehicle"
+		},
+        {
+				"kana": "バス",
+				"kanji": "",
+				"romaji": "basu",
+				"english": "bus"
+		},
+        {
+				"kana": "タクシー",
+				"kanji": "",
+				"romaji": "takushii",
+				"english": "taxi"
+		},
+        {
+				"kana": "じてんしゃ",
+				"kanji": "自転車",
+				"romaji": "jitensha",
+				"english": "bicycle"
+		},
+        {
+				"kana": "ちかてつ",
+				"kanji": "",
+				"romaji": "chikatetsu",
+				"english": "subway"
+		},
+        {
+				"kana": "でんしゃ",
+				"kanji": "電車",
+				"romaji": "densha",
+				"english": "electric train"
+		},
+        {
+				"kana": "ひこうき",
+				"kanji": "飛行機",
+				"romaji": "hikooki",
+				"english": "airplane"
+		},
+        {
+				"kana": "ふね",
+				"kanji": "",
+				"romaji": "fune",
+				"english": "boat, ship"
+		},
+        {
+				"kana": "あるいていきます・あるいていく",
+				"kanji": "歩いて　行きます・歩いて　行く",
+				"romaji": "aruite ikimasu/aruite iku",
+				"english": "to go by walking"
+		},
+        {
+				"kana": "あるいて　きます・あるいて　くる",
+				"kanji": "歩いて　来ます・歩いて　来る",
+				"romaji": "aruite kimasu/aruite kuru",
+				"english": "to come by walking"
+		},
+        {
+				"kana": "あるいて　かえります・あるいて　かえる",
+				"kanji": "",
+				"romaji": "aruite kaerimasu/aruite kaeru",
+				"english": "to return by walking"
+		},
+{
+				"kana": "で",
+				"kanji": "",
+				"romaji": "transportation mode + de",
+				"english": "by (transportation mode)"
+		},
+        {
+				"kana": "＿・だれが＿ます",
+				"kanji": "",
+				"romaji": "subject/dare + ga ~ masu",
+				"english": "subject particle"
+		},
+        {
+				"kana": "うみ",
+				"kanji": "海",
+				"romaji": "umi",
+				"english": "beach, ocean, sea"
+		},
+        {
+				"kana": "やま",
+				"kanji": "山",
+				"romaji": "yama",
+				"english": "mountain"
+		},
+        {
+				"kana": "かわ",
+				"kanji": "川",
+				"romaji": "kawa",
+				"english": "river"
+		},
+        {
+				"kana": "りょこう",
+				"kanji": "旅行",
+				"romaji": "ryokoo",
+				"english": "trip, traveling"
+		},
+        {
+				"kana": "デパート",
+				"kanji": "",
+				"romaji": "depaato",
+				"english": "department store"
+		},
+        {
+				"kana": "レストラン",
+				"kanji": "",
+				"romaji": "resutoran",
+				"english": "restaurant"
+		},
+        {
+				"kana": "かいもの",
+				"kanji": "買い物",
+				"romaji": "kaimono",
+				"english": "shopping"
+		},
+        {
+				"kana": "しょくじ",
+				"kanji": "食事",
+				"romaji": "shokuji",
+				"english": "meal, dining"
+		},
+        {
+				"kana": "パーティー",
+				"kanji": "",
+				"romaji": "paatii",
+				"english": "party"
+		},
+        {
+				"kana": "ピックニック",
+				"kanji": "",
+				"romaji": "pikunikku",
+				"english": "picnic"
+		},
+        {
+				"kana": "キャンプ",
+				"kanji": "",
+				"romaji": "kyanpu",
+				"english": "camping"
+		},
+        {
+				"kana": "いそがしい",
+				"kanji": "忙しい",
+				"romaji": "isogashii",
+				"english": "busy"
+		},
+        {
+				"kana": "どこへも〜",
+				"kanji": "",
+				"romaji": "dokohemo + negative of direction verb",
+				"english": "do not go/return anywhere"
+		},
+        {
+				"kana": "おやすみ",
+				"kanji": "",
+				"romaji": "(o)yasumi",
+				"english": "day off, vacation"
+		},
+        {
+				"kana": "はなび",
+				"kanji": "花火",
+				"romaji": "hanabi",
+				"english": "fireworks"
+		},
+        {
+				"kana": "から〜まで",
+				"kanji": "",
+				"romaji": "~kara~made",
+				"english": "from~ to~"
+		},
+        {
+				"kana": "どうですか",
+				"kanji": "",
+				"romaji": "doodesuka",
+				"english": "how is it?"
+		},
+{
+				"kana": "を　たのしみに　して　います",
+				"kanji": "",
+				"romaji": "~wo tanoshimini shite imasu",
+				"english": "I am looking forward to (something)"
+		},
+        {
+				"kana": "ハワイ",
+				"kanji": "",
+				"romaji": "hawai",
+				"english": "Hawaii"
+		},
+        {
+				"kana": "ロサンゼルス",
+				"kanji": "",
+				"romaji": "rosanzerusu",
+				"english": "Los Angeles"
+		},
+        {
+				"kana": "グランドキャンイオン",
+				"kanji": "",
+				"romaji": "gurandokyanion",
+				"english": "Grand Canyon"
+		},
+        {
+				"kana": "サンフランシスコ",
+				"kanji": "",
+				"romaji": "sanfuranshisuko",
+				"english": "San Francisco"
+		},
+        {
+				"kana": "ニューヨーク",
+				"kanji": "",
+				"romaji": "nyuuyooku",
+				"english": "New York"
+		},
+        {
+				"kana": "ボストン",
+				"kanji": "",
+				"romaji": "bosuton",
+				"english": "Boston"
+		},
+        {
+				"kana": "フロリダ",
+				"kanji": "",
+				"romaji": "furorida",
+				"english": "Florida"
+		}
+    ]
+}
