@@ -27,6 +27,7 @@
           let json = JSON.parse(string);
           masterJson.unit += (masterJson.unit != "" ? "/" : "") + json.unit;
           masterJson.vocab = masterJson.vocab.concat(json.vocab);
+          console.log(masterJson.unit);
 
           if (index + 1 >= filePaths.length)
           {
@@ -37,13 +38,12 @@
               unitString.forEach(unit => {
                 if (unit == "") return;
                 let unitSplice = unit.split(" ");
-                newUnit += unitSplice[1].substring(0, unitSplice[1].length - 1) + ", ";
+                let sectionSplice = unit.split(" - ");
+                newUnit += `${unitSplice[1].substring(0, unitSplice[1].length - 1)}-${sectionSplice[sectionSplice.length - 1]}, `;
               });
               newUnit = newUnit.substring(0, newUnit.length - 2);
               masterJson.unit = newUnit;
             }
-            
-
             loadQuiz(masterJson);
           }
           else

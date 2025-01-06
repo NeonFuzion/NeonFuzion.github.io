@@ -17,10 +17,10 @@ header {
 
 button {
     display: inline-block;
-    font-size: 1.75vw;
     border-color: bisque;
     background-color: beige;
     border-radius: 1vw;
+    font-size: 1.75vw;
 }
 
 progress::-webkit-progress-bar {
@@ -107,11 +107,12 @@ label {
 
 #start {
     width: 20%;
-    background-color: beige;
+    background-color: goldenrod;
     padding: 1%;
     margin: 1%;
     border-radius: 1vw;
     font-size: 2vw;
+    display: none;
 }
 
 #progress {
@@ -182,7 +183,7 @@ label {
     padding: 2vw;
     margin: 1vw;
     display: inline-block;
-    font-size: 1.75vw;
+    font-size: 2vw;
     width: 40%;
     height: 30%;
 }

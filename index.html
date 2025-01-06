@@ -20,11 +20,30 @@
         let quiz = document.getElementById("select");
         let classDetails = document.getElementById("quizzes");
         json.classes.forEach(year => {
-          let yearTab = document.createElement("button");
           let classSplit = year.class.split("/");
+          let yearTab = document.createElement("button");
           yearTab.setAttribute("class", "year");
           yearTab.innerHTML = year.class.split("/")[1];
           quiz.append(yearTab);
+
+          yearTab.onclick = function() {
+            sessionStorage.setItem("className", classSplit[1]);
+            let yearTabs = document.getElementById("select").children;
+            for (let i = 0; i < yearTabs.length; i++)
+            {
+              let year = yearTabs[i];
+              year.style.fontWeight = year == yearTab ? "bold" : "normal";
+            }
+            
+            let units = document.getElementById("quizzes");
+            let children = units.children;
+            for (let i = 0; i < children.length; i++)
+            {
+              let unit = children[i];
+              if (unitList.includes(unit)) unit.style.display = "block";
+              else unit.style.display = "none";
+            }
+          }
 
           let unitList = [];
           year.chapters.forEach((unit, index) => {
@@ -33,9 +52,9 @@
             let pathEnd = `-${year.year}-${unitNum}`;
 
             let units = document.createElement("details");
+            units.style.display = "none";
             classDetails.append(units);
             unitList.push(units);
-            units.style.display = "none";
             
             let unitDropdown = document.createElement("summary");
             unitDropdown.innerHTML = `Unit ${unitNum}: ${unit}`;
@@ -55,36 +74,41 @@
               checkbox.setAttribute("type", "checkbox");
               checkbox.setAttribute("class", "section");
               checkbox.setAttribute("id", path);
+              checkbox.onclick = function() {
+                let quizzes = document.getElementById("quizzes");
+                let start = document.getElementById("start");
+                let units = quizzes.children;
+                let found = false;
+                for (let i = 0; i < units.length; i++)
+                {
+                  let unit = units[i];
+                  if (unit.style.display == "none") continue;
+
+                  let checkboxes = unit.children;
+                  let unitSelected = false;
+                  for (let j = 0; j < checkboxes.length; j++)
+                  {
+                    let checkbox = checkboxes[j];
+                    if (checkbox.id == null || checkbox.id == "") continue;
+                    if (!checkbox.checked) continue;
+                    found = true;
+                    unitSelected = true;
+                  }
+                  checkboxes[0].style.backgroundColor = unitSelected ? "goldenrod" : "beige";
+                }
+                start.style.display = found ? "block" : "none";
+                yearTab.style.backgroundColor = found ? "goldenrod" : "beige";
+              }
 
               let label = document.createElement("label");
               label.setAttribute("for", path);
               label.innerHTML = buttonText;
-              /*button.onclick = function() { loadQuiz(path, year.class.split("/")[1]) }*/
 
               units.append(checkbox);
               units.append(label);
             });
           });
 
-          yearTab.onclick = function() {
-            sessionStorage.setItem("className", classSplit[1]);
-            let yearTabs = document.getElementById("select").children;
-            for (let i = 0; i < yearTabs.length; i++)
-            {
-              let year = yearTabs[i];
-              if (year == yearTab) year.style.backgroundColor = "bisque";
-              else year.style.backgroundColor = "beige";
-            }
-            
-            let units = document.getElementById("quizzes");
-            let children = units.children;
-            for (let i = 0; i < children.length; i++)
-            {
-              let unit = children[i];
-              if (unitList.includes(unit)) unit.style.display = "block";
-              else unit.style.display = "none";
-            }
-          }
         });
       }
 
