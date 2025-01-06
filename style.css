@@ -162,6 +162,8 @@ label {
     display: inline-block;
     background-color: beige;
     border-radius: 1vw;
+    width: 2vw;
+    height: 2vw;
 }
 
 .year {
