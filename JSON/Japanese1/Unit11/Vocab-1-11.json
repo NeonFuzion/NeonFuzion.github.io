@@ -1,0 +1,307 @@
+﻿{
+  "unit": "Unit 11: Shopping",
+  "vocab": [
+    {
+      "kana": "すわってください",
+      "kanji": "座ってください",
+      "romaji": "suwattekudasai",
+      "english": "please sit"
+    },
+    {
+      "kana": "すわります「すわる」",
+      "kanji": "座ります「座る」",
+      "romaji": "suwarimasu [suwaru]",
+      "english": "to sit"
+    },
+    {
+      "kana": "たってください",
+      "kanji": "立ってください",
+      "romaji": "tattekudasai",
+      "english": "stand please"
+    },
+    {
+      "kana": "たちます「たつ」",
+      "kanji": "立ちます「立つ」",
+      "romaji": "tachimasu [tatsu]",
+      "english": "to stand"
+    },
+    {
+      "kana": "だしてください",
+      "kanji": "出してください",
+      "romaji": "dashitekudasai",
+      "english": "please turn in (something)"
+    },
+    {
+      "kana": "だします「だす」",
+      "kanji": "出します「出す」",
+      "romaji": "dashimasu [dasu]",
+      "english": "to turn in (something)"
+    },
+    {
+      "kana": "みせてください",
+      "kanji": "見せてください",
+      "romaji": "misetekudasai",
+      "english": "please show me (something)"
+    },
+    {
+      "kana": "みせます「みせる」",
+      "kanji": "見せます「見せる」",
+      "romaji": "misemasu [miseru]",
+      "english": "to show (something)"
+    },
+    {
+      "kana": "まどを　あけてください",
+      "kanji": "窓を　開けてください",
+      "romaji": "madowo aketekudasai",
+      "english": "please open the window"
+    },
+    {
+      "kana": "あけます「あける」",
+      "kanji": "開けます「開ける」",
+      "romaji": "akemasu [akeru]",
+      "english": "to open"
+    },
+    {
+      "kana": "ドアを　しめてください",
+      "kanji": "ドアを　閉めてください",
+      "romaji": "doawo shimetekudasai",
+      "english": "please close the door"
+    },
+    {
+      "kana": "しめます「しめる」",
+      "kanji": "閉めます「閉める」",
+      "romaji": "shimemasu [shimeru]",
+      "english": "to close the door"
+    },
+    {
+      "kana": "しずかに　して　ください",
+      "kanji": "静かに　してく　ださい",
+      "romaji": "shizukani shite kudasai",
+      "english": "please be quiet"
+    },
+    {
+      "kana": "しずかに　します「する」",
+      "kanji": "静かに　します「する」",
+      "romaji": "shizukani shimasu [suru]",
+      "english": "to be quiet"
+    },
+    {
+      "kana": "もう　いちど　いってください",
+      "kanji": "もう　一度　行ってください",
+      "romaji": "mou ichido ittekudasai",
+      "english": "please say it one more time"
+    },
+    {
+      "kana": "いいます「いう」",
+      "kanji": "言います「言う」",
+      "romaji": "iimasu [iu]",
+      "english": "to say one more time"
+    },
+    {
+      "kana": "ちょっと　まって　ください",
+      "kanji": "ちょっと　待って　ください",
+      "romaji": "chotto matte kudasai",
+      "english": "please wait a minute"
+    },
+    {
+      "kana": "まちます「まつ」",
+      "kanji": "待ちます「待つ」",
+      "romaji": "machimasu [matsu]",
+      "english": "to wait"
+    },
+    {
+      "kana": "（お）みせ",
+      "kanji": "(お)店",
+      "romaji": "(o)mise",
+      "english": "store"
+    },
+    {
+      "kana": "すみません",
+      "kanji": "",
+      "romaji": "sumimasen",
+      "english": "excuse me (to get attention)"
+    },
+    {
+      "kana": "シャツ",
+      "kanji": "",
+      "romaji": "shatsu",
+      "english": "shirt"
+    },
+    {
+      "kana": "ジャケット",
+      "kanji": "",
+      "romaji": "jaketto",
+      "english": "jacket"
+    },
+    {
+      "kana": "パンツ",
+      "kanji": "",
+      "romaji": "pantsu",
+      "english": "pants"
+    },
+    {
+      "kana": "くつ",
+      "kanji": "靴",
+      "romaji": "kutsu",
+      "english": "shoes"
+    },
+    {
+      "kana": "とけい",
+      "kanji": "時計",
+      "romaji": "tokei",
+      "english": "clock, watch"
+    },
+    {
+      "kana": "スーパー",
+      "kanji": "",
+      "romaji": "suupaa",
+      "english": "supermarket"
+    },
+    {
+      "kana": "ほんや",
+      "kanji": "本や",
+      "romaji": "honya",
+      "english": "bookstore"
+    },
+    {
+      "kana": "はなや",
+      "kanji": "花や",
+      "romaji": "hanaya",
+      "english": "flower shop"
+    },
+    {
+      "kana": "すしや",
+      "kanji": "",
+      "romaji": "sushiya",
+      "english": "sushi shop/bar"
+    },
+    {
+      "kana": "けっさてん",
+      "kanji": "けっさ店",
+      "romaji": "kessaten",
+      "english": "coffee shop"
+    },
+    {
+      "kana": "かいます「かう・かって」",
+      "kanji": "買います「買う・買って",
+      "romaji": "kaimasu [kau/katte]",
+      "english": "to buy"
+    },
+    {
+      "kana": "ドル",
+      "kanji": "",
+      "romaji": "doru",
+      "english": "dollar"
+    },
+    {
+      "kana": "セント",
+      "kanji": "",
+      "romaji": "sento",
+      "english": "cent"
+    },
+    {
+      "kana": "ひゃく",
+      "kanji": "百",
+      "romaji": "hyaku",
+      "english": "hundred"
+    },
+
+    {
+      "kana": "せん",
+      "kanji": "千",
+      "romaji": "sen",
+      "english": "thousand"
+    },
+    {
+      "kana": "いちまん",
+      "kanji": "一万",
+      "romaji": "ichiman",
+      "english": "ten thousand"
+    },
+
+    {
+      "kana": "（お）いくら",
+      "kanji": "",
+      "romaji": "(o)ikura",
+      "english": "how much?"
+    },
+    {
+      "kana": "〜ぐらい",
+      "kanji": "",
+      "romaji": "~gurai",
+      "english": "about (not used for time)"
+    },
+    {
+      "kana": "どれ",
+      "kanji": "",
+      "romaji": "dore",
+      "english": "which one (of more than 2)"
+    },
+    {
+      "kana": "どの",
+      "kanji": "",
+      "romaji": "dono",
+      "english": "which~"
+    },
+    {
+      "kana": "じゅうまん",
+      "kanji": "十万",
+      "romaji": "juuman",
+      "english": "100,000"
+    },
+    {
+      "kana": "ひゃくまん",
+      "kanji": "百万",
+      "romaji": "hyakuman",
+      "english": "1,000,000"
+    },
+    {
+      "kana": "たかい",
+      "kanji": "高い",
+      "romaji": "takai",
+      "english": "expensive"
+    },
+    {
+      "kana": "やすい",
+      "kanji": "安い",
+      "romaji": "yasui",
+      "english": "cheap"
+    },
+    {
+      "kana": "おいしい",
+      "kanji": "美味しい",
+      "romaji": "oishii",
+      "english": "delicious"
+    },
+    {
+      "kana": "まずい",
+      "kanji": "不味い",
+      "romaji": "mazui",
+      "english": "unappetizing"
+    },
+    {
+      "kana": "すごい",
+      "kanji": "凄い",
+      "romaji": "sugoi",
+      "english": "is terrific, terrible"
+    },
+    {
+      "kana": "すばらしい",
+      "kanji": "素晴らしい",
+      "romaji": "subarashii",
+      "english": "is wonderful"
+    },
+    {
+      "kana": "〜は　いかがですか",
+      "kanji": "",
+      "romaji": "~ha (wa) ikagadesuka",
+      "english": "how about~? (polite person of doudesuka)"
+    },
+    {
+      "kana": "わあ",
+      "kanji": "",
+      "romaji": "waa",
+      "english": "wow!"
+    }
+  ]
+}

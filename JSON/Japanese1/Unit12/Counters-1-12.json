@@ -1,0 +1,77 @@
+{
+    "unit": "Unit 12: Lunchtime - Counters",
+    "vocab": [
+      {
+        "kana": "いっぱい",
+        "kanji": "一杯",
+        "romaji": "ippai",
+        "english": "1 cupful, glassful, bowlful, spoonful"
+      },
+      {
+        "kana": "にはい",
+        "kanji": "二杯",
+        "romaji": "nihai",
+        "english": "2 cupful, glassful, bowlful, spoonful"
+      },
+      {
+        "kana": "さんばい",
+        "kanji": "三杯",
+        "romaji": "sanbai",
+        "english": "3 cupful, glassful, bowlful, spoonful"
+      },
+      {
+        "kana": "よんはい",
+        "kanji": "四杯",
+        "romaji": "yonhai",
+        "english": "4 cupful, glassful, bowlful, spoonful"
+      },
+      {
+        "kana": "ごはい",
+        "kanji": "五杯",
+        "romaji": "gohai",
+        "english": "5 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "ろっぱい",
+        "kanji": "六杯",
+        "romaji": "roppai",
+        "english": "6 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "ななはい",
+        "kanji": "七杯",
+        "romaji": "nanahai",
+        "english": "7 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "はっぱい",
+        "kanji": "八杯",
+        "romaji": "happai",
+        "english": "8 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "きゅうはい",
+        "kanji": "九杯",
+        "romaji": "kyuuhai",
+        "english": "9 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "じゅっぱい",
+        "kanji": "十杯",
+        "romaji": "juppai",
+        "english": "10 cupful, glassful, bowlful, spoonful"
+      },
+  
+      {
+        "kana": "なんばい",
+        "kanji": "何杯",
+        "romaji": "nanbai",
+        "english": "how many cupful, glassful, bowlful, spoonful"
+      }
+    ]
+  }

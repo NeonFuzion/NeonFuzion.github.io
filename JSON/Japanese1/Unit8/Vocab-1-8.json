@@ -1,0 +1,323 @@
+﻿{
+  "unit": "Unit 8: School",
+  "vocab": [
+    {
+      "kana": "います「いる」",
+      "kanji": "",
+      "romaji": "imasu [iru]",
+      "english": "there is, are (animate objects)"
+    },
+    {
+      "kana": "あります「ある」",
+      "kanji": "",
+      "romaji": "arimasu [aru]",
+      "english": "there is, are (inanimate objects)"
+    },
+    {
+      "kana": "そと",
+      "kanji": "外",
+      "romaji": "soto",
+      "english": "outside"
+    },
+    {
+      "kana": "ドア、と",
+      "kanji": "",
+      "romaji": "doa, to",
+      "english": "door"
+    },
+    {
+      "kana": "まど",
+      "kanji": "窓",
+      "romaji": "mado",
+      "english": "window"
+    },
+    {
+      "kana": "つくえ",
+      "kanji": "机",
+      "romaji": "tsukue",
+      "english": "desk"
+    },
+    {
+      "kana": "いす",
+      "kanji": "椅子",
+      "romaji": "isu",
+      "english": "chair"
+    },
+    {
+      "kana": "えんぴつけずり",
+      "kanji": "鉛筆削り",
+      "romaji": "enpitsukezuri",
+      "english": "pencil sharpener"
+    },
+    {
+      "kana": "ゴミばこ",
+      "kanji": "ゴミ箱",
+      "romaji": "gomibako",
+      "english": "trash can"
+    },
+    {
+      "kana": "いぬ",
+      "kanji": "犬",
+      "romaji": "inu",
+      "english": "dog"
+    },
+    {
+      "kana": "ねこ",
+      "kanji": "猫",
+      "romaji": "neko",
+      "english": "cat"
+    },
+    {
+      "kana": "に",
+      "kanji": "",
+      "romaji": "location ni+ existence verb",
+      "english": "in, at"
+    },
+    {
+      "kana": "また",
+      "kanji": "",
+      "romaji": "mata",
+      "english": "again"
+    },
+    {
+      "kana": "おとこ",
+      "kanji": "男",
+      "romaji": "otoko",
+      "english": "male"
+    },
+    {
+      "kana": "おんな",
+      "kanji": "女",
+      "romaji": "onna",
+      "english": "female"
+    },
+    {
+      "kana": "ひと",
+      "kanji": "人",
+      "romaji": "hito",
+      "english": "person"
+    },
+    {
+      "kana": "こども",
+      "kanji": "子ども",
+      "romaji": "kodomo",
+      "english": "child"
+    },
+    {
+      "kana": "おとこのひと",
+      "kanji": "男の人",
+      "romaji": "otokonohito",
+      "english": "man"
+    },
+    {
+      "kana": "おんあのひと",
+      "kanji": "女の人",
+      "romaji": "onnanohito",
+      "english": "woman/lady"
+    },
+    {
+      "kana": "おとこのこ",
+      "kanji": "男の子",
+      "romaji": "otokonoko",
+      "english": "boy"
+    },
+    {
+      "kana": "おんあのこ",
+      "kanji": "女の子",
+      "romaji": "onnanoko",
+      "english": "girl"
+    },
+    {
+      "kana": "トイレ、おてあらい",
+      "kanji": "お手洗い",
+      "romaji": "toire, otearai",
+      "english": "toilet, bathroom, restroom"
+    },
+    {
+      "kana": "プウる",
+      "kanji": "",
+      "romaji": "puuru",
+      "english": "pool"
+    },
+    {
+      "kana": "〜かた",
+      "kanji": "",
+      "romaji": "~ kata",
+      "english": "person (polite form of hito)"
+    },
+    {
+      "kana": "き",
+      "kanji": "木",
+      "romaji": "ki",
+      "english": "tree"
+    },
+    {
+      "kana": "はな",
+      "kanji": "花",
+      "romaji": "hana",
+      "english": "flower"
+    },
+    {
+      "kana": "いけ",
+      "kanji": "池",
+      "romaji": "ike",
+      "english": "pond"
+    },
+    {
+      "kana": "さかな",
+      "kanji": "魚",
+      "romaji": "sakana",
+      "english": "fish"
+    },
+    {
+      "kana": "とり",
+      "kanji": "鳥",
+      "romaji": "tori",
+      "english": "bird"
+    },
+    {
+      "kana": "たくさん",
+      "kanji": "沢山",
+      "romaji": "takusan",
+      "english": "a lot, many"
+    },
+    {
+      "kana": "すこし",
+      "kanji": "少し",
+      "romaji": "sukoshi",
+      "english": "a little"
+    },
+    {
+      "kana": "たてもの",
+      "kanji": "建物",
+      "romaji": "tatemono",
+      "english": "building"
+    },
+    {
+      "kana": "じむしょ",
+      "kanji": "事務所",
+      "romaji": "jimusho",
+      "english": "office"
+    },
+    {
+      "kana": "きょうしつ",
+      "kanji": "教室",
+      "romaji": "kyoushitsu",
+      "english": "classroom"
+    },
+    {
+      "kana": "ロッカー",
+      "kanji": "",
+      "romaji": "rokkaa",
+      "english": "locker"
+    },
+    {
+      "kana": "あたらしい",
+      "kanji": "新しい",
+      "romaji": "atarashii",
+      "english": "new"
+    },
+    {
+      "kana": "ふるい",
+      "kanji": "古い",
+      "romaji": "furui",
+      "english": "old (not for animal/a person’s age)"
+    },
+    {
+      "kana": "うつくしい",
+      "kanji": "美しい",
+      "romaji": "utsukushii",
+      "english": "beautiful"
+    },
+    {
+      "kana": "ゆうめい",
+      "kanji": "有名",
+      "romaji": "yuumei",
+      "english": "famous"
+    },
+    {
+      "kana": "あたらしく　ないです",
+      "kanji": "新しく　ないです",
+      "romaji": "atarashiku naidesu",
+      "english": "is not new"
+    },
+    {
+      "kana": "ふるく　ないです",
+      "kanji": "古く　ないです",
+      "romaji": "furuku naidesu",
+      "english": "is not old"
+    },
+    {
+      "kana": "うつくしく　ないです",
+      "kanji": "美しく　ないです",
+      "romaji": "utsukushiku naidesu",
+      "english": "is not beautiful"
+    },
+    {
+      "kana": "ゆうめいではありません",
+      "kanji": "有名ではありません",
+      "romaji": "yuumei deha (dewa) arimasen",
+      "english": "is not famous"
+    },
+    {
+      "kana": "にわ",
+      "kanji": "庭",
+      "romaji": "niwa",
+      "english": "garden, yard"
+    },
+    {
+      "kana": "ガレエジ",
+      "kanji": "",
+      "romaji": "gareeji",
+      "english": "garage (at someone’s residence)"
+    },
+    {
+      "kana": "へや",
+      "kanji": "部屋",
+      "romaji": "heya",
+      "english": "room"
+    },
+    {
+      "kana": "ベッド",
+      "kanji": "",
+      "romaji": "beddo",
+      "english": "bed"
+    },
+    {
+      "kana": "ねずみ",
+      "kanji": "鼠",
+      "romaji": "nezumi",
+      "english": "mouse"
+    },
+    {
+      "kana": "ぶた",
+      "kanji": "豚",
+      "romaji": "buta",
+      "english": "pig"
+    },
+    {
+      "kana": "ひるい",
+      "kanji": "",
+      "romaji": "hirui",
+      "english": "wide, spacious"
+    },
+    {
+      "kana": "せまい",
+      "kanji": "",
+      "romaji": "semai",
+      "english": "narrow, small (room)"
+    },
+    {
+      "kana": "ちかい",
+      "kanji": "近い",
+      "romaji": "chikai",
+      "english": "near, close"
+    },
+    {
+      "kana": "とおい",
+      "kanji": "遠い",
+      "romaji": "tooi",
+      "english": "far"
+    }
+  ]
+}

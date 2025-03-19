@@ -1,0 +1,293 @@
+﻿{
+  "unit": "Unit 8: School - Counters",
+  "vocab": [
+    {
+      "kana": "いちだい",
+      "kanji": "一だい",
+      "romaji": "ichidai",
+      "english": "1 large mechanized good(s)"
+    },
+    {
+      "kana": "にだい",
+      "kanji": "二だい",
+      "romaji": "nidai",
+      "english": "2 large mechanized good(s)"
+    },
+    {
+      "kana": "さんだい",
+      "kanji": "三だい",
+      "romaji": "sandai",
+      "english": "3 large mechanized good(s)"
+    },
+    {
+      "kana": "よんだい",
+      "kanji": "四だい",
+      "romaji": "yondai",
+      "english": "4 large mechanized good(s)"
+    },
+    {
+      "kana": "ごだい",
+      "kanji": "五だい",
+      "romaji": "godai",
+      "english": "5 large mechanized good(s)"
+    },
+    {
+      "kana": "ろくだい",
+      "kanji": "六だい",
+      "romaji": "rokudai",
+      "english": "6 large mechanized good(s)"
+    },
+    {
+      "kana": "ななだい",
+      "kanji": "七だい",
+      "romaji": "nanadai",
+      "english": "7 large mechanized good(s)"
+    },
+    {
+      "kana": "はちだい",
+      "kanji": "八だい",
+      "romaji": "hachidai",
+      "english": "8 large mechanized good(s)"
+    },
+    {
+      "kana": "きゅうだい",
+      "kanji": "九だい",
+      "romaji": "kyuudai",
+      "english": "9 large mechanized good(s)"
+    },
+    {
+      "kana": "じゅうだい",
+      "kanji": "十だい",
+      "romaji": "juudai",
+      "english": "10 large mechanized good(s)"
+    },
+    {
+      "kana": "じゅういちいだい",
+      "kanji": "十一だい",
+      "romaji": "juuichidai",
+      "english": "11 large mechanized good(s)"
+    },
+    {
+      "kana": "なんだい",
+      "kanji": "何だい",
+      "romaji": "nandai",
+      "english": "how many large mechanized good(s)"
+    },
+    {
+      "kana": "いちわ",
+      "kanji": "一わ",
+      "romaji": "ichiwa",
+      "english": "1 bird(s)"
+    },
+    {
+      "kana": "にわ",
+      "kanji": "二わ",
+      "romaji": "niwa",
+      "english": "2 bird(s)"
+    },
+    {
+      "kana": "さんわ",
+      "kanji": "三わ",
+      "romaji": "sanwa",
+      "english": "3 bird(s)"
+    },
+    {
+      "kana": "よんわ",
+      "kanji": "四わ",
+      "romaji": "yonwa",
+      "english": "4 bird(s)"
+    },
+    {
+      "kana": "ごわ",
+      "kanji": "五わ",
+      "romaji": "gowa",
+      "english": "5 bird(s)"
+    },
+    {
+      "kana": "ろくわ",
+      "kanji": "六わ",
+      "romaji": "rokuwa",
+      "english": "6 bird(s)"
+    },
+    {
+      "kana": "ななわ",
+      "kanji": "七わ",
+      "romaji": "nanawa",
+      "english": "7 bird(s)"
+    },
+    {
+      "kana": "はちわ",
+      "kanji": "八わ",
+      "romaji": "hachiwa",
+      "english": "8 bird(s)"
+    },
+    {
+      "kana": "きゅうわ",
+      "kanji": "九わ",
+      "romaji": "kyuuwa",
+      "english": "9 bird(s)"
+    },
+    {
+      "kana": "じゅうわ",
+      "kanji": "十わ",
+      "romaji": "juuwa",
+      "english": "10 bird(s)"
+    },
+    {
+      "kana": "じゅういちわ",
+      "kanji": "十一わ",
+      "romaji": "juuichiwa",
+      "english": "11 bird(s)"
+    },
+    {
+      "kana": "なんわ",
+      "kanji": "何わ",
+      "romaji": "nanwa",
+      "english": "how many bird(s)"
+    },
+    {
+      "kana": "いっぴき",
+      "kanji": "一匹",
+      "romaji": "ippiki",
+      "english": "1 small animal(s)"
+    },
+    {
+      "kana": "にひき",
+      "kanji": "二匹",
+      "romaji": "nihiki",
+      "english": "2  small animal(s)"
+    },
+    {
+      "kana": "さんびき",
+      "kanji": "三匹",
+      "romaji": "sanbiki",
+      "english": "3 small animal(s)"
+    },
+    {
+      "kana": "よんひき",
+      "kanji": "四匹",
+      "romaji": "yonhiki",
+      "english": "4 small animal(s)"
+    },
+    {
+      "kana": "ごひき",
+      "kanji": "五匹",
+      "romaji": "gohiki",
+      "english": "5  small animal(s)"
+    },
+    {
+      "kana": "ろっぴき",
+      "kanji": "六匹",
+      "romaji": "roppiki",
+      "english": "6  small animal(s)"
+    },
+    {
+      "kana": "ななひき",
+      "kanji": "七匹",
+      "romaji": "nanahiki",
+      "english": "7 small animal(s)"
+    },
+    {
+      "kana": "はっぴき",
+      "kanji": "八匹",
+      "romaji": "happiki",
+      "english": "8 small animal(s)"
+    },
+    {
+      "kana": "きゅうひき",
+      "kanji": "九匹",
+      "romaji": "kyuuhiki",
+      "english": "9 small animal(s)"
+    },
+    {
+      "kana": "じゅっぴき",
+      "kanji": "十匹",
+      "romaji": "juppiki",
+      "english": "10 small animal(s)"
+    },
+    {
+      "kana": "じゅういっぴき",
+      "kanji": "十一匹",
+      "romaji": "juuippiki",
+      "english": "11 small animal(s)"
+    },
+    {
+      "kana": "なんびき",
+      "kanji": "何匹",
+      "romaji": "nanbiki",
+      "english": "how many small animal(s)"
+    },
+    {
+      "kana": "いっぽん",
+      "kanji": "一本",
+      "romaji": "ippon",
+      "english": "1 long cylindrical object(s)"
+    },
+    {
+      "kana": "にほん",
+      "kanji": "二本",
+      "romaji": "nihon",
+      "english": "2 long cylindrical object(s)"
+    },
+    {
+      "kana": "さんぼん",
+      "kanji": "三本",
+      "romaji": "sanbon",
+      "english": "3 long cylindrical object(s)"
+    },
+    {
+      "kana": "よんほん",
+      "kanji": "四本",
+      "romaji": "yonhon",
+      "english": "4 long cylindrical object(s)"
+    },
+    {
+      "kana": "ごほん",
+      "kanji": "五本",
+      "romaji": "gohon",
+      "english": "5 long cylindrical object(s)"
+    },
+    {
+      "kana": "ろっぽん",
+      "kanji": "六本",
+      "romaji": "roppon",
+      "english": "6 long cylindrical object(s)"
+    },
+    {
+      "kana": "ななほん",
+      "kanji": "七本",
+      "romaji": "nanahon",
+      "english": "7 long cylindrical object(s)"
+    },
+    {
+      "kana": "はっぽん",
+      "kanji": "八本",
+      "romaji": "happon",
+      "english": "8 long cylindrical object(s)"
+    },
+    {
+      "kana": "きゅうほん",
+      "kanji": "九本",
+      "romaji": "kyuuhon",
+      "english": "9 long cylindrical object(s)"
+    },
+    {
+      "kana": "じゅっぽん",
+      "kanji": "十本",
+      "romaji": "juppon",
+      "english": "10 long cylindrical object(s)"
+    },
+    {
+      "kana": "じゅういっぽん",
+      "kanji": "十一本",
+      "romaji": "juuippon",
+      "english": "11 long cylindrical object(s)"
+    },
+    {
+      "kana": "なんぼん",
+      "kanji": "何本",
+      "romaji": "nanbon",
+      "english": "how many long cylindrical object(s)"
+    }
+  ]
+}

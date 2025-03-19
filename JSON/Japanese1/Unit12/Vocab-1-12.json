@@ -1,0 +1,275 @@
+﻿{
+  "unit": "Unit 12: Lunchtime",
+  "vocab": [
+    {
+      "kana": "おなかが　すきました",
+      "kanji": "お腹が空きました",
+      "romaji": "onaka ga sukimashita",
+      "english": "I got hungry"
+    },
+    {
+      "kana": "おなかが　ペコペコです・おなかが　すいています",
+      "kanji": "お腹がペコペコです・お腹が空いています",
+      "romaji": "onaka ga peko peko desu/onaka ga suite imasu",
+      "english": "I am hungry"
+    },
+    {
+      "kana": "のどが　かわきました",
+      "kanji": "喉が乾きました",
+      "romaji": "nodo ga kawakimashita",
+      "english": "I got thirsty"
+    },
+    {
+      "kana": "のどが　カラカラです・のどが　かわいています",
+      "kanji": "喉が　カラカラです・喉が　乾いています",
+      "romaji": "nodo ga karakara desu/nodo ga kawaite imasu",
+      "english": "I am thirrsty"
+    },
+    {
+      "kana": "もう",
+      "kanji": "",
+      "romaji": "mou",
+      "english": "already"
+    },
+    {
+      "kana": "いいえ、まだです",
+      "kanji": "",
+      "romaji": "iie, mada desu",
+      "english": "no, not yet"
+    },
+    {
+      "kana": "じゃ",
+      "kanji": "",
+      "romaji": "ja",
+      "english": "well then"
+    },
+    {
+      "kana": "では",
+      "kanji": "",
+      "romaji": "deha (wa)",
+      "english": "well then"
+    },
+    {
+      "kana": "ピザ",
+      "kanji": "",
+      "romaji": "piza",
+      "english": "pizza"
+    },
+    {
+      "kana": "ハンバーガー",
+      "kanji": "",
+      "romaji": "hambaagaa",
+      "english": "hamurger"
+    },
+    {
+      "kana": "ヒットドッグ",
+      "kanji": "",
+      "romaji": "hotto doggu",
+      "english": "hot dog"
+    },
+    {
+      "kana": "サンドイッチ",
+      "kanji": "",
+      "romaji": "sandoicchi",
+      "english": "sandwich"
+    },
+    {
+      "kana": "サラダ",
+      "kanji": "",
+      "romaji": "sarada",
+      "english": "salad"
+    },
+    {
+      "kana": "フライドポペト",
+      "kanji": "",
+      "romaji": "furaidoputeto",
+      "english": "french fries"
+    },
+    {
+      "kana": "(お)べんとう",
+      "kanji": "(お)弁当",
+      "romaji": "(o)bentou",
+      "english": "box lunch"
+    },
+    {
+      "kana": "(お)むすび、(お)にぎり",
+      "kanji": "",
+      "romaji": "(o)musubi/(o)nigiri",
+      "english": "rice ball"
+    },
+    {
+      "kana": "サイズ",
+      "kanji": "",
+      "romaji": "saizu",
+      "english": "size"
+    },
+    {
+      "kana": "エス　サイズ",
+      "kanji": "",
+      "romaji": "esu  saizu",
+      "english": "small size"
+    },
+    {
+      "kana": "エム　サイズ",
+      "kanji": "",
+      "romaji": "emu saizu",
+      "english": "medium size"
+    },
+    {
+      "kana": "エル　サイズ",
+      "kanji": "",
+      "romaji": "eru saizu",
+      "english": "large size"
+    },
+    {
+      "kana": "ぜんぶ",
+      "kanji": "全部",
+      "romaji": "zenbu",
+      "english": "everything"
+    },
+    {
+      "kana": "ぜんぶで",
+      "kanji": "全部で",
+      "romaji": "zenbbude",
+      "english": "for all"
+    },
+    {
+      "kana": "(お)はし",
+      "kanji": "",
+      "romaji": "(o)hashi",
+      "english": "chopsticks"
+    },
+    {
+      "kana": "フォーク",
+      "kanji": "",
+      "romaji": "fooku",
+      "english": ""
+    },
+    {
+      "kana": "スプーン",
+      "kanji": "",
+      "romaji": "supuun",
+      "english": "spoon"
+    },
+    {
+      "kana": "ナイフ",
+      "kanji": "",
+      "romaji": "naifu",
+      "english": "knife"
+    },
+    {
+      "kana": "ストロー",
+      "kanji": "",
+      "romaji": "sutoroo",
+      "english": "straw"
+    },
+    {
+      "kana": "（お）さら",
+      "kanji": "（お）皿",
+      "romaji": "(o)sara",
+      "english": "a plate, a dish"
+    },
+    {
+      "kana": "コップ",
+      "kanji": "",
+      "romaji": "koppu",
+      "english": "cup"
+    },
+    {
+      "kana": "ナプキン",
+      "kanji": "",
+      "romaji": "napukin",
+      "english": "napkin"
+    },
+    {
+      "kana": "フォオクで",
+      "kanji": "",
+      "romaji": "fooku de",
+      "english": "with a fork"
+    },
+    {
+      "kana": "いいえ、けっこうです",
+      "kanji": "いいえ、結構です",
+      "romaji": "iie, kekkoudesu",
+      "english": "no thank you"
+    },
+    {
+      "kana": "わすれました「わすれる、わすれて」",
+      "kanji": "忘れました「忘れる、忘れて」",
+      "romaji": "wasuremashita [wasureru/wasurete]",
+      "english": "I forgot"
+    },
+    {
+      "kana": "〜が　いります「いる、いって）",
+      "kanji": "",
+      "romaji": "~ga irimasu [iru/itte]",
+      "english": "need"
+    },
+    {
+      "kana": "〜を　かして　ください「かします、かす」",
+      "kanji": "〜を　貸してください「貸します、貸す」",
+      "romaji": "~wo kashite kudasai [kashimasu/kasu]",
+      "english": "please lend me"
+    },
+    {
+      "kana": "つめたい",
+      "kanji": "冷たい",
+      "romaji": "tsumetai",
+      "english": "cold (to the touch)"
+    },
+    {
+      "kana": "あたたかい",
+      "kanji": "温かい",
+      "romaji": "atatakai",
+      "english": "warm\"\""
+    },
+    {
+      "kana": "もう（いっぱい）",
+      "kanji": "もう（一杯）",
+      "romaji": "mou (ippai)",
+      "english": "(one) more (cup)"
+    },
+    {
+      "kana": "いただきます",
+      "kanji": "",
+      "romaji": "itadakimasu",
+      "english": "used before beginning a meal (literally means I will receive)"
+    },
+    {
+      "kana": "ごちそうさま",
+      "kanji": "",
+      "romaji": "gochisousama",
+      "english": "used upon finishing a meal (literally means it was a feast)"
+    },
+    {
+      "kana": "おなかが　いっぱいです",
+      "kanji": "",
+      "romaji": "onakaga ippaidesu",
+      "english": "I am full"
+    },
+    {
+      "kana": "じゃ、またあとで",
+      "kanji": "じゃ、また後で",
+      "romaji": "ja, mata atode",
+      "english": "well then, see you later (formal)"
+    },
+    {
+      "kana": "バイバイ",
+      "kanji": "",
+      "romaji": "baibai",
+      "english": "goodbye (casual)"
+    },
+    {
+      "kana": "これから",
+      "kanji": "",
+      "romaji": "korekara",
+      "english": "from now on"
+    },
+    {
+      "kana": "それから",
+      "kanji": "",
+      "romaji": "sorekara",
+      "english": "and then"
+    }
+  ]
+}

@@ -3,10 +3,10 @@
         {
             "class": "Japanese1/Japanese 1",
             "year": 1,
-            "chapters": [ "Self-Introduction", "Classroom", "Family", "Everyday Life", "Hobbies", "Characteristics", "Saturday", "School", "School Subjects", "How are you?", "Shopping" ],
+            "chapters": [ "Self-Introduction", "Classroom", "Family", "Everyday Life", "Hobbies", "Characteristics", "Saturday", "School", "School Subjects", "How are you?", "Shopping", "Lunchtime" ],
             "sections": [ "Vocab/Vocabulary", "ExtraVocab/Additional Vocabulary" ],
             "specialSection": "Counters/Counters", 
-            "specialChapters": [ 1, 2, 3, 8 ]
+            "specialChapters": [ 1, 2, 3, 8, 12 ]
         },
         {
             "class": "Japanese2/Japanese 2",
