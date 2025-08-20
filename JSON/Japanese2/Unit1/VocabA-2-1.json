@@ -1,0 +1,83 @@
+{
+    "unit": "Unit 1: Self-Introduction - A",
+    "vocab": [
+        {
+            "kana": "でんわばんご",
+            "kanji": "電話番号",
+            "romaji": "",
+            "english": "telephone number"
+		},
+        {
+            "kana": "じゅうしょ",
+            "kanji": "住所",
+            "romaji": "",
+            "english": "address"
+		},
+        {
+            "kana": "（Place で）うまれました",
+            "kanji": "（Place で）生まれました",
+            "romaji": "",
+            "english": "was born (in ~) [G2]"
+		},
+        {
+            "kana": "（Place に）すんでいます",
+            "kanji": "（Place に）住んでいます",
+            "romaji": "",
+            "english": "live (in), reside (in) [G1]"
+		},
+        {
+            "kana": "（Place に）つとめています",
+            "kanji": "（Place に）勤めています",
+            "romaji": "",
+            "english": "is employed (at ~) [G2]"
+		},
+        {
+            "kana": "（Place で）はたらいています",
+            "kanji": "（Place で）働いています",
+            "romaji": "",
+            "english": "is working (at ~) [G1]"
+		},
+        {
+            "kana": "（Place で）（アル）バイト（を）しています",
+            "kanji": "",
+            "romaji": "",
+            "english": "is working part-time [for students] [G3]"
+		},
+        {
+            "kana": "（Person と）けっこん（を）しています",
+            "kanji": "（Person と）結婚（を）しています",
+            "romaji": "",
+            "english": "is married (to ~) [G3]"
+		},
+        {
+            "kana": "もっています",
+            "kanji": "持っています",
+            "romaji": "",
+            "english": "have, possess, hold, carry [G1]"
+		},
+        {
+            "kana": "しっています",
+            "kanji": "知っています",
+            "romaji": "",
+            "english": "to know [G1]"
+		},
+        {
+            "kana": "しりません",
+            "kanji": "知りません",
+            "romaji": "",
+            "english": "to not know [G1]"
+		},
+        {
+            "kana": "ならっています",
+            "kanji": "習っています",
+            "romaji": "",
+            "english": "is learning [G1]"
+		},
+        {
+            "kana": "ホームステイをします",
+            "kanji": "",
+            "romaji": "",
+            "english": "will do a homestay [G3]"
+		}
+    ]
+}

@@ -113,6 +113,9 @@ label {
     border-radius: 1vw;
     font-size: 2vw;
     display: none;
+    position: fixed;
+    bottom: 0;
+    right: 0;
 }
 
 #progress {

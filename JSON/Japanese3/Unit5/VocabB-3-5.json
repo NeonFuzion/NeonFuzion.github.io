@@ -8,7 +8,7 @@
             "english": "The 5th century starts from the year 401."
         },
         {
-            "kana": "どうやてかう?",
+            "kana": "どうやってかう?",
             "kanji": "どうやって買う?",
             "romaji": "dou yatte kau?",
             "english": "How do (you) buy (it)?"
@@ -44,7 +44,7 @@
             "english": "different textures"
         },
         {
-            "kana": "いろいろかざり",
+            "kana": "いろいろなかざり",
             "kanji": "いろいろな飾り",
             "romaji": "iroiro na kazari",
             "english": "various garnishes"
@@ -58,7 +58,7 @@
         {
             "kana": "そばにてんぷらがいっている",
             "kanji": "そばに天ぷらが入っている",
-            "romaji": "soba ni tenpura ga haitte iru",
+            "romaji": "soba ni tenpura ga itte iru",
             "english": "[G1] The tempura is in the soba"
         },
         {
@@ -69,8 +69,8 @@
         },
         {
             "kana": "たべものがべつべつにしてある。",
-            "kanji": "食べ物が別々にされている。",
-            "romaji": "tabemono ga betsubetsu ni sarete iru.",
+            "kanji": "食べ物が別々にしてある。",
+            "romaji": "tabemono ga betsubetsu ni shite iru.",
             "english": "The food has been separated."
         },
         {

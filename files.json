@@ -11,8 +11,8 @@
         {
             "class": "Japanese2/Japanese 2",
             "year": 2,
-            "chapters": [ "Japanese Cooking", "My mother's hobby is traveling" ],
-            "sections": [ "Vocab/Vocabulary" ],
+            "chapters": [ "Self-Introduction" ],
+            "sections": [ "VocabA/Section A", "VocabB/Section B", "ExtraVocab/Additional Vocabulary" ],
             "specialSection": "",
             "specialChapters": []
         },

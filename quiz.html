@@ -27,7 +27,6 @@
           let json = JSON.parse(string);
           masterJson.unit += (masterJson.unit != "" ? "/" : "") + json.unit;
           masterJson.vocab = masterJson.vocab.concat(json.vocab);
-          console.log(masterJson.unit);
 
           if (index + 1 >= filePaths.length)
           {
@@ -133,30 +132,6 @@
         let possibleQuestions = [];
         let questionInfoDiv = document.getElementById("questionInfo");
         let questionInfo = `#${quiz.length - stats.index} - `;
-
-        stats.words.forEach(vocabWord => {
-          if (vocabWord.correct / vocabWord.total < 0.65)
-            possibleQuestions.push(
-              {
-                word: vocabWord.word,
-                questionType: "Relearn"
-              }
-            );
-        });
-          
-        let greatestAge = 0;
-        stats.words.forEach(word => {
-          if (word.age > greatestAge) greatestAge = word.age;
-        });
-        stats.words.forEach(vocabWord => {
-          if (vocabWord.age == greatestAge)
-            possibleQuestions.push(
-              {
-                word: vocabWord.word,
-                questionType: "Review"
-              }
-            );
-        });
         
         let shuffled = shuffle(stats.newWords);
         let max = possibleQuestions.length + 1;
@@ -172,16 +147,40 @@
             }
           );
         }
-        
-        if (possibleQuestions.length == 0)
-          quiz.forEach(word => {
-            possibleQuestions.push(
-              {
-                word: word,
-                questionType: "Endless"
-              }
-            );
+
+        if (stats.words.length > 5)
+        {
+          stats.words.forEach(vocabWord => {
+            if (vocabWord.correct / vocabWord.total < 0.65)
+              possibleQuestions.push(
+                {
+                  word: vocabWord.word,
+                  questionType: "Relearn"
+                }
+              );
           });
+            
+          let greatestAge = Math.max(stats.words.map(x => x.age));
+          stats.words.forEach(vocabWord => {
+            if (vocabWord.age == greatestAge)
+              possibleQuestions.push(
+                {
+                  word: vocabWord.word,
+                  questionType: "Review"
+                }
+              );
+          });
+          
+          if (possibleQuestions.length == 0)
+            quiz.forEach(word => {
+              possibleQuestions.push(
+                {
+                  word: word,
+                  questionType: "Endless"
+                }
+              );
+            });
+        }
 
         let index = Math.trunc(Math.random() * possibleQuestions.length);
         let question = possibleQuestions[index];
@@ -210,8 +209,10 @@
         let result = document.getElementById("result");
         let incorrectDiv = document.getElementById("incorrect");
         let correctDiv = document.getElementById("correct");
+        let optionsDiv = document.getElementById("options");
         let isCorrect = option === answer;
         stats.index--;
+        optionsDiv.style.display = "none";
 
         let found = false;
         let correctCount = isCorrect ? 1 : 0;
@@ -273,6 +274,7 @@
         cont.onclick = function () {
           if (ans.style.display == "none") return;
           ans.style.display = "none";
+          optionsDiv.style.display = "block";
           generateQuestion(quiz, stats);
         };
 
@@ -318,9 +320,7 @@
         <div id="correct" class="correctness">
           Correct
           <div id="correctEnglish"></div>
-          <ruby>
-            <div id="correctKana"></div>
-            <rt id="correctFurigana"></rt>
+          <div id="correctKana"></div> <div id="correctFurigana"></div>
           </ruby>
           <div id="details">
           </div>
@@ -328,10 +328,7 @@
         <div id="incorrect" class="correctness">
           Incorrect
           <div id="incorrectEnglish"></div>
-          <ruby>
-            <div id="incorrectKana"></div>
-            <rt id="incorrectFurigana"></rt>
-          </ruby>
+          <div id="incorrectKana"></div> <div id="incorrectFurigana"></div>
           <div id="details">
           </div>
         </div>
