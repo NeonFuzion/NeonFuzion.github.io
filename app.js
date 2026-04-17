@@ -388,9 +388,10 @@ document.getElementById('retryQuizBtn').addEventListener('click', startQuiz);
 document.getElementById('quizDoneBtn').addEventListener('click', () => showView('dashboard'));
 
 function startQuiz() {
-  const pool = quizSettings.content === 'vocab' ? VOCABULARY : KANJI;
+  const isFillBlank = quizSettings.type === 'fill-blank';
+  const pool = (quizSettings.content === 'vocab' || isFillBlank) ? VOCABULARY : KANJI;
   let filtered = pool;
-  if (quizSettings.content === 'vocab' && quizSettings.chapter !== 'all') {
+  if ((quizSettings.content === 'vocab' || isFillBlank) && quizSettings.chapter !== 'all') {
     filtered = pool.filter(v => v.chapter == quizSettings.chapter);
   }
   if (filtered.length < 4) { alert('Not enough items for a quiz in this selection.'); return; }
@@ -413,7 +414,8 @@ function showQuizQuestion(idx) {
     return;
   }
   const item = quizItems[idx];
-  const pool = quizSettings.content === 'vocab' ? VOCABULARY : KANJI;
+  const isFillBlank = quizSettings.type === 'fill-blank';
+  const pool = (quizSettings.content === 'vocab' || isFillBlank) ? VOCABULARY : KANJI;
 
   document.getElementById('quizProgressBar').style.width = (idx / quizItems.length * 100) + '%';
   document.getElementById('quizCounter').textContent = `${idx + 1} / ${quizItems.length}`;
@@ -423,11 +425,19 @@ function showQuizQuestion(idx) {
 
   const { questionText, questionReading, correctAnswer, questionLabel } = buildQuestion(item);
   document.getElementById('questionLabel').textContent = questionLabel;
-  document.getElementById('questionWord').textContent = questionText;
+
+  const qWordEl = document.getElementById('questionWord');
+  qWordEl.classList.toggle('is-sentence', isFillBlank);
+  if (isFillBlank) {
+    const blankHtml = item.example.replace(item.word, '<span class="blank-token">＿＿＿</span>');
+    qWordEl.innerHTML = blankHtml;
+  } else {
+    qWordEl.textContent = questionText;
+  }
   document.getElementById('questionReading').textContent = questionReading;
 
   // Wrong answers
-  const wrongPool = pool.filter(p => p.id !== item.id);
+  const wrongPool = (isFillBlank ? VOCABULARY : pool).filter(p => p.id !== item.id);
   const wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p));
   const choices = shuffle([correctAnswer, ...wrongs]);
 
@@ -457,6 +467,11 @@ function buildQuestion(item) {
     questionText = isVocab ? item.word : item.character;
     questionReading = '';
     correctAnswer = isVocab ? item.reading : item.onyomi;
+  } else if (type === 'fill-blank') {
+    questionLabel = 'Fill in the blank:';
+    questionText = item.example;
+    questionReading = '';
+    correctAnswer = item.word;
   } else {
     questionLabel = 'Which word means:';
     questionText = isVocab ? item.meaning : item.meaning;
@@ -468,9 +483,10 @@ function buildQuestion(item) {
 
 function buildAnswer(item) {
   const type = quizSettings.type;
-  const isVocab = quizSettings.content === 'vocab';
+  const isVocab = quizSettings.content === 'vocab' || type === 'fill-blank';
   if (type === 'mc-meaning') return isVocab ? item.meaning : item.meaning;
   if (type === 'mc-reading') return isVocab ? item.reading : item.onyomi;
+  if (type === 'fill-blank') return item.word;
   return isVocab ? item.word : item.character;
 }
 
@@ -482,11 +498,11 @@ function handleQuizAnswer(btn, choice, correct, item) {
   });
 
   const isCorrect = choice === correct;
+  const useVocab = quizSettings.content === 'vocab' || quizSettings.type === 'fill-blank';
   if (!isCorrect) {
     btn.classList.add('wrong');
     quizIncorrectCount++;
-    // Update SRS
-    if (quizSettings.content === 'vocab') {
+    if (useVocab) {
       state.vocab[item.id] = updateSM2(state.vocab[item.id], 1);
     } else {
       state.kanji[item.id] = updateSM2(state.kanji[item.id], 1);
@@ -494,7 +510,7 @@ function handleQuizAnswer(btn, choice, correct, item) {
   } else {
     quizCorrectCount++;
     state.xp += 5;
-    if (quizSettings.content === 'vocab') {
+    if (useVocab) {
       state.vocab[item.id] = updateSM2(state.vocab[item.id], 4);
     } else {
       state.kanji[item.id] = updateSM2(state.kanji[item.id], 4);
