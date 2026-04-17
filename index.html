@@ -1,156 +1,359 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Japanese Quizzer 2 - Select</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script>
-      function loadFileNames()
-      {
-        fetch('files.json')
-          .then(response => response.text())
-          .then(json => {
-            processFiles(JSON.parse(json));
-          });
-      }
-
-      function processFiles(json)
-      {
-        let quiz = document.getElementById("select");
-        let classDetails = document.getElementById("quizzes");
-        json.classes.forEach(year => {
-          let classSplit = year.class.split("/");
-          let yearTab = document.createElement("button");
-          yearTab.setAttribute("class", "year");
-          yearTab.innerHTML = year.class.split("/")[1];
-          quiz.append(yearTab);
-
-          yearTab.onclick = function() {
-            sessionStorage.setItem("className", classSplit[1]);
-            let yearTabs = document.getElementById("select").children;
-            for (let i = 0; i < yearTabs.length; i++)
-            {
-              let year = yearTabs[i];
-              year.style.fontWeight = year == yearTab ? "bold" : "normal";
-            }
-            
-            let units = document.getElementById("quizzes");
-            let children = units.children;
-            for (let i = 0; i < children.length; i++)
-            {
-              let unit = children[i];
-              if (unitList.includes(unit)) unit.style.display = "block";
-              else unit.style.display = "none";
-            }
-          }
-
-          let unitList = [];
-          year.chapters.forEach((unit, index) => {
-            let unitNum = index + 1;
-            let pathFront = `${classSplit[0]}/Unit${unitNum}/`;
-            let pathEnd = `-${year.year}-${unitNum}`;
-
-            let units = document.createElement("details");
-            units.style.display = "none";
-            classDetails.append(units);
-            unitList.push(units);
-            
-            let unitDropdown = document.createElement("summary");
-            unitDropdown.innerHTML = `Unit ${unitNum}: ${unit}`;
-            unitDropdown.setAttribute("class", "unit");
-            units.append(unitDropdown);
-            
-            let sections = year.sections;
-            if (year.specialChapters.includes(unitNum) && !sections.includes(year.specialSection)) sections.push(year.specialSection);
-            else if (!year.specialChapters.includes(unitNum) && sections.includes(year.specialSection)) sections.pop(year.specialSection);
-
-            sections.forEach(section => {
-              let sectionSplit = section.split("/");
-              let path = pathFront + sectionSplit[0] + pathEnd;
-              let buttonText = sectionSplit[1];
-
-              let checkbox = document.createElement("input");
-              checkbox.setAttribute("type", "checkbox");
-              checkbox.setAttribute("class", "section");
-              checkbox.setAttribute("id", path);
-              checkbox.onclick = function() {
-                let quizzes = document.getElementById("quizzes");
-                let start = document.getElementById("start");
-                let units = quizzes.children;
-                let found = false;
-                for (let i = 0; i < units.length; i++)
-                {
-                  let unit = units[i];
-                  if (unit.style.display == "none") continue;
-
-                  let checkboxes = unit.children;
-                  let unitSelected = false;
-                  for (let j = 0; j < checkboxes.length; j++)
-                  {
-                    let checkbox = checkboxes[j];
-                    if (checkbox.id == null || checkbox.id == "") continue;
-                    if (!checkbox.checked) continue;
-                    found = true;
-                    unitSelected = true;
-                  }
-                  checkboxes[0].style.backgroundColor = unitSelected ? "goldenrod" : "beige";
-                }
-                yearTab.style.backgroundColor = found ? "goldenrod" : "beige";
-                start.style.display = found ? "block" : "none";
-              }
-
-              let label = document.createElement("label");
-              label.setAttribute("for", path);
-              label.innerHTML = buttonText;
-
-              units.append(checkbox);
-              units.append(label);
-            });
-          });
-
-        });
-      }
-
-      function loadQuiz(quizMode)
-      {
-        let filePaths = [];
-        let units = document.getElementById("quizzes").children;
-        for (let i = 0; i < units.length; i++)
-        {
-          let unit = units[i];
-          if (unit.style.display == "none") continue;
-
-          let checkboxes = unit.children;
-          for (let j = 0; j < checkboxes.length; j++)
-          {
-            let checkbox = checkboxes[j];
-            if (checkbox.id == null || checkbox.id == "") continue;
-            if (!checkbox.checked) continue;
-            filePaths.push(checkbox.id);
-          }
-        }
-
-        if (filePaths.length == 0) return;
-        sessionStorage.setItem("filePaths", filePaths);
-        sessionStorage.setItem("mode", quizMode);
-        window.location.href = 'quiz.html';
-      }
-    </script>
-  </head>
-
-  <body onload="loadFileNames()">
-    <header>Japanese Quizzer</header>
-    <div id="select">
-      
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本語マスター | AP Japanese Quizzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-jp">日本語</span>
+      <span class="logo-en">マスター</span>
     </div>
-    <div id="quizzes">
-
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-view="dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a></li>
+      <li><a href="#" class="nav-link" data-view="study"><span class="nav-icon">📚</span><span>Study</span></a></li>
+      <li><a href="#" class="nav-link" data-view="quiz"><span class="nav-icon">✏️</span><span>Quiz</span></a></li>
+      <li><a href="#" class="nav-link" data-view="kanji"><span class="nav-icon">漢</span><span>Kanji</span></a></li>
+      <li><a href="#" class="nav-link" data-view="vocab"><span class="nav-icon">📖</span><span>Vocabulary</span></a></li>
+    </ul>
+    <div class="sidebar-streak">
+      <div class="streak-flame">🔥</div>
+      <div class="streak-info">
+        <span class="streak-num" id="streakCount">0</span>
+        <span class="streak-label">day streak</span>
+      </div>
     </div>
-    <details id="start">
-      <summary>Start Quiz</summary>
-      <button class="start" onclick="loadQuiz('quiz')">Quiz</button>
-      <button class="start" onclick="loadQuiz('blitz')">Blitz</button>
-    </details>
-  </body>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="top-header">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="header-stats">
+        <div class="stat-pill">
+          <span class="stat-icon">⭐</span>
+          <span id="totalXP">0 XP</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">📊</span>
+          <span id="totalStudied">0 studied</span>
+        </div>
+        <button class="save-btn" id="exportBtn" title="Save progress to file">💾 Save</button>
+        <label class="save-btn load-btn" title="Load progress from file">
+          📂 Load
+          <input type="file" id="importFile" accept=".json" style="display:none">
+        </label>
+      </div>
+    </header>
+
+    <!-- Dashboard View -->
+    <section class="view active" id="view-dashboard">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <h1>おはよう！<span id="greetingName"></span></h1>
+          <p class="hero-sub">Ready to level up your AP Japanese?</p>
+        </div>
+        <button class="btn-primary btn-study-now" id="startStudyBtn">
+          <span>Start Studying</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Progress Cards -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>Words Due Today</h3>
+            <span class="badge badge-urgent" id="dueCount">0</span>
+          </div>
+          <div class="due-breakdown">
+            <div class="due-item">
+              <span class="due-dot new"></span>
+              <span id="newCount">0 new</span>
+            </div>
+            <div class="due-item">
+              <span class="due-dot review"></span>
+              <span id="reviewCount">0 review</span>
+            </div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="dailyProgress"></div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>Overall Mastery</h3>
+          </div>
+          <div class="mastery-ring-wrap">
+            <svg class="mastery-ring" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#e8e8f0" stroke-width="10"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#4f46e5" stroke-width="10"
+                stroke-dasharray="251.2" stroke-dashoffset="251.2"
+                stroke-linecap="round" transform="rotate(-90 50 50)"
+                id="masteryRingPath"/>
+            </svg>
+            <div class="mastery-pct" id="masteryPct">0%</div>
+          </div>
+          <p class="mastery-sub" id="masterySubtext">0 / 110 words mastered</p>
+        </div>
+
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>Kanji Progress</h3>
+          </div>
+          <div class="kanji-progress-grid" id="kanjiProgressGrid">
+            <!-- filled by JS -->
+          </div>
+          <p class="card-sub">0 / 80 kanji learned</p>
+        </div>
+
+        <div class="dash-card wide">
+          <div class="card-header">
+            <h3>Recent Activity</h3>
+          </div>
+          <div class="activity-heatmap" id="activityHeatmap">
+            <!-- filled by JS -->
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>Accuracy</h3>
+          </div>
+          <div class="accuracy-display">
+            <div class="accuracy-num" id="accuracyPct">—</div>
+            <div class="accuracy-label">correct rate</div>
+          </div>
+          <div class="accuracy-bars" id="accuracyBars"></div>
+        </div>
+
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>Chapters</h3>
+          </div>
+          <div class="chapter-list" id="chapterList">
+            <!-- filled by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study View (Flashcard / Membean style) -->
+    <section class="view" id="view-study">
+      <div class="study-header">
+        <button class="btn-back" id="studyBackBtn">← Back</button>
+        <div class="study-progress-wrap">
+          <div class="study-progress-bar" id="studyProgressBar"></div>
+        </div>
+        <span class="study-counter" id="studyCounter">0 / 0</span>
+      </div>
+
+      <!-- Flashcard -->
+      <div class="card-scene" id="cardScene">
+        <div class="flash-card" id="flashCard">
+          <div class="card-front">
+            <div class="card-chapter-badge" id="cardChapterBadge">Chapter 1</div>
+            <div class="card-jp" id="cardJP">—</div>
+            <div class="card-tap-hint">Tap to reveal</div>
+          </div>
+          <div class="card-back">
+            <div class="card-reading" id="cardReading" style="font-size:1.1rem;color:#6b7280;margin-bottom:8px;">—</div>
+            <div class="card-meaning" id="cardMeaning">—</div>
+            <div class="card-example" id="cardExample">—</div>
+            <div class="card-example-en" id="cardExampleEn">—</div>
+            <div class="card-tags" id="cardTags"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer buttons (show after flip) -->
+      <div class="answer-btns hidden" id="answerBtns">
+        <button class="ans-btn ans-wrong" data-quality="1">
+          <span class="ans-icon">✗</span>
+          <span>Again</span>
+        </button>
+        <button class="ans-btn ans-hard" data-quality="3">
+          <span class="ans-icon">△</span>
+          <span>Hard</span>
+        </button>
+        <button class="ans-btn ans-good" data-quality="4">
+          <span class="ans-icon">○</span>
+          <span>Good</span>
+        </button>
+        <button class="ans-btn ans-easy" data-quality="5">
+          <span class="ans-icon">★</span>
+          <span>Easy</span>
+        </button>
+      </div>
+
+      <div class="study-done hidden" id="studyDone">
+        <div class="done-icon">🎉</div>
+        <h2>Session Complete!</h2>
+        <div class="done-stats" id="doneStats"></div>
+        <button class="btn-primary" id="doneBackBtn">Back to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Quiz View -->
+    <section class="view" id="view-quiz">
+      <div class="quiz-setup" id="quizSetup">
+        <h2 class="view-title">Quiz Mode</h2>
+        <div class="quiz-options">
+          <div class="option-group">
+            <label>Quiz Type</label>
+            <div class="option-pills">
+              <button class="option-pill active" data-quiz="mc-meaning">Meaning</button>
+              <button class="option-pill" data-quiz="mc-reading">Reading</button>
+              <button class="option-pill" data-quiz="mc-word">Word</button>
+            </div>
+          </div>
+          <div class="option-group">
+            <label>Content</label>
+            <div class="option-pills">
+              <button class="option-pill active" data-content="vocab">Vocabulary</button>
+              <button class="option-pill" data-content="kanji">Kanji</button>
+            </div>
+          </div>
+          <div class="option-group">
+            <label>Chapter</label>
+            <select class="styled-select" id="quizChapterSelect">
+              <option value="all">All Chapters</option>
+            </select>
+          </div>
+          <div class="option-group">
+            <label>Questions</label>
+            <div class="option-pills">
+              <button class="option-pill active" data-count="10">10</button>
+              <button class="option-pill" data-count="20">20</button>
+              <button class="option-pill" data-count="40">40</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" id="startQuizBtn">Start Quiz</button>
+      </div>
+
+      <div class="quiz-game hidden" id="quizGame">
+        <div class="quiz-top">
+          <button class="btn-back" id="quizBackBtn">← Back</button>
+          <div class="quiz-progress-wrap">
+            <div class="quiz-progress-bar" id="quizProgressBar"></div>
+          </div>
+          <span class="quiz-counter" id="quizCounter">1 / 10</span>
+        </div>
+        <div class="quiz-score-row">
+          <span class="quiz-correct" id="quizCorrect">✓ 0</span>
+          <span class="quiz-incorrect" id="quizIncorrect">✗ 0</span>
+        </div>
+        <div class="quiz-question-card">
+          <div class="question-label" id="questionLabel">What is the meaning of:</div>
+          <div class="question-word" id="questionWord">—</div>
+          <div class="question-reading" id="questionReading"></div>
+        </div>
+        <div class="quiz-choices" id="quizChoices">
+          <!-- filled by JS -->
+        </div>
+        <div class="quiz-feedback hidden" id="quizFeedback">
+          <div class="feedback-icon" id="feedbackIcon"></div>
+          <div class="feedback-text" id="feedbackText"></div>
+          <button class="btn-primary btn-next" id="nextQuestionBtn">Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-results hidden" id="quizResults">
+        <div class="results-hero">
+          <div class="results-grade" id="resultsGrade">A</div>
+          <h2 id="resultsTitle">Great Job!</h2>
+          <p id="resultsSubtitle"></p>
+        </div>
+        <div class="results-stats">
+          <div class="res-stat"><span id="resCorrect">0</span><label>Correct</label></div>
+          <div class="res-stat"><span id="resIncorrect">0</span><label>Incorrect</label></div>
+          <div class="res-stat"><span id="resPct">0%</span><label>Score</label></div>
+        </div>
+        <div class="results-actions">
+          <button class="btn-secondary" id="retryQuizBtn">Retry</button>
+          <button class="btn-primary" id="quizDoneBtn">Back to Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kanji View -->
+    <section class="view" id="view-kanji">
+      <h2 class="view-title">Kanji Study</h2>
+      <div class="filter-bar">
+        <input class="search-input" type="text" id="kanjiSearch" placeholder="Search kanji or meaning...">
+        <div class="filter-pills">
+          <button class="filter-pill active" data-level="all">All</button>
+          <button class="filter-pill" data-level="N4">N4</button>
+          <button class="filter-pill" data-level="N3">N3</button>
+        </div>
+      </div>
+      <div class="kanji-grid" id="kanjiGrid">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+    <!-- Vocabulary View -->
+    <section class="view" id="view-vocab">
+      <h2 class="view-title">Vocabulary List</h2>
+      <div class="filter-bar">
+        <input class="search-input" type="text" id="vocabSearch" placeholder="Search words...">
+        <div class="filter-pills" id="vocabTagFilters">
+          <button class="filter-pill active" data-tag="all">All</button>
+          <button class="filter-pill" data-tag="daily">Daily</button>
+          <button class="filter-pill" data-tag="school">School</button>
+          <button class="filter-pill" data-tag="work">Work</button>
+          <button class="filter-pill" data-tag="society">Society</button>
+          <button class="filter-pill" data-tag="culture">Culture</button>
+          <button class="filter-pill" data-tag="health">Health</button>
+          <button class="filter-pill" data-tag="travel">Travel</button>
+        </div>
+      </div>
+      <div class="vocab-table-wrap">
+        <table class="vocab-table">
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Reading</th>
+              <th>Meaning</th>
+              <th>Chapter</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="vocabTableBody">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Kanji Detail Modal -->
+  <div class="modal-overlay hidden" id="kanjiModal">
+    <div class="modal-card">
+      <button class="modal-close" id="kanjiModalClose">×</button>
+      <div class="modal-kanji-char" id="modalKanjiChar">漢</div>
+      <div class="modal-kanji-info">
+        <div class="modal-row"><span class="modal-label">On'yomi</span><span id="modalOnyomi">—</span></div>
+        <div class="modal-row"><span class="modal-label">Kun'yomi</span><span id="modalKunyomi">—</span></div>
+        <div class="modal-row"><span class="modal-label">Meaning</span><span id="modalMeaning">—</span></div>
+        <div class="modal-row"><span class="modal-label">Strokes</span><span id="modalStrokes">—</span></div>
+        <div class="modal-row"><span class="modal-label">Level</span><span id="modalLevel">—</span></div>
+      </div>
+      <div class="modal-examples">
+        <h4>Examples</h4>
+        <div id="modalExamples"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
