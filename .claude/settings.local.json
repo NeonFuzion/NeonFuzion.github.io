@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:pdfcoffee.com)",
+      "WebFetch(domain:nihongokyoshi-net.com)",
+      "WebFetch(domain:www.dekirunihongo.jp)",
+      "WebFetch(domain:www.collegesidekick.com)",
+      "WebFetch(domain:quizlet.com)",
+      "WebFetch(domain:apieceofsushi.com)",
+      "WebFetch(domain:www.nihongoph.com)",
+      "WebFetch(domain:www.scribd.com)",
+      "WebFetch(domain:cotohajime.net)",
+      "WebFetch(domain:www.jpf.go.jp)",
+      "WebFetch(domain:book.alc.co.jp)",
+      "WebFetch(domain:hire39.com)",
+      "WebFetch(domain:hello-nihongo.com)"
+    ]
+  }
+}

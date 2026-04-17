@@ -136,6 +136,191 @@ const VOCABULARY = [
   { id: "v108", word: "医療", reading: "いりょう", romaji: "iryou", meaning: "medical care; healthcare", example: "医療費が高くなっています。", exampleEn: "Medical costs are rising.", chapter: 6, tags: ["health", "society"] },
   { id: "v109", word: "予防", reading: "よぼう", romaji: "yobou", meaning: "prevention", example: "病気の予防が大切です。", exampleEn: "Prevention of illness is important.", chapter: 6, tags: ["health"] },
   { id: "v110", word: "精神的", reading: "せいしんてき", romaji: "seishinteki", meaning: "mental; psychological", example: "精神的なストレスを感じます。", exampleEn: "I feel mental stress.", chapter: 6, tags: ["health"] },
+
+  // Chapter 1 additions - Basic introductions
+  { id: "v111", word: "学生", reading: "がくせい", romaji: "gakusei", meaning: "student", example: "私は大学の学生です。", exampleEn: "I am a university student.", chapter: 1, tags: ["school"] },
+  { id: "v112", word: "先生", reading: "せんせい", romaji: "sensei", meaning: "teacher", example: "先生に質問があります。", exampleEn: "I have a question for the teacher.", chapter: 1, tags: ["school"] },
+  { id: "v113", word: "名前", reading: "なまえ", romaji: "namae", meaning: "name", example: "お名前は何ですか。", exampleEn: "What is your name?", chapter: 1, tags: ["social"] },
+  { id: "v114", word: "映画", reading: "えいが", romaji: "eiga", meaning: "movie; film", example: "週末に映画を見ました。", exampleEn: "I watched a movie on the weekend.", chapter: 1, tags: ["daily", "culture"] },
+  { id: "v115", word: "音楽", reading: "おんがく", romaji: "ongaku", meaning: "music", example: "音楽を聴くのが好きです。", exampleEn: "I like listening to music.", chapter: 1, tags: ["daily", "culture"] },
+  { id: "v116", word: "誕生日", reading: "たんじょうび", romaji: "tanjoubi", meaning: "birthday", example: "今日は私の誕生日です。", exampleEn: "Today is my birthday.", chapter: 1, tags: ["social"] },
+  { id: "v117", word: "国", reading: "くに", romaji: "kuni", meaning: "country; nation", example: "あなたの国はどこですか。", exampleEn: "What country are you from?", chapter: 1, tags: ["social"] },
+
+  // Chapter 2 additions - Food and shopping basics
+  { id: "v118", word: "食べ物", reading: "たべもの", romaji: "tabemono", meaning: "food", example: "好きな食べ物は何ですか。", exampleEn: "What is your favorite food?", chapter: 2, tags: ["food"] },
+  { id: "v119", word: "飲み物", reading: "のみもの", romaji: "nomimono", meaning: "beverage; drink", example: "何か飲み物はいかがですか。", exampleEn: "Would you like something to drink?", chapter: 2, tags: ["food"] },
+  { id: "v120", word: "魚", reading: "さかな", romaji: "sakana", meaning: "fish", example: "毎日魚を食べています。", exampleEn: "I eat fish every day.", chapter: 2, tags: ["food"] },
+  { id: "v121", word: "野菜", reading: "やさい", romaji: "yasai", meaning: "vegetable", example: "野菜をたくさん食べてください。", exampleEn: "Please eat lots of vegetables.", chapter: 2, tags: ["food", "health"] },
+  { id: "v122", word: "肉", reading: "にく", romaji: "niku", meaning: "meat", example: "肉より魚が好きです。", exampleEn: "I like fish more than meat.", chapter: 2, tags: ["food"] },
+  { id: "v123", word: "お茶", reading: "おちゃ", romaji: "ocha", meaning: "green tea; tea", example: "日本では毎日お茶を飲みます。", exampleEn: "In Japan, we drink tea every day.", chapter: 2, tags: ["food", "culture"] },
+  { id: "v124", word: "コーヒー", reading: "コーヒー", romaji: "koohii", meaning: "coffee", example: "朝はコーヒーを飲みます。", exampleEn: "I drink coffee in the morning.", chapter: 2, tags: ["food", "daily"] },
+  { id: "v125", word: "メニュー", reading: "メニュー", romaji: "menyuu", meaning: "menu", example: "メニューを見せてください。", exampleEn: "Please show me the menu.", chapter: 2, tags: ["food"] },
+
+  // Chapter 3 additions - Schedule and time
+  { id: "v126", word: "時間", reading: "じかん", romaji: "jikan", meaning: "time; hour", example: "時間がありません。", exampleEn: "I don't have time.", chapter: 3, tags: ["daily"] },
+  { id: "v127", word: "週末", reading: "しゅうまつ", romaji: "shuumatsu", meaning: "weekend", example: "週末は友達と遊びます。", exampleEn: "I hang out with friends on the weekend.", chapter: 3, tags: ["daily"] },
+  { id: "v128", word: "平日", reading: "へいじつ", romaji: "heijitsu", meaning: "weekday", example: "平日は毎日学校に行きます。", exampleEn: "On weekdays, I go to school every day.", chapter: 3, tags: ["daily", "school"] },
+  { id: "v129", word: "銀行", reading: "ぎんこう", romaji: "ginkou", meaning: "bank", example: "銀行でお金を下ろしました。", exampleEn: "I withdrew money from the bank.", chapter: 3, tags: ["daily"] },
+  { id: "v130", word: "郵便局", reading: "ゆうびんきょく", romaji: "yuubinkyoku", meaning: "post office", example: "郵便局で荷物を送りました。", exampleEn: "I sent a package at the post office.", chapter: 3, tags: ["daily"] },
+  { id: "v131", word: "朝", reading: "あさ", romaji: "asa", meaning: "morning", example: "朝早く起きるのが苦手です。", exampleEn: "I'm not good at waking up early in the morning.", chapter: 3, tags: ["daily"] },
+  { id: "v132", word: "夜", reading: "よる", romaji: "yoru", meaning: "night; evening", example: "夜は静かに勉強します。", exampleEn: "I study quietly at night.", chapter: 3, tags: ["daily"] },
+  { id: "v133", word: "毎日", reading: "まいにち", romaji: "mainichi", meaning: "every day", example: "毎日日本語を練習しています。", exampleEn: "I practice Japanese every day.", chapter: 3, tags: ["daily"] },
+
+  // Chapter 4 additions - Transportation and places
+  { id: "v134", word: "新幹線", reading: "しんかんせん", romaji: "shinkansen", meaning: "bullet train; Shinkansen", example: "東京から大阪まで新幹線で行きます。", exampleEn: "I'll go from Tokyo to Osaka by bullet train.", chapter: 4, tags: ["travel"] },
+  { id: "v135", word: "飛行機", reading: "ひこうき", romaji: "hikouki", meaning: "airplane", example: "飛行機は電車より速いです。", exampleEn: "Airplanes are faster than trains.", chapter: 4, tags: ["travel"] },
+  { id: "v136", word: "バス", reading: "バス", romaji: "basu", meaning: "bus", example: "バスで学校に通っています。", exampleEn: "I commute to school by bus.", chapter: 4, tags: ["travel", "daily"] },
+  { id: "v137", word: "山", reading: "やま", romaji: "yama", meaning: "mountain", example: "富士山は日本一高い山です。", exampleEn: "Mt. Fuji is the tallest mountain in Japan.", chapter: 4, tags: ["travel", "environment"] },
+  { id: "v138", word: "川", reading: "かわ", romaji: "kawa", meaning: "river", example: "川の近くで遊びました。", exampleEn: "We played near the river.", chapter: 4, tags: ["environment"] },
+  { id: "v139", word: "神社", reading: "じんじゃ", romaji: "jinja", meaning: "Shinto shrine", example: "新年に神社に行きました。", exampleEn: "I went to a Shinto shrine for New Year's.", chapter: 4, tags: ["culture", "travel"] },
+  { id: "v140", word: "温泉", reading: "おんせん", romaji: "onsen", meaning: "hot spring; onsen", example: "温泉に入るのが大好きです。", exampleEn: "I love soaking in hot springs.", chapter: 4, tags: ["travel", "culture"] },
+  { id: "v141", word: "町", reading: "まち", romaji: "machi", meaning: "town; city; neighborhood", example: "この町はとても静かです。", exampleEn: "This town is very quiet.", chapter: 4, tags: ["daily"] },
+
+  // Chapter 5 additions - Days off and leisure
+  { id: "v142", word: "家", reading: "いえ", romaji: "ie", meaning: "house; home", example: "私の家は駅の近くにあります。", exampleEn: "My house is near the station.", chapter: 5, tags: ["daily"] },
+  { id: "v143", word: "部屋", reading: "へや", romaji: "heya", meaning: "room", example: "部屋を掃除しました。", exampleEn: "I cleaned my room.", chapter: 5, tags: ["daily"] },
+  { id: "v144", word: "写真", reading: "しゃしん", romaji: "shashin", meaning: "photograph; photo", example: "旅行で写真をたくさん撮りました。", exampleEn: "I took many photos during the trip.", chapter: 5, tags: ["daily", "travel"] },
+  { id: "v145", word: "自転車", reading: "じてんしゃ", romaji: "jitensha", meaning: "bicycle", example: "毎日自転車で通学しています。", exampleEn: "I commute to school by bicycle every day.", chapter: 5, tags: ["travel", "daily"] },
+  { id: "v146", word: "公園", reading: "こうえん", romaji: "kouen", meaning: "park", example: "公園で子供たちが遊んでいます。", exampleEn: "Children are playing in the park.", chapter: 5, tags: ["daily"] },
+
+  // Chapter 6 additions - Entertainment and plans
+  { id: "v147", word: "映画館", reading: "えいがかん", romaji: "eigakan", meaning: "movie theater; cinema", example: "映画館で新しい映画を見ました。", exampleEn: "I watched a new movie at the movie theater.", chapter: 6, tags: ["daily", "culture"] },
+  { id: "v148", word: "カラオケ", reading: "カラオケ", romaji: "karaoke", meaning: "karaoke", example: "友達とカラオケに行きました。", exampleEn: "I went to karaoke with my friends.", chapter: 6, tags: ["daily", "social"] },
+  { id: "v149", word: "コンサート", reading: "コンサート", romaji: "konsaato", meaning: "concert", example: "好きな歌手のコンサートに行きます。", exampleEn: "I'm going to my favorite singer's concert.", chapter: 6, tags: ["daily", "culture"] },
+  { id: "v150", word: "試合", reading: "しあい", romaji: "shiai", meaning: "match; game; competition", example: "明日、サッカーの試合があります。", exampleEn: "There is a soccer match tomorrow.", chapter: 6, tags: ["daily"] },
+  { id: "v151", word: "約束", reading: "やくそく", romaji: "yakusoku", meaning: "promise; appointment", example: "友達との約束を忘れました。", exampleEn: "I forgot my promise with my friend.", chapter: 6, tags: ["social"] },
+  { id: "v152", word: "地下鉄", reading: "ちかてつ", romaji: "chikatetsu", meaning: "subway; underground train", example: "地下鉄で会社に通っています。", exampleEn: "I commute to work by subway.", chapter: 6, tags: ["travel", "daily"] },
+
+  // Chapter 7 additions - Directions and locations
+  { id: "v153", word: "右", reading: "みぎ", romaji: "migi", meaning: "right (direction)", example: "次の角を右に曲がってください。", exampleEn: "Please turn right at the next corner.", chapter: 7, tags: ["daily"] },
+  { id: "v154", word: "左", reading: "ひだり", romaji: "hidari", meaning: "left (direction)", example: "郵便局は左側にあります。", exampleEn: "The post office is on the left side.", chapter: 7, tags: ["daily"] },
+  { id: "v155", word: "橋", reading: "はし", romaji: "hashi", meaning: "bridge", example: "川の上に大きな橋があります。", exampleEn: "There is a large bridge over the river.", chapter: 7, tags: ["daily", "travel"] },
+  { id: "v156", word: "道", reading: "みち", romaji: "michi", meaning: "road; path; way", example: "この道を真っすぐ行ってください。", exampleEn: "Please go straight along this road.", chapter: 7, tags: ["travel", "daily"] },
+  { id: "v157", word: "信号", reading: "しんごう", romaji: "shingou", meaning: "traffic light; signal", example: "信号が赤のときは止まります。", exampleEn: "Stop when the traffic light is red.", chapter: 7, tags: ["travel"] },
+  { id: "v158", word: "交差点", reading: "こうさてん", romaji: "kousaten", meaning: "intersection; crossroads", example: "交差点を左に曲がってください。", exampleEn: "Please turn left at the intersection.", chapter: 7, tags: ["travel"] },
+
+  // Chapter 8 additions - Family and body
+  { id: "v159", word: "父", reading: "ちち", romaji: "chichi", meaning: "father (my own)", example: "父は会社員です。", exampleEn: "My father is a company employee.", chapter: 8, tags: ["family"] },
+  { id: "v160", word: "母", reading: "はは", romaji: "haha", meaning: "mother (my own)", example: "母は料理が上手です。", exampleEn: "My mother is good at cooking.", chapter: 8, tags: ["family"] },
+  { id: "v161", word: "兄", reading: "あに", romaji: "ani", meaning: "older brother (my own)", example: "兄は大学に通っています。", exampleEn: "My older brother attends university.", chapter: 8, tags: ["family"] },
+  { id: "v162", word: "姉", reading: "あね", romaji: "ane", meaning: "older sister (my own)", example: "姉はもう結婚しています。", exampleEn: "My older sister is already married.", chapter: 8, tags: ["family"] },
+  { id: "v163", word: "弟", reading: "おとうと", romaji: "otouto", meaning: "younger brother", example: "弟は高校生です。", exampleEn: "My younger brother is a high school student.", chapter: 8, tags: ["family"] },
+  { id: "v164", word: "妹", reading: "いもうと", romaji: "imouto", meaning: "younger sister", example: "妹と仲良しです。", exampleEn: "I get along well with my younger sister.", chapter: 8, tags: ["family"] },
+  { id: "v165", word: "目", reading: "め", romaji: "me", meaning: "eye", example: "目が悪くなってきました。", exampleEn: "My eyes have been getting worse.", chapter: 8, tags: ["health"] },
+  { id: "v166", word: "耳", reading: "みみ", romaji: "mimi", meaning: "ear", example: "耳が痛いので病院に行きます。", exampleEn: "My ear hurts so I'll go to the hospital.", chapter: 8, tags: ["health"] },
+  { id: "v167", word: "鼻", reading: "はな", romaji: "hana", meaning: "nose", example: "花粉症で鼻が出ます。", exampleEn: "My nose runs because of hay fever.", chapter: 8, tags: ["health"] },
+  { id: "v168", word: "口", reading: "くち", romaji: "kuchi", meaning: "mouth", example: "口の中が痛いです。", exampleEn: "The inside of my mouth hurts.", chapter: 8, tags: ["health"] },
+  { id: "v169", word: "手", reading: "て", romaji: "te", meaning: "hand", example: "手を洗ってから食べてください。", exampleEn: "Please wash your hands before eating.", chapter: 8, tags: ["health", "daily"] },
+  { id: "v170", word: "頭", reading: "あたま", romaji: "atama", meaning: "head", example: "頭が痛くて学校を休みました。", exampleEn: "I had a headache and stayed home from school.", chapter: 8, tags: ["health"] },
+  { id: "v171", word: "足", reading: "あし", romaji: "ashi", meaning: "foot; leg", example: "昨日から足が痛いです。", exampleEn: "My leg has been hurting since yesterday.", chapter: 8, tags: ["health"] },
+
+  // Chapter 9 additions - Hobbies
+  { id: "v172", word: "小説", reading: "しょうせつ", romaji: "shousetsu", meaning: "novel; fiction", example: "この小説はとても面白いです。", exampleEn: "This novel is very interesting.", chapter: 9, tags: ["culture", "daily"] },
+  { id: "v173", word: "漫画", reading: "まんが", romaji: "manga", meaning: "manga; comics", example: "日本の漫画は世界中で人気があります。", exampleEn: "Japanese manga is popular all over the world.", chapter: 9, tags: ["culture"] },
+  { id: "v174", word: "書道", reading: "しょどう", romaji: "shodou", meaning: "calligraphy", example: "書道の授業で美しい字を練習します。", exampleEn: "I practice beautiful characters in calligraphy class.", chapter: 9, tags: ["culture", "school"] },
+
+  // Chapter 10 additions - Directions and sightseeing
+  { id: "v175", word: "入り口", reading: "いりぐち", romaji: "iriguchi", meaning: "entrance", example: "入り口で待っています。", exampleEn: "I'm waiting at the entrance.", chapter: 10, tags: ["daily", "travel"] },
+  { id: "v176", word: "出口", reading: "でぐち", romaji: "deguchi", meaning: "exit", example: "出口はどこですか。", exampleEn: "Where is the exit?", chapter: 10, tags: ["daily", "travel"] },
+  { id: "v177", word: "場所", reading: "ばしょ", romaji: "basho", meaning: "place; location; spot", example: "この場所はとても静かです。", exampleEn: "This place is very quiet.", chapter: 10, tags: ["daily"] },
+  { id: "v178", word: "動物園", reading: "どうぶつえん", romaji: "doubutsuen", meaning: "zoo", example: "子供と一緒に動物園に行きました。", exampleEn: "I went to the zoo with my child.", chapter: 10, tags: ["daily", "travel"] },
+
+  // Chapter 11 additions - Daily life
+  { id: "v179", word: "生活", reading: "せいかつ", romaji: "seikatsu", meaning: "daily life; lifestyle; living", example: "日本での生活に慣れてきました。", exampleEn: "I've gotten used to life in Japan.", chapter: 11, tags: ["daily"] },
+  { id: "v180", word: "日記", reading: "にっき", romaji: "nikki", meaning: "diary; journal", example: "毎晩日記を書いています。", exampleEn: "I write in my diary every evening.", chapter: 11, tags: ["daily"] },
+  { id: "v181", word: "一人暮らし", reading: "ひとりぐらし", romaji: "hitorigurashi", meaning: "living alone", example: "大学から一人暮らしを始めました。", exampleEn: "I started living alone since university.", chapter: 11, tags: ["daily"] },
+
+  // Chapter 12 additions - Illness and injury
+  { id: "v182", word: "けが", reading: "けが", romaji: "kega", meaning: "injury; wound", example: "スポーツでけがをしました。", exampleEn: "I got injured playing sports.", chapter: 12, tags: ["health"] },
+  { id: "v183", word: "熱", reading: "ねつ", romaji: "netsu", meaning: "fever; temperature", example: "熱が出て、学校を休みました。", exampleEn: "I had a fever and missed school.", chapter: 12, tags: ["health"] },
+  { id: "v184", word: "病気", reading: "びょうき", romaji: "byouki", meaning: "illness; disease; sickness", example: "先週から病気で寝ていました。", exampleEn: "I was sick in bed since last week.", chapter: 12, tags: ["health"] },
+  { id: "v185", word: "のど", reading: "のど", romaji: "nodo", meaning: "throat", example: "のどが痛いので薬を飲みました。", exampleEn: "My throat hurts so I took medicine.", chapter: 12, tags: ["health"] },
+  { id: "v186", word: "歯", reading: "は", romaji: "ha", meaning: "tooth; teeth", example: "歯が痛くて歯医者に行きました。", exampleEn: "My tooth hurt so I went to the dentist.", chapter: 12, tags: ["health"] },
+  { id: "v187", word: "調子", reading: "ちょうし", romaji: "choushi", meaning: "condition; how one feels", example: "最近、体の調子がよくないです。", exampleEn: "I haven't been feeling well lately.", chapter: 12, tags: ["health"] },
+
+  // Chapter 13 additions - Culture and recommendations
+  { id: "v188", word: "浴衣", reading: "ゆかた", romaji: "yukata", meaning: "yukata; summer kimono", example: "夏祭りで浴衣を着ました。", exampleEn: "I wore a yukata at the summer festival.", chapter: 13, tags: ["culture"] },
+  { id: "v189", word: "人気", reading: "にんき", romaji: "ninki", meaning: "popularity; being popular", example: "このお店は人気があります。", exampleEn: "This restaurant is popular.", chapter: 13, tags: ["daily", "society"] },
+  { id: "v190", word: "紅葉", reading: "こうよう", romaji: "kouyou", meaning: "autumn leaves; fall foliage", example: "秋になると紅葉がきれいです。", exampleEn: "When autumn comes, the autumn leaves are beautiful.", chapter: 13, tags: ["culture", "environment"] },
+  { id: "v191", word: "相撲", reading: "すもう", romaji: "sumou", meaning: "sumo wrestling", example: "相撲は日本の伝統的なスポーツです。", exampleEn: "Sumo is a traditional Japanese sport.", chapter: 13, tags: ["culture"] },
+
+  // Chapter 14 - Country customs (Dekiru 初級 Ch.14)
+  { id: "v192", word: "こたつ", reading: "こたつ", romaji: "kotatsu", meaning: "kotatsu; heated table", example: "冬はこたつに入って温まります。", exampleEn: "In winter, I warm up inside the kotatsu.", chapter: 14, tags: ["culture", "daily"] },
+  { id: "v193", word: "布団", reading: "ふとん", romaji: "futon", meaning: "futon; Japanese bedding", example: "毎朝布団を片付けます。", exampleEn: "I put away the futon every morning.", chapter: 14, tags: ["culture", "daily"] },
+  { id: "v194", word: "玄関", reading: "げんかん", romaji: "genkan", meaning: "entrance hall; entryway", example: "玄関で靴を脱いでください。", exampleEn: "Please take off your shoes at the entrance.", chapter: 14, tags: ["culture", "daily"] },
+  { id: "v195", word: "制服", reading: "せいふく", romaji: "seifuku", meaning: "school uniform; uniform", example: "日本の高校生は制服を着ます。", exampleEn: "Japanese high school students wear uniforms.", chapter: 14, tags: ["school", "culture"] },
+  { id: "v196", word: "田舎", reading: "いなか", romaji: "inaka", meaning: "countryside; rural area", example: "田舎の生活はのんびりしています。", exampleEn: "Life in the countryside is relaxing.", chapter: 14, tags: ["daily", "society"] },
+  { id: "v197", word: "都会", reading: "とかい", romaji: "tokai", meaning: "city; urban area", example: "都会は便利ですが、うるさいです。", exampleEn: "The city is convenient but noisy.", chapter: 14, tags: ["daily", "society"] },
+  { id: "v198", word: "料金", reading: "りょうきん", romaji: "ryoukin", meaning: "fee; charge; fare", example: "入場料金はいくらですか。", exampleEn: "How much is the entrance fee?", chapter: 14, tags: ["shopping", "daily"] },
+  { id: "v199", word: "自由", reading: "じゆう", romaji: "jiyuu", meaning: "freedom; liberty", example: "自由な時間に本を読みます。", exampleEn: "I read books in my free time.", chapter: 14, tags: ["daily", "society"] },
+  { id: "v200", word: "話", reading: "はなし", romaji: "hanashi", meaning: "story; talk; conversation", example: "友達から面白い話を聞きました。", exampleEn: "I heard an interesting story from my friend.", chapter: 14, tags: ["communication"] },
+  { id: "v201", word: "お湯", reading: "おゆ", romaji: "oyu", meaning: "hot water", example: "お湯を沸かしてコーヒーを作ります。", exampleEn: "I boil hot water to make coffee.", chapter: 14, tags: ["daily"] },
+  { id: "v202", word: "電気", reading: "でんき", romaji: "denki", meaning: "electricity; electric light", example: "部屋を出るときは電気を消してください。", exampleEn: "Please turn off the light when you leave the room.", chapter: 14, tags: ["daily"] },
+  { id: "v203", word: "空気", reading: "くうき", romaji: "kuuki", meaning: "air; atmosphere", example: "山の空気は気持ちいいです。", exampleEn: "The mountain air feels refreshing.", chapter: 14, tags: ["environment", "daily"] },
+  { id: "v204", word: "身分証", reading: "みぶんしょう", romaji: "mibunjou", meaning: "ID; identification card", example: "身分証を見せてください。", exampleEn: "Please show me your ID.", chapter: 14, tags: ["daily"] },
+
+  // Chapter 15 - News and media (Dekiru 初級 Ch.15)
+  { id: "v205", word: "地震", reading: "じしん", romaji: "jishin", meaning: "earthquake", example: "地震が起きたら、机の下に隠れます。", exampleEn: "When an earthquake occurs, hide under a desk.", chapter: 15, tags: ["environment", "society"] },
+  { id: "v206", word: "事故", reading: "じこ", romaji: "jiko", meaning: "accident; incident", example: "道路で事故がありました。", exampleEn: "There was an accident on the road.", chapter: 15, tags: ["society", "daily"] },
+  { id: "v207", word: "中止", reading: "ちゅうし", romaji: "chuushi", meaning: "cancellation; discontinuation", example: "雨のため、試合が中止になりました。", exampleEn: "The game was cancelled due to rain.", chapter: 15, tags: ["daily"] },
+  { id: "v208", word: "昔", reading: "むかし", romaji: "mukashi", meaning: "old times; the past; long ago", example: "昔はここに森がありました。", exampleEn: "Long ago, there was a forest here.", chapter: 15, tags: ["culture", "society"] },
+  { id: "v209", word: "無料", reading: "むりょう", romaji: "muryou", meaning: "free of charge; no cost", example: "このサービスは無料で使えます。", exampleEn: "This service can be used for free.", chapter: 15, tags: ["shopping", "daily"] },
+  { id: "v210", word: "夕方", reading: "ゆうがた", romaji: "yuugata", meaning: "early evening; dusk", example: "夕方から雨が降り始めました。", exampleEn: "It started raining in the early evening.", chapter: 15, tags: ["daily"] },
+  { id: "v211", word: "風", reading: "かぜ", romaji: "kaze", meaning: "wind; breeze", example: "今日は風が強いです。", exampleEn: "The wind is strong today.", chapter: 15, tags: ["weather"] },
+  { id: "v212", word: "席", reading: "せき", romaji: "seki", meaning: "seat; place", example: "電車の席が空いていました。", exampleEn: "There was an open seat on the train.", chapter: 15, tags: ["travel", "daily"] },
+
+  // Chapter 16 - New beginnings (Dekiru 初中級 Ch.1)
+  { id: "v213", word: "面接", reading: "めんせつ", romaji: "mensetsu", meaning: "interview (job or school)", example: "明日、就職の面接があります。", exampleEn: "I have a job interview tomorrow.", chapter: 16, tags: ["work", "school"] },
+  { id: "v214", word: "履歴書", reading: "りれきしょ", romaji: "rirekisho", meaning: "resume; CV", example: "面接のために履歴書を書きました。", exampleEn: "I wrote a resume for the interview.", chapter: 16, tags: ["work"] },
+  { id: "v215", word: "楽器", reading: "がっき", romaji: "gakki", meaning: "musical instrument", example: "ピアノという楽器を習っています。", exampleEn: "I'm learning to play the piano.", chapter: 16, tags: ["culture", "daily"] },
+  { id: "v216", word: "歴史", reading: "れきし", romaji: "rekishi", meaning: "history", example: "日本の歴史をもっと知りたいです。", exampleEn: "I want to learn more about Japanese history.", chapter: 16, tags: ["culture", "school"] },
+  { id: "v217", word: "言葉", reading: "ことば", romaji: "kotoba", meaning: "word; language; expression", example: "言葉の意味を調べました。", exampleEn: "I looked up the meaning of the word.", chapter: 16, tags: ["communication", "school"] },
+  { id: "v218", word: "自分", reading: "じぶん", romaji: "jibun", meaning: "oneself; myself", example: "自分の意見をしっかり言えます。", exampleEn: "I can express my own opinion clearly.", chapter: 16, tags: ["social", "communication"] },
+  { id: "v219", word: "字幕", reading: "じまく", romaji: "jimaku", meaning: "subtitles; captions", example: "字幕を見ながら映画を楽しみます。", exampleEn: "I enjoy movies while reading the subtitles.", chapter: 16, tags: ["technology", "culture"] },
+  { id: "v220", word: "問い合わせ", reading: "といあわせ", romaji: "toiawase", meaning: "inquiry; question", example: "問い合わせはメールで受け付けています。", exampleEn: "Inquiries are accepted by email.", chapter: 16, tags: ["communication", "work"] },
+  { id: "v221", word: "日常会話", reading: "にちじょうかいわ", romaji: "nichijou kaiwa", meaning: "everyday conversation; daily conversation", example: "日常会話なら日本語でできます。", exampleEn: "I can manage everyday conversation in Japanese.", chapter: 16, tags: ["communication", "school"] },
+
+  // Chapter 17 - Shopping (Dekiru 初中級 Ch.2)
+  { id: "v222", word: "画面", reading: "がめん", romaji: "gamen", meaning: "screen; display", example: "スマホの画面が割れてしまいました。", exampleEn: "The smartphone screen cracked.", chapter: 17, tags: ["technology"] },
+  { id: "v223", word: "指輪", reading: "ゆびわ", romaji: "yubiwa", meaning: "ring (jewelry)", example: "結婚記念日に指輪をもらいました。", exampleEn: "I received a ring on my wedding anniversary.", chapter: 17, tags: ["shopping"] },
+  { id: "v224", word: "棚", reading: "たな", romaji: "tana", meaning: "shelf; rack", example: "本を棚に並べました。", exampleEn: "I lined up the books on the shelf.", chapter: 17, tags: ["daily"] },
+  { id: "v225", word: "売り場", reading: "うりば", romaji: "uriba", meaning: "sales floor; sales area", example: "この商品は二階の売り場にあります。", exampleEn: "This product is on the second-floor sales area.", chapter: 17, tags: ["shopping"] },
+  { id: "v226", word: "壁", reading: "かべ", romaji: "kabe", meaning: "wall", example: "壁に絵を飾りました。", exampleEn: "I decorated the wall with a painting.", chapter: 17, tags: ["daily"] },
+
+  // Chapter 18 - Goals (Dekiru 初中級 Ch.3)
+  { id: "v227", word: "専門学校", reading: "せんもんがっこう", romaji: "senmon gakkou", meaning: "vocational school; technical college", example: "料理の専門学校に通っています。", exampleEn: "I attend a culinary vocational school.", chapter: 18, tags: ["school"] },
+  { id: "v228", word: "将来", reading: "しょうらい", romaji: "shourai", meaning: "future; one's future", example: "将来は医者になりたいです。", exampleEn: "I want to become a doctor in the future.", chapter: 18, tags: ["school", "work"] },
+  { id: "v229", word: "間違い", reading: "まちがい", romaji: "machigai", meaning: "mistake; error", example: "間違いを直してもらいました。", exampleEn: "I had my mistakes corrected.", chapter: 18, tags: ["school", "communication"] },
+  { id: "v230", word: "夢", reading: "ゆめ", romaji: "yume", meaning: "dream; aspiration", example: "夢を持って努力することが大切です。", exampleEn: "It's important to have a dream and work hard.", chapter: 18, tags: ["school", "work"] },
+  { id: "v231", word: "書類", reading: "しょるい", romaji: "shorui", meaning: "documents; paperwork", example: "申し込みに必要な書類を集めました。", exampleEn: "I gathered the documents needed for the application.", chapter: 18, tags: ["work", "school"] },
+  { id: "v232", word: "通訳", reading: "つうやく", romaji: "tsuuyaku", meaning: "interpreter; interpreting", example: "国際会議で通訳をしました。", exampleEn: "I worked as an interpreter at an international conference.", chapter: 18, tags: ["work", "communication"] },
+  { id: "v233", word: "笑顔", reading: "えがお", romaji: "egao", meaning: "smile; smiling face", example: "笑顔で接客することが大切です。", exampleEn: "It's important to serve customers with a smile.", chapter: 18, tags: ["social", "work"] },
+  { id: "v234", word: "法律", reading: "ほうりつ", romaji: "houritsu", meaning: "law; legislation", example: "法律を守ることは大切です。", exampleEn: "It is important to follow the law.", chapter: 18, tags: ["society"] },
+  { id: "v235", word: "答え", reading: "こたえ", romaji: "kotae", meaning: "answer; solution", example: "難しい問題の答えが分かりました。", exampleEn: "I found the answer to the difficult question.", chapter: 18, tags: ["school", "communication"] },
+  { id: "v236", word: "資格", reading: "しかく", romaji: "shikaku", meaning: "qualification; license; certificate", example: "日本語の資格を取りたいです。", exampleEn: "I want to obtain a Japanese language qualification.", chapter: 18, tags: ["work", "school"] },
+
+  // Chapter 19 - Community life (Dekiru 初中級 Ch.4)
+  { id: "v237", word: "美容院", reading: "びよういん", romaji: "biyouin", meaning: "hair salon; beauty parlor", example: "月に一度、美容院に行きます。", exampleEn: "I go to the hair salon once a month.", chapter: 19, tags: ["daily"] },
+  { id: "v238", word: "市民", reading: "しみん", romaji: "shimin", meaning: "citizen; resident", example: "市民として地域に貢献したいです。", exampleEn: "I want to contribute to the community as a citizen.", chapter: 19, tags: ["society"] },
+  { id: "v239", word: "種類", reading: "しゅるい", romaji: "shurui", meaning: "type; kind; variety", example: "この店にはたくさんの種類のお菓子があります。", exampleEn: "This store has many kinds of sweets.", chapter: 19, tags: ["daily"] },
+  { id: "v240", word: "水道", reading: "すいどう", romaji: "suidou", meaning: "tap water; water supply", example: "水道の水は安全に飲めます。", exampleEn: "The tap water is safe to drink.", chapter: 19, tags: ["daily"] },
+  { id: "v241", word: "市役所", reading: "しやくしょ", romaji: "shiyakusho", meaning: "city hall; municipal office", example: "市役所で住民票を取りました。", exampleEn: "I got my residence certificate at the city hall.", chapter: 19, tags: ["daily", "society"] },
+  { id: "v242", word: "大使館", reading: "たいしかん", romaji: "taishikan", meaning: "embassy", example: "大使館でビザの手続きをしました。", exampleEn: "I completed the visa procedures at the embassy.", chapter: 19, tags: ["society", "travel"] },
+  { id: "v243", word: "小学校", reading: "しょうがっこう", romaji: "shougakkou", meaning: "elementary school; primary school", example: "小学校で算数を教えています。", exampleEn: "I teach mathematics at an elementary school.", chapter: 19, tags: ["school"] },
+  { id: "v244", word: "中学校", reading: "ちゅうがっこう", romaji: "chuugakkou", meaning: "junior high school; middle school", example: "中学校から英語の勉強を始めました。", exampleEn: "I started studying English from junior high school.", chapter: 19, tags: ["school"] },
+  { id: "v245", word: "坂", reading: "さか", romaji: "saka", meaning: "slope; hill", example: "この坂はとても急です。", exampleEn: "This slope is very steep.", chapter: 19, tags: ["daily", "travel"] },
+  { id: "v246", word: "交流会", reading: "こうりゅうかい", romaji: "kouryuukai", meaning: "exchange event; mixer; meetup", example: "留学生との交流会に参加しました。", exampleEn: "I participated in an exchange event with international students.", chapter: 19, tags: ["social", "school"] },
+
+  // Chapter 20 - A hectic day (Dekiru 初中級 Ch.5)
+  { id: "v247", word: "階段", reading: "かいだん", romaji: "kaidan", meaning: "stairs; staircase", example: "エレベーターが壊れているので階段を使います。", exampleEn: "The elevator is broken so I use the stairs.", chapter: 20, tags: ["daily"] },
+  { id: "v248", word: "鍵", reading: "かぎ", romaji: "kagi", meaning: "key; lock", example: "家の鍵を忘れてしまいました。", exampleEn: "I forgot my house key.", chapter: 20, tags: ["daily"] },
+  { id: "v249", word: "教科書", reading: "きょうかしょ", romaji: "kyoukasho", meaning: "textbook", example: "教科書を読んで授業の準備をします。", exampleEn: "I prepare for class by reading the textbook.", chapter: 20, tags: ["school"] },
+  { id: "v250", word: "色", reading: "いろ", romaji: "iro", meaning: "color", example: "好きな色は青です。", exampleEn: "My favorite color is blue.", chapter: 20, tags: ["daily"] },
+  { id: "v251", word: "形", reading: "かたち", romaji: "katachi", meaning: "shape; form", example: "この石は面白い形をしています。", exampleEn: "This stone has an interesting shape.", chapter: 20, tags: ["daily"] },
+  { id: "v252", word: "忘れ物", reading: "わすれもの", romaji: "wasuremono", meaning: "forgotten item; something left behind", example: "電車に忘れ物をしてしまいました。", exampleEn: "I left something behind on the train.", chapter: 20, tags: ["daily", "travel"] },
+  { id: "v253", word: "終点", reading: "しゅうてん", romaji: "shuuten", meaning: "terminal station; last stop", example: "この電車の終点はどこですか。", exampleEn: "Where is the terminal station of this train?", chapter: 20, tags: ["travel"] },
+  { id: "v254", word: "窓口", reading: "まどぐち", romaji: "madoguchi", meaning: "ticket window; service counter", example: "窓口でチケットを買いました。", exampleEn: "I bought a ticket at the ticket window.", chapter: 20, tags: ["travel", "daily"] },
+  { id: "v255", word: "途中", reading: "とちゅう", romaji: "tochuu", meaning: "on the way; midway; in the middle of", example: "途中で友達に会いました。", exampleEn: "I met a friend on the way.", chapter: 20, tags: ["daily", "travel"] },
 ];
 
 const KANJI = [
