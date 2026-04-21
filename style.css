@@ -653,18 +653,41 @@ body {
   border-radius: var(--radius);
   padding: 20px 24px;
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 12px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
 }
 .quiz-feedback.hidden { display: none; }
+.feedback-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .feedback-icon { font-size: 1.5rem; }
 .feedback-text { flex: 1; font-size: 0.9rem; color: var(--text-muted); }
+.feedback-reasoning {
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 2px);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 3px solid var(--border);
+}
+.feedback-reasoning.hidden { display: none; }
+.reasoning-word { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.reasoning-reading { font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 8px; }
+.reasoning-pattern { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.reasoning-meaning { font-size: 0.88rem; color: var(--accent); font-weight: 500; }
+.reasoning-usage { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+.reasoning-example { font-size: 0.9rem; color: var(--text); margin-top: 2px; }
+.reasoning-example-en { font-size: 0.82rem; color: var(--text-muted); }
 .btn-next {
   white-space: nowrap;
   padding: 10px 20px;
   font-size: 0.9rem;
+  align-self: flex-end;
 }
 
 /* Results */

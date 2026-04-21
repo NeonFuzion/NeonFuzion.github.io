@@ -13,10 +13,12 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const s = JSON.parse(raw);
-      if (!s.grammar) {
-        s.grammar = {};
-        GRAMMAR.forEach(g => { s.grammar[g.id] = createInitialProgress(g.id); });
-      }
+      if (!s.vocab) s.vocab = {};
+      if (!s.kanji) s.kanji = {};
+      if (!s.grammar) s.grammar = {};
+      VOCABULARY.forEach(v => { if (!s.vocab[v.id]) s.vocab[v.id] = createInitialProgress(v.id); });
+      KANJI.forEach(k => { if (!s.kanji[k.id]) s.kanji[k.id] = createInitialProgress(k.id); });
+      GRAMMAR.forEach(g => { if (!s.grammar[g.id]) s.grammar[g.id] = createInitialProgress(g.id); });
       return s;
     }
   } catch (e) {}
@@ -485,7 +487,6 @@ function buildQuestion(item) {
     } else {
       questionLabel = 'What does this grammar pattern mean?';
       questionText = item.pattern;
-      questionReading = item.usage ? item.usage.slice(0, 60) + (item.usage.length > 60 ? '…' : '') : '';
       correctAnswer = item.meaning;
     }
   } else if (type === 'mc-meaning') {
@@ -556,6 +557,34 @@ function handleQuizAnswer(btn, choice, correct, item) {
   document.getElementById('feedbackText').textContent = isCorrect
     ? 'Correct!'
     : `Correct answer: ${correct}`;
+
+  const reasoningEl = document.getElementById('feedbackReasoning');
+  let html = '';
+  if (isGrammar) {
+    html = `<div class="reasoning-pattern">${item.pattern}</div>
+            <div class="reasoning-meaning">${item.meaning}</div>
+            ${item.usage ? `<div class="reasoning-usage">${item.usage}</div>` : ''}
+            ${item.example ? `<div class="reasoning-example">${item.example}</div><div class="reasoning-example-en">${item.exampleEn}</div>` : ''}`;
+  } else if (!isCorrect) {
+    if (useVocab) {
+      html = `<div class="reasoning-word">${item.word} <span class="reasoning-reading">${item.reading !== item.word ? item.reading : ''}</span></div>
+              <div class="reasoning-meaning">${item.meaning}</div>
+              <div class="reasoning-example">${item.example}</div>
+              <div class="reasoning-example-en">${item.exampleEn}</div>`;
+    } else {
+      html = `<div class="reasoning-word">${item.character}</div>
+              <div class="reasoning-meaning">${item.meaning}</div>
+              <div class="reasoning-usage">On: ${item.onyomi} &nbsp;|&nbsp; Kun: ${item.kunyomi}</div>`;
+    }
+  }
+  if (html) {
+    reasoningEl.innerHTML = html;
+    reasoningEl.style.borderLeftColor = isCorrect ? 'var(--success)' : 'var(--danger)';
+    reasoningEl.classList.remove('hidden');
+  } else {
+    reasoningEl.classList.add('hidden');
+  }
+
   feedback.classList.remove('hidden');
 
   document.getElementById('quizCorrect').textContent = `✓ ${quizCorrectCount}`;
