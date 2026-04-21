@@ -19,6 +19,7 @@
       <li><a href="#" class="nav-link" data-view="quiz"><span class="nav-icon">✏️</span><span>Quiz</span></a></li>
       <li><a href="#" class="nav-link" data-view="kanji"><span class="nav-icon">漢</span><span>Kanji</span></a></li>
       <li><a href="#" class="nav-link" data-view="vocab"><span class="nav-icon">📖</span><span>Vocabulary</span></a></li>
+      <li><a href="#" class="nav-link" data-view="grammar"><span class="nav-icon">文</span><span>Grammar</span></a></li>
     </ul>
     <div class="sidebar-streak">
       <div class="streak-flame">🔥</div>
@@ -219,6 +220,7 @@
             <div class="option-pills">
               <button class="option-pill active" data-content="vocab">Vocabulary</button>
               <button class="option-pill" data-content="kanji">Kanji</button>
+              <button class="option-pill" data-content="grammar">Grammar</button>
             </div>
           </div>
           <div class="option-group">
@@ -333,7 +335,48 @@
         </table>
       </div>
     </section>
+
+    <!-- Grammar View -->
+    <section class="view" id="view-grammar">
+      <h2 class="view-title">Grammar Patterns</h2>
+      <div class="filter-bar">
+        <input class="search-input" type="text" id="grammarSearch" placeholder="Search patterns or meanings...">
+        <div class="filter-pills" id="grammarCatFilters">
+          <button class="filter-pill active" data-cat="all">All</button>
+          <button class="filter-pill" data-cat="te-form">て-form</button>
+          <button class="filter-pill" data-cat="conditional">Conditional</button>
+          <button class="filter-pill" data-cat="obligation">Obligation</button>
+          <button class="filter-pill" data-cat="conjunction">Conjunction</button>
+          <button class="filter-pill" data-cat="speculation">Speculation</button>
+          <button class="filter-pill" data-cat="change">Change</button>
+          <button class="filter-pill" data-cat="passive-causative">Passive/Causative</button>
+          <button class="filter-pill" data-cat="relative-clause">Relative Clause</button>
+          <button class="filter-pill" data-cat="keigo">Keigo</button>
+        </div>
+      </div>
+      <div class="grammar-grid" id="grammarGrid">
+        <!-- filled by JS -->
+      </div>
+    </section>
   </main>
+
+  <!-- Grammar Detail Modal -->
+  <div class="modal-overlay hidden" id="grammarModal">
+    <div class="modal-card grammar-modal-card">
+      <button class="modal-close" id="grammarModalClose">×</button>
+      <div class="grammar-modal-pattern" id="grammarModalPattern">〜ている</div>
+      <div class="grammar-modal-meaning" id="grammarModalMeaning">—</div>
+      <div class="grammar-modal-section">
+        <span class="grammar-modal-label">Usage</span>
+        <p id="grammarModalUsage">—</p>
+      </div>
+      <div class="grammar-modal-section">
+        <span class="grammar-modal-label">Example</span>
+        <p class="grammar-modal-example-jp" id="grammarModalExample">—</p>
+        <p class="grammar-modal-example-en" id="grammarModalExampleEn">—</p>
+      </div>
+    </div>
+  </div>
 
   <!-- Kanji Detail Modal -->
   <div class="modal-overlay hidden" id="kanjiModal">

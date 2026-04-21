@@ -14,7 +14,20 @@
       "WebFetch(domain:www.jpf.go.jp)",
       "WebFetch(domain:book.alc.co.jp)",
       "WebFetch(domain:hire39.com)",
-      "WebFetch(domain:hello-nihongo.com)"
+      "WebFetch(domain:hello-nihongo.com)",
+      "WebFetch(domain:www.cheng-tsui.com)",
+      "WebFetch(domain:dekiru.cheng-tsui.com)",
+      "WebFetch(domain:www.amazon.com)",
+      "WebFetch(domain:www.goodreads.com)",
+      "WebFetch(domain:examcave.com)",
+      "WebFetch(domain:apcentral.collegeboard.org)",
+      "WebFetch(domain:www.abebooks.com)",
+      "WebFetch(domain:verasia.eu)",
+      "WebFetch(domain:booksrun.com)",
+      "WebFetch(domain:fiveable.me)",
+      "WebFetch(domain:archive.org)",
+      "WebFetch(domain:catalog.losgatosca.gov)",
+      "Bash(node -e ' *)"
     ]
   }
 }

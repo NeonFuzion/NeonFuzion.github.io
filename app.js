@@ -11,11 +11,19 @@ let streakData = loadStreak();
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (!s.grammar) {
+        s.grammar = {};
+        GRAMMAR.forEach(g => { s.grammar[g.id] = createInitialProgress(g.id); });
+      }
+      return s;
+    }
   } catch (e) {}
-  const s = { vocab: {}, kanji: {}, xp: 0, totalStudied: 0 };
+  const s = { vocab: {}, kanji: {}, grammar: {}, xp: 0, totalStudied: 0 };
   VOCABULARY.forEach(v => { s.vocab[v.id] = createInitialProgress(v.id); });
   KANJI.forEach(k => { s.kanji[k.id] = createInitialProgress(k.id); });
+  GRAMMAR.forEach(g => { s.grammar[g.id] = createInitialProgress(g.id); });
   return s;
 }
 
@@ -81,6 +89,7 @@ function showView(name) {
   if (name === 'kanji') renderKanjiGrid();
   if (name === 'vocab') renderVocabTable();
   if (name === 'quiz') renderQuizSetup();
+  if (name === 'grammar') renderGrammarGrid();
 }
 
 navLinks.forEach(link => {
@@ -389,7 +398,12 @@ document.getElementById('quizDoneBtn').addEventListener('click', () => showView(
 
 function startQuiz() {
   const isFillBlank = quizSettings.type === 'fill-blank';
-  const pool = (quizSettings.content === 'vocab' || isFillBlank) ? VOCABULARY : KANJI;
+  const isGrammar = quizSettings.content === 'grammar';
+  let pool;
+  if (isGrammar) pool = GRAMMAR;
+  else if (quizSettings.content === 'vocab' || isFillBlank) pool = VOCABULARY;
+  else pool = KANJI;
+
   let filtered = pool;
   if ((quizSettings.content === 'vocab' || isFillBlank) && quizSettings.chapter !== 'all') {
     filtered = pool.filter(v => v.chapter == quizSettings.chapter);
@@ -415,7 +429,11 @@ function showQuizQuestion(idx) {
   }
   const item = quizItems[idx];
   const isFillBlank = quizSettings.type === 'fill-blank';
-  const pool = (quizSettings.content === 'vocab' || isFillBlank) ? VOCABULARY : KANJI;
+  const isGrammar = quizSettings.content === 'grammar';
+  let pool;
+  if (isGrammar) pool = GRAMMAR;
+  else if (quizSettings.content === 'vocab' || isFillBlank) pool = VOCABULARY;
+  else pool = KANJI;
 
   document.getElementById('quizProgressBar').style.width = (idx / quizItems.length * 100) + '%';
   document.getElementById('quizCounter').textContent = `${idx + 1} / ${quizItems.length}`;
@@ -438,6 +456,7 @@ function showQuizQuestion(idx) {
 
   // Wrong answers
   const wrongPool = (isFillBlank ? VOCABULARY : pool).filter(p => p.id !== item.id);
+
   const wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p));
   const choices = shuffle([correctAnswer, ...wrongs]);
 
@@ -455,13 +474,25 @@ function showQuizQuestion(idx) {
 function buildQuestion(item) {
   const type = quizSettings.type;
   const isVocab = quizSettings.content === 'vocab';
+  const isGrammar = quizSettings.content === 'grammar';
   let questionText, questionReading = '', correctAnswer, questionLabel;
 
-  if (type === 'mc-meaning') {
+  if (isGrammar) {
+    if (type === 'mc-word') {
+      questionLabel = 'Which pattern means:';
+      questionText = item.meaning;
+      correctAnswer = item.pattern;
+    } else {
+      questionLabel = 'What does this grammar pattern mean?';
+      questionText = item.pattern;
+      questionReading = item.usage ? item.usage.slice(0, 60) + (item.usage.length > 60 ? '…' : '') : '';
+      correctAnswer = item.meaning;
+    }
+  } else if (type === 'mc-meaning') {
     questionLabel = 'What is the meaning of:';
     questionText = isVocab ? item.word : item.character;
     questionReading = isVocab ? item.reading : item.onyomi;
-    correctAnswer = isVocab ? item.meaning : item.meaning;
+    correctAnswer = item.meaning;
   } else if (type === 'mc-reading') {
     questionLabel = 'What is the reading of:';
     questionText = isVocab ? item.word : item.character;
@@ -474,7 +505,7 @@ function buildQuestion(item) {
     correctAnswer = item.word;
   } else {
     questionLabel = 'Which word means:';
-    questionText = isVocab ? item.meaning : item.meaning;
+    questionText = item.meaning;
     questionReading = '';
     correctAnswer = isVocab ? item.word : item.character;
   }
@@ -483,8 +514,10 @@ function buildQuestion(item) {
 
 function buildAnswer(item) {
   const type = quizSettings.type;
+  const isGrammar = quizSettings.content === 'grammar';
   const isVocab = quizSettings.content === 'vocab' || type === 'fill-blank';
-  if (type === 'mc-meaning') return isVocab ? item.meaning : item.meaning;
+  if (isGrammar) return type === 'mc-word' ? item.pattern : item.meaning;
+  if (type === 'mc-meaning') return item.meaning;
   if (type === 'mc-reading') return isVocab ? item.reading : item.onyomi;
   if (type === 'fill-blank') return item.word;
   return isVocab ? item.word : item.character;
@@ -498,23 +531,20 @@ function handleQuizAnswer(btn, choice, correct, item) {
   });
 
   const isCorrect = choice === correct;
-  const useVocab = quizSettings.content === 'vocab' || quizSettings.type === 'fill-blank';
+  const isGrammar = quizSettings.content === 'grammar';
+  const useVocab = !isGrammar && (quizSettings.content === 'vocab' || quizSettings.type === 'fill-blank');
   if (!isCorrect) {
     btn.classList.add('wrong');
     quizIncorrectCount++;
-    if (useVocab) {
-      state.vocab[item.id] = updateSM2(state.vocab[item.id], 1);
-    } else {
-      state.kanji[item.id] = updateSM2(state.kanji[item.id], 1);
-    }
+    if (isGrammar) state.grammar[item.id] = updateSM2(state.grammar[item.id], 1);
+    else if (useVocab) state.vocab[item.id] = updateSM2(state.vocab[item.id], 1);
+    else state.kanji[item.id] = updateSM2(state.kanji[item.id], 1);
   } else {
     quizCorrectCount++;
     state.xp += 5;
-    if (useVocab) {
-      state.vocab[item.id] = updateSM2(state.vocab[item.id], 4);
-    } else {
-      state.kanji[item.id] = updateSM2(state.kanji[item.id], 4);
-    }
+    if (isGrammar) state.grammar[item.id] = updateSM2(state.grammar[item.id], 4);
+    else if (useVocab) state.vocab[item.id] = updateSM2(state.vocab[item.id], 4);
+    else state.kanji[item.id] = updateSM2(state.kanji[item.id], 4);
   }
   state.totalStudied++;
   saveState();
@@ -670,6 +700,80 @@ document.querySelectorAll('#vocabTagFilters .filter-pill').forEach(btn => {
 document.getElementById('vocabSearch').addEventListener('input', e => {
   vocabFilter.search = e.target.value;
   renderVocabTable();
+});
+
+/* ===== Grammar View ===== */
+let grammarFilter = { cat: 'all', search: '' };
+
+function renderGrammarGrid() {
+  if (!state.grammar) {
+    state.grammar = {};
+    GRAMMAR.forEach(g => { state.grammar[g.id] = createInitialProgress(g.id); });
+  }
+  const grid = document.getElementById('grammarGrid');
+  grid.innerHTML = '';
+  const filtered = GRAMMAR.filter(g => {
+    const matchCat = grammarFilter.cat === 'all' || g.category === grammarFilter.cat;
+    const q = grammarFilter.search.toLowerCase();
+    const matchSearch = !q || g.pattern.includes(q) || g.meaning.toLowerCase().includes(q) || g.usage.toLowerCase().includes(q);
+    return matchCat && matchSearch;
+  });
+  filtered.forEach(g => {
+    const p = state.grammar[g.id] || createInitialProgress(g.id);
+    const card = document.createElement('div');
+    card.className = 'grammar-card';
+    if (p.correct >= 3 && p.interval >= 6) card.classList.add('mastered');
+    else if (p.correct >= 1) card.classList.add('learned');
+    card.innerHTML = `
+      <span class="grammar-level-tag level-${g.level}">${g.level}</span>
+      <div class="grammar-pattern">${g.pattern}</div>
+      <div class="grammar-meaning-sm">${g.meaning}</div>
+      <div class="grammar-cat-sm">${g.category}</div>
+    `;
+    card.addEventListener('click', () => openGrammarModal(g));
+    grid.appendChild(card);
+  });
+}
+
+function openGrammarModal(g) {
+  document.getElementById('grammarModalPattern').textContent = g.pattern;
+  document.getElementById('grammarModalMeaning').textContent = g.meaning;
+  document.getElementById('grammarModalUsage').textContent = g.usage;
+  document.getElementById('grammarModalExample').textContent = g.example;
+  document.getElementById('grammarModalExampleEn').textContent = g.exampleEn;
+
+  if (!state.grammar) state.grammar = {};
+  if (!state.grammar[g.id]) state.grammar[g.id] = createInitialProgress(g.id);
+  const p = state.grammar[g.id];
+  if (p.correct === 0 && p.incorrect === 0) {
+    state.grammar[g.id] = updateSM2(p, 3);
+    state.totalStudied++;
+    saveState();
+  }
+  document.getElementById('grammarModal').classList.remove('hidden');
+}
+
+document.getElementById('grammarModalClose').addEventListener('click', () => {
+  document.getElementById('grammarModal').classList.add('hidden');
+});
+document.getElementById('grammarModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('grammarModal')) {
+    document.getElementById('grammarModal').classList.add('hidden');
+  }
+});
+
+document.querySelectorAll('#grammarCatFilters .filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#grammarCatFilters .filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    grammarFilter.cat = btn.dataset.cat;
+    renderGrammarGrid();
+  });
+});
+
+document.getElementById('grammarSearch').addEventListener('input', e => {
+  grammarFilter.search = e.target.value;
+  renderGrammarGrid();
 });
 
 /* ===== Export / Import ===== */

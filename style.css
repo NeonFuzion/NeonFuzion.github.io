@@ -905,6 +905,106 @@ body {
 }
 .btn-back:hover { border-color: var(--primary); color: var(--primary); }
 
+/* ========== Grammar View ========== */
+.grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.grammar-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  padding: 18px 14px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  text-align: center;
+}
+.grammar-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
+.grammar-card.learned { border-color: var(--primary); background: var(--primary-light); }
+.grammar-card.mastered { border-color: var(--success); background: #f0fdf4; }
+
+.grammar-pattern {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-underline-offset: 3px;
+}
+.grammar-meaning-sm {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.grammar-cat-sm {
+  font-size: 0.68rem;
+  color: var(--primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.grammar-level-tag {
+  position: absolute;
+  top: 6px; right: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+.level-basic    { background: #d1fae5; color: #065f46; }
+.level-intermediate { background: #fef3c7; color: #92400e; }
+.level-advanced { background: #fce7f3; color: #9d174d; }
+
+/* Grammar Modal */
+.grammar-modal-card { max-width: 480px; }
+.grammar-modal-pattern {
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.grammar-modal-meaning {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.grammar-modal-section {
+  border-top: 1px solid var(--border);
+  padding: 14px 0;
+}
+.grammar-modal-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.grammar-modal-section p {
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.grammar-modal-example-jp {
+  font-weight: 700;
+  margin-bottom: 4px !important;
+}
+.grammar-modal-example-en {
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
   .sidebar { transform: translateX(-100%); }
@@ -923,4 +1023,5 @@ body {
   .card-jp { font-size: 2.5rem; }
   .quiz-choices { grid-template-columns: 1fr; }
   .kanji-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+  .grammar-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
