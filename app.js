@@ -92,6 +92,7 @@ function showView(name) {
   if (name === 'vocab') renderVocabTable();
   if (name === 'quiz') renderQuizSetup();
   if (name === 'grammar') renderGrammarGrid();
+  if (name === 'study') { renderPicker(); document.getElementById('studySession').classList.remove('hidden'); document.getElementById('studyDone').classList.add('hidden'); openSetPanel(); }
 }
 
 navLinks.forEach(link => {
@@ -220,42 +221,123 @@ function renderDashboard() {
   });
 }
 
-/* ===== Study (Flashcard/SRS) ===== */
+/* ===== Study (Flashcard) ===== */
 let studyQueue = [];
 let studyIdx = 0;
 let studyCorrect = 0;
 let studyIncorrect = 0;
-let cardFlipped = false;
+let cardFace = 0;
+let studyStartFace = 0;
+let badItems = [];
+let currentSetItems = [];
 
-function getDueItems() {
-  const now = Date.now();
-  const due = [];
-  VOCABULARY.forEach(v => {
-    const p = state.vocab[v.id];
-    if (p.nextReview <= now) due.push({ type: 'vocab', id: v.id, data: v });
-  });
-  return due;
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
-function buildStudyQueue() {
-  const now = Date.now();
-  const due = [];
-  VOCABULARY.forEach(v => {
-    const p = state.vocab[v.id];
-    if (p.nextReview <= now) due.push({ type: 'vocab', id: v.id, data: v });
-  });
-  // Prioritize unseen, then due
-  due.sort((a, b) => {
-    const pa = state.vocab[a.id], pb = state.vocab[b.id];
-    if ((pa.correct + pa.incorrect) === 0) return -1;
-    if ((pb.correct + pb.incorrect) === 0) return 1;
-    return pa.nextReview - pb.nextReview;
-  });
-  return due.slice(0, 20);
+/* ---- Picker ---- */
+let pickerFilter = { type: 'chapter', chapters: [], tag: null };
+
+const ALL_TAGS = [...new Set(VOCABULARY.flatMap(v => v.tags))].sort();
+const ALL_CHAPTERS = [...new Set(VOCABULARY.map(v => v.chapter))].sort((a, b) => a - b);
+
+function renderPicker() {
+  const chapEl = document.getElementById('pickerChapters');
+  chapEl.innerHTML = ALL_CHAPTERS.map(c =>
+    `<button class="picker-val" data-val="${c}">Ch. ${c}</button>`
+  ).join('');
+
+  const tagEl = document.getElementById('pickerTags');
+  tagEl.innerHTML = ALL_TAGS.map(t =>
+    `<button class="picker-val" data-val="${t}">${t}</button>`
+  ).join('');
+
+  updatePickerCount();
 }
 
+function getFilteredVocab() {
+  if (pickerFilter.type === 'chapter') {
+    if (pickerFilter.chapters.length === 0) return [];
+    return VOCABULARY.filter(v => pickerFilter.chapters.includes(v.chapter));
+  }
+  if (pickerFilter.type === 'tag') {
+    if (!pickerFilter.tag) return [];
+    return VOCABULARY.filter(v => v.tags.includes(pickerFilter.tag));
+  }
+  return [];
+}
+
+function updatePickerCount() {
+  const n = getFilteredVocab().length;
+  const noSelection = pickerFilter.type === 'chapter'
+    ? pickerFilter.chapters.length === 0
+    : !pickerFilter.tag;
+  document.getElementById('pickerCount').textContent = noSelection
+    ? 'Select one or more to continue'
+    : `${n} word${n !== 1 ? 's' : ''} in this set`;
+  document.getElementById('pickerStartBtn').disabled = n === 0;
+}
+
+function openSetPanel() {
+  document.getElementById('setPanel').classList.remove('collapsed');
+  document.getElementById('setToggle').classList.add('open');
+}
+
+function closeSetPanel() {
+  document.getElementById('setPanel').classList.add('collapsed');
+  document.getElementById('setToggle').classList.remove('open');
+}
+
+document.getElementById('setToggle').addEventListener('click', () => {
+  document.getElementById('setPanel').classList.contains('collapsed') ? openSetPanel() : closeSetPanel();
+});
+
+document.getElementById('pickerTypeRow').addEventListener('click', e => {
+  const btn = e.target.closest('.picker-type');
+  if (!btn) return;
+  pickerFilter.type = btn.dataset.type;
+  pickerFilter.chapters = [];
+  pickerFilter.tag = null;
+  document.querySelectorAll('.picker-type').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.picker-val').forEach(b => b.classList.remove('active'));
+  document.getElementById('pickerChapters').classList.toggle('hidden', pickerFilter.type !== 'chapter');
+  document.getElementById('pickerTags').classList.toggle('hidden', pickerFilter.type !== 'tag');
+  updatePickerCount();
+});
+
+document.getElementById('pickerChapters').addEventListener('click', e => {
+  const btn = e.target.closest('.picker-val');
+  if (!btn) return;
+  const ch = parseInt(btn.dataset.val);
+  const idx = pickerFilter.chapters.indexOf(ch);
+  if (idx === -1) { pickerFilter.chapters.push(ch); btn.classList.add('active'); }
+  else { pickerFilter.chapters.splice(idx, 1); btn.classList.remove('active'); }
+  updatePickerCount();
+});
+
+document.getElementById('pickerTags').addEventListener('click', e => {
+  const btn = e.target.closest('.picker-val');
+  if (!btn) return;
+  pickerFilter.tag = btn.dataset.val;
+  document.querySelectorAll('#pickerTags .picker-val').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updatePickerCount();
+});
+
+document.getElementById('pickerStartBtn').addEventListener('click', () => {
+  const vocab = getFilteredVocab();
+  if (!vocab.length) return;
+  startStudy(vocab);
+});
+
+/* ---- Session ---- */
 document.getElementById('startStudyBtn').addEventListener('click', () => {
-  startStudy();
   showView('study');
 });
 
@@ -263,27 +345,40 @@ document.getElementById('studyBackBtn').addEventListener('click', () => {
   showView('dashboard');
 });
 
-document.getElementById('doneBackBtn').addEventListener('click', () => {
-  showView('dashboard');
-});
-
-function startStudy() {
-  studyQueue = buildStudyQueue();
+function startStudy(vocabItems) {
+  currentSetItems = vocabItems;
+  studyQueue = shuffle(vocabItems).map(v => ({ id: v.id, data: v }));
   studyIdx = 0;
   studyCorrect = 0;
   studyIncorrect = 0;
-  cardFlipped = false;
+  badItems = [];
 
   document.getElementById('studyDone').classList.add('hidden');
-  document.getElementById('cardScene').style.display = '';
-  document.getElementById('answerBtns').classList.add('hidden');
-  document.getElementById('flashCard').classList.remove('flipped');
+  document.getElementById('studySession').classList.remove('hidden');
+  document.getElementById('cardArea').classList.remove('hidden');
+  closeSetPanel();
 
-  if (studyQueue.length === 0) {
-    showStudyDone();
-    return;
-  }
   showCard(0);
+}
+
+function updateFaceNav(face) {
+  document.querySelectorAll('.face-nav-btn').forEach((b, i) => b.classList.toggle('active', i === face));
+}
+
+function setupFaces(startFace) {
+  const flashCard = document.getElementById('flashCard');
+  flashCard.classList.add('no-transition');
+  for (let i = 0; i < 4; i++) {
+    const el = document.getElementById('cardFace' + i);
+    el.classList.remove('face-active', 'face-prev');
+    if (i < startFace) el.classList.add('face-prev');
+    else if (i === startFace) el.classList.add('face-active');
+  }
+  cardFace = startFace;
+  document.getElementById('answerBtns').classList.remove('hidden');
+  document.getElementById('faceNavRow').classList.remove('hidden');
+  updateFaceNav(startFace);
+  requestAnimationFrame(() => flashCard.classList.remove('no-transition'));
 }
 
 function showCard(idx) {
@@ -291,19 +386,18 @@ function showCard(idx) {
     showStudyDone();
     return;
   }
-  cardFlipped = false;
   const item = studyQueue[idx];
   const v = item.data;
-  document.getElementById('flashCard').classList.remove('flipped');
-  document.getElementById('answerBtns').classList.add('hidden');
 
   document.getElementById('cardJP').textContent = v.word;
-  document.getElementById('cardReading').textContent = v.reading !== v.word ? v.reading : '';
+  document.getElementById('cardReading').textContent = v.reading;
   document.getElementById('cardChapterBadge').textContent = 'Chapter ' + v.chapter;
   document.getElementById('cardMeaning').textContent = v.meaning;
   document.getElementById('cardExample').textContent = v.example;
   document.getElementById('cardExampleEn').textContent = v.exampleEn;
   document.getElementById('cardTags').innerHTML = v.tags.map(t => `<span class="tag-chip">${t}</span>`).join('');
+
+  setupFaces(studyStartFace);
 
   const pct = Math.round((idx / studyQueue.length) * 100);
   document.getElementById('studyProgressBar').style.width = pct + '%';
@@ -311,10 +405,35 @@ function showCard(idx) {
 }
 
 document.getElementById('flashCard').addEventListener('click', () => {
-  if (cardFlipped) return;
-  cardFlipped = true;
-  document.getElementById('flashCard').classList.add('flipped');
-  document.getElementById('answerBtns').classList.remove('hidden');
+  if (cardFace >= 3) return;
+  document.getElementById('cardFace' + cardFace).classList.remove('face-active');
+  document.getElementById('cardFace' + cardFace).classList.add('face-prev');
+  cardFace++;
+  document.getElementById('cardFace' + cardFace).classList.add('face-active');
+  updateFaceNav(cardFace);
+});
+
+document.getElementById('startFaceBtns').addEventListener('click', e => {
+  const btn = e.target.closest('.sfs-btn');
+  if (!btn) return;
+  studyStartFace = parseInt(btn.dataset.face);
+  document.querySelectorAll('.sfs-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+});
+
+document.getElementById('faceNavBtns').addEventListener('click', e => {
+  const btn = e.target.closest('.face-nav-btn');
+  if (!btn) return;
+  const target = parseInt(btn.dataset.face);
+  if (target === cardFace) return;
+  for (let i = 0; i < 4; i++) {
+    const el = document.getElementById('cardFace' + i);
+    el.classList.remove('face-active', 'face-prev');
+    if (i < target) el.classList.add('face-prev');
+    else if (i === target) el.classList.add('face-active');
+  }
+  cardFace = target;
+  updateFaceNav(target);
 });
 
 document.getElementById('answerBtns').addEventListener('click', e => {
@@ -322,12 +441,13 @@ document.getElementById('answerBtns').addEventListener('click', e => {
   if (!btn) return;
   const quality = parseInt(btn.dataset.quality);
   const item = studyQueue[studyIdx];
+  if (!item) return;
   const oldProgress = state.vocab[item.id];
   state.vocab[item.id] = updateSM2(oldProgress, quality);
   state.xp += quality >= 3 ? 10 : 2;
   state.totalStudied++;
   if (quality >= 3) studyCorrect++;
-  else studyIncorrect++;
+  else { studyIncorrect++; badItems.push(item); }
   saveState();
   recordActivity(1);
   studyIdx++;
@@ -335,17 +455,35 @@ document.getElementById('answerBtns').addEventListener('click', e => {
 });
 
 function showStudyDone() {
-  document.getElementById('cardScene').style.display = 'none';
-  document.getElementById('answerBtns').classList.add('hidden');
+  document.getElementById('studySession').classList.add('hidden');
   document.getElementById('studyDone').classList.remove('hidden');
+  document.getElementById('cardArea').classList.add('hidden');
   const total = studyCorrect + studyIncorrect;
   const pct = total ? Math.round(studyCorrect / total * 100) : 0;
   document.getElementById('doneStats').innerHTML = `
-    <div class="done-stat"><div class="done-stat-num">${studyCorrect}</div><div class="done-stat-label">Correct</div></div>
-    <div class="done-stat"><div class="done-stat-num">${studyIncorrect}</div><div class="done-stat-label">Incorrect</div></div>
+    <div class="done-stat"><div class="done-stat-num">${studyCorrect}</div><div class="done-stat-label">Good</div></div>
+    <div class="done-stat"><div class="done-stat-num">${studyIncorrect}</div><div class="done-stat-label">Bad</div></div>
     <div class="done-stat"><div class="done-stat-num">${pct}%</div><div class="done-stat-label">Accuracy</div></div>
   `;
+  const badBtn = document.getElementById('doneReviewBadBtn');
+  document.getElementById('doneBadCount').textContent = badItems.length;
+  badBtn.classList.toggle('hidden', badItems.length === 0);
 }
+
+document.getElementById('doneAgainBtn').addEventListener('click', () => {
+  startStudy(currentSetItems);
+});
+
+document.getElementById('doneReviewBadBtn').addEventListener('click', () => {
+  startStudy(badItems.map(item => item.data));
+});
+
+document.getElementById('doneNewSetBtn').addEventListener('click', () => {
+  document.getElementById('studyDone').classList.add('hidden');
+  document.getElementById('studySession').classList.remove('hidden');
+  document.getElementById('cardArea').classList.add('hidden');
+  openSetPanel();
+});
 
 /* ===== Quiz ===== */
 let quizSettings = { type: 'mc-meaning', content: 'vocab', chapter: 'all', count: 10 };
@@ -691,31 +829,68 @@ document.getElementById('kanjiModal').addEventListener('click', e => {
 });
 
 /* ===== Vocab View ===== */
+const VOCAB_PAGE_SIZE = 50;
 let vocabFilter = { tag: 'all', search: '' };
+let vocabFiltered = [];
+let vocabLoaded = 0;
+let vocabObserver = null;
 
-function renderVocabTable() {
-  const tbody = document.getElementById('vocabTableBody');
-  tbody.innerHTML = '';
-  const filtered = VOCABULARY.filter(v => {
+function getVocabFiltered() {
+  return VOCABULARY.filter(v => {
     const matchTag = vocabFilter.tag === 'all' || v.tags.includes(vocabFilter.tag);
     const q = vocabFilter.search.toLowerCase();
     const matchSearch = !q || v.word.includes(q) || v.reading.includes(q) || v.meaning.toLowerCase().includes(q) || v.romaji.includes(q);
     return matchTag && matchSearch;
   });
-  filtered.forEach(v => {
+}
+
+function renderVocabRows(items) {
+  const tbody = document.getElementById('vocabTableBody');
+  const frag = document.createDocumentFragment();
+  items.forEach(v => {
     const p = state.vocab[v.id];
     let statusClass = 'status-new', statusText = 'New';
-    if (p.correct >= 3 && p.interval >= 6) { statusClass = 'status-mastered'; statusText = 'Mastered'; }
-    else if (p.correct >= 1) { statusClass = 'status-learning'; statusText = 'Learning'; }
-    tbody.innerHTML += `<tr>
+    if (p && p.correct >= 3 && p.interval >= 6) { statusClass = 'status-mastered'; statusText = 'Mastered'; }
+    else if (p && p.correct >= 1) { statusClass = 'status-learning'; statusText = 'Learning'; }
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
       <td><span class="vocab-word-jp">${v.word}</span></td>
       <td><span class="vocab-reading">${v.reading}</span></td>
       <td>${v.meaning}</td>
       <td>Ch. ${v.chapter}</td>
-      <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-    </tr>`;
+      <td><span class="status-badge ${statusClass}">${statusText}</span></td>`;
+    frag.appendChild(tr);
   });
+  tbody.appendChild(frag);
 }
+
+function vocabLoadNextPage() {
+  const nextItems = vocabFiltered.slice(vocabLoaded, vocabLoaded + VOCAB_PAGE_SIZE);
+  if (nextItems.length === 0) return;
+  renderVocabRows(nextItems);
+  vocabLoaded += nextItems.length;
+  const loadMore = document.getElementById('vocabLoadMore');
+  if (vocabLoaded >= vocabFiltered.length) {
+    loadMore.classList.add('hidden');
+  } else {
+    loadMore.classList.remove('hidden');
+  }
+}
+
+function renderVocabTable() {
+  document.getElementById('vocabTableBody').innerHTML = '';
+  vocabFiltered = getVocabFiltered();
+  vocabLoaded = 0;
+  vocabLoadNextPage();
+}
+
+// IntersectionObserver for auto-loading when sentinel enters view
+vocabObserver = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) vocabLoadNextPage();
+}, { threshold: 0 });
+vocabObserver.observe(document.getElementById('vocabScrollSentinel'));
+
+document.getElementById('vocabLoadMoreBtn').addEventListener('click', vocabLoadNextPage);
 
 document.querySelectorAll('#vocabTagFilters .filter-pill').forEach(btn => {
   btn.addEventListener('click', () => {

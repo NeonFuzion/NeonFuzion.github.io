@@ -145,59 +145,103 @@
       </div>
     </section>
 
-    <!-- Study View (Flashcard / Membean style) -->
+    <!-- Study View -->
     <section class="view" id="view-study">
-      <div class="study-header">
-        <button class="btn-back" id="studyBackBtn">← Back</button>
-        <div class="study-progress-wrap">
-          <div class="study-progress-bar" id="studyProgressBar"></div>
-        </div>
-        <span class="study-counter" id="studyCounter">0 / 0</span>
-      </div>
 
-      <!-- Flashcard -->
-      <div class="card-scene" id="cardScene">
-        <div class="flash-card" id="flashCard">
-          <div class="card-front">
-            <div class="card-chapter-badge" id="cardChapterBadge">Chapter 1</div>
-            <div class="card-jp" id="cardJP">—</div>
-            <div class="card-tap-hint">Tap to reveal</div>
+      <!-- Session (always shown on study tab) -->
+      <div id="studySession">
+        <div class="session-top">
+          <div class="study-header">
+            <button class="btn-back" id="studyBackBtn">← Back</button>
+            <div class="study-progress-wrap">
+              <div class="study-progress-bar" id="studyProgressBar"></div>
+            </div>
+            <span class="study-counter" id="studyCounter"></span>
+            <button class="set-panel-btn" id="setToggle" title="Change set">▾</button>
           </div>
-          <div class="card-back">
-            <div class="card-reading" id="cardReading" style="font-size:1.1rem;color:#6b7280;margin-bottom:8px;">—</div>
-            <div class="card-meaning" id="cardMeaning">—</div>
-            <div class="card-example" id="cardExample">—</div>
-            <div class="card-example-en" id="cardExampleEn">—</div>
-            <div class="card-tags" id="cardTags"></div>
+
+          <!-- Collapsible picker panel (overlays card) -->
+          <div class="set-panel collapsed" id="setPanel">
+          <div class="picker-type-row" id="pickerTypeRow">
+            <button class="picker-type active" data-type="chapter">Chapter</button>
+            <button class="picker-type" data-type="tag">Topic</button>
           </div>
+          <div class="picker-values" id="pickerChapters"></div>
+          <div class="picker-values hidden" id="pickerTags"></div>
+          <div class="picker-count" id="pickerCount"></div>
+          <button class="btn-primary picker-start-btn" id="pickerStartBtn">Start Studying →</button>
+        </div>
+        </div><!-- /session-top -->
+
+        <!-- Card area (hidden until session starts) -->
+        <div class="card-area hidden" id="cardArea">
+          <div class="card-side">
+            <span class="side-label">Start</span>
+            <div class="sfs-btns" id="startFaceBtns">
+              <button class="sfs-btn active" data-face="0">Kanji</button>
+              <button class="sfs-btn" data-face="1">Reading</button>
+              <button class="sfs-btn" data-face="2">Meaning</button>
+              <button class="sfs-btn" data-face="3">Details</button>
+            </div>
+          </div>
+          <div class="card-scene" id="cardScene">
+            <div class="flash-card" id="flashCard">
+              <div class="card-face" id="cardFace0">
+                <div class="card-chapter-badge" id="cardChapterBadge">Chapter 1</div>
+                <div class="card-jp" id="cardJP">—</div>
+                <div class="card-tap-hint">Tap to reveal</div>
+              </div>
+              <div class="card-face" id="cardFace1">
+                <div class="card-face-label">Reading</div>
+                <div class="card-reading" id="cardReading">—</div>
+                <div class="card-tap-hint">Tap to continue</div>
+              </div>
+              <div class="card-face" id="cardFace2">
+                <div class="card-face-label">Meaning</div>
+                <div class="card-meaning" id="cardMeaning">—</div>
+                <div class="card-tap-hint">Tap to continue</div>
+              </div>
+              <div class="card-face" id="cardFace3">
+                <div class="card-face-label">Details</div>
+                <div class="card-example" id="cardExample">—</div>
+                <div class="card-example-en" id="cardExampleEn">—</div>
+                <div class="card-tags" id="cardTags"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-side hidden" id="faceNavRow">
+            <span class="side-label">Face</span>
+            <div class="face-nav-btns" id="faceNavBtns">
+              <button class="face-nav-btn active" data-face="0">Kanji</button>
+              <button class="face-nav-btn" data-face="1">Reading</button>
+              <button class="face-nav-btn" data-face="2">Meaning</button>
+              <button class="face-nav-btn" data-face="3">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="answer-btns hidden" id="answerBtns">
+          <button class="ans-btn ans-wrong" data-quality="1">
+            <span class="ans-icon">✗</span>
+            <span>Bad</span>
+          </button>
+          <button class="ans-btn ans-good" data-quality="4">
+            <span class="ans-icon">✓</span>
+            <span>Good</span>
+          </button>
         </div>
       </div>
 
-      <!-- Answer buttons (show after flip) -->
-      <div class="answer-btns hidden" id="answerBtns">
-        <button class="ans-btn ans-wrong" data-quality="1">
-          <span class="ans-icon">✗</span>
-          <span>Again</span>
-        </button>
-        <button class="ans-btn ans-hard" data-quality="3">
-          <span class="ans-icon">△</span>
-          <span>Hard</span>
-        </button>
-        <button class="ans-btn ans-good" data-quality="4">
-          <span class="ans-icon">○</span>
-          <span>Good</span>
-        </button>
-        <button class="ans-btn ans-easy" data-quality="5">
-          <span class="ans-icon">★</span>
-          <span>Easy</span>
-        </button>
-      </div>
-
+      <!-- Done Screen -->
       <div class="study-done hidden" id="studyDone">
         <div class="done-icon">🎉</div>
         <h2>Session Complete!</h2>
         <div class="done-stats" id="doneStats"></div>
-        <button class="btn-primary" id="doneBackBtn">Back to Dashboard</button>
+        <div class="done-actions">
+          <button class="btn-secondary" id="doneAgainBtn">Shuffle &amp; Go Again</button>
+          <button class="btn-secondary done-bad-btn hidden" id="doneReviewBadBtn">Review Bad (<span id="doneBadCount">0</span>)</button>
+          <button class="btn-primary" id="doneNewSetBtn">Pick New Set</button>
+        </div>
       </div>
     </section>
 
@@ -336,6 +380,10 @@
             <!-- filled by JS -->
           </tbody>
         </table>
+        <div id="vocabLoadMore" class="vocab-load-more hidden">
+          <button class="btn-secondary" id="vocabLoadMoreBtn">Load more</button>
+        </div>
+        <div id="vocabScrollSentinel"></div>
       </div>
     </section>
 
