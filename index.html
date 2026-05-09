@@ -205,7 +205,10 @@
                 <div class="card-face-label">Details</div>
                 <div class="card-example" id="cardExample">—</div>
                 <div class="card-example-en" id="cardExampleEn">—</div>
-                <div class="card-tags" id="cardTags"></div>
+                <div class="card-details-row">
+                  <span class="pos-chip" id="cardPos"></span>
+                  <div class="card-tags" id="cardTags"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -269,9 +272,9 @@
           </div>
           <div class="option-group">
             <label>Chapter</label>
-            <select class="styled-select" id="quizChapterSelect">
-              <option value="all">All Chapters</option>
-            </select>
+            <div class="option-pills" id="quizChapterPills">
+              <button class="option-pill active" data-chapter="all">All</button>
+            </div>
           </div>
           <div class="option-group">
             <label>Questions</label>
@@ -359,6 +362,19 @@
       <h2 class="view-title">Vocabulary List</h2>
       <div class="filter-bar">
         <input class="search-input" type="text" id="vocabSearch" placeholder="Search words...">
+        <div class="filter-pills" id="vocabPosFilters">
+          <button class="filter-pill active" data-pos="all">All POS</button>
+          <button class="filter-pill" data-pos="noun">Noun</button>
+          <button class="filter-pill" data-pos="v1">Godan [V1]</button>
+          <button class="filter-pill" data-pos="v2">Ichidan [V2]</button>
+          <button class="filter-pill" data-pos="v3">Irregular [V3]</button>
+          <button class="filter-pill" data-pos="i-adj">I-Adj</button>
+          <button class="filter-pill" data-pos="na-adj">Na-Adj</button>
+          <button class="filter-pill" data-pos="adjective">Adjective</button>
+          <button class="filter-pill" data-pos="adverb">Adverb</button>
+          <button class="filter-pill" data-pos="phrase">Expression</button>
+          <button class="filter-pill" data-pos="conjunction">Conjunction</button>
+        </div>
         <div class="filter-pills" id="vocabTagFilters">
           <button class="filter-pill active" data-tag="all">All</button>
           <button class="filter-pill" data-tag="daily">Daily</button>
@@ -374,11 +390,12 @@
         <table class="vocab-table">
           <thead>
             <tr>
-              <th>Word</th>
+              <th class="th-sortable" data-sort="word">Word <span class="sort-icon">↕</span></th>
               <th>Reading</th>
               <th>Meaning</th>
-              <th>Chapter</th>
-              <th>Status</th>
+              <th class="th-sortable" data-sort="pos">POS <span class="sort-icon">↕</span></th>
+              <th class="th-sortable" data-sort="chapter">Chapter <span class="sort-icon">↕</span></th>
+              <th class="th-sortable" data-sort="status">Status <span class="sort-icon">↕</span></th>
             </tr>
           </thead>
           <tbody id="vocabTableBody">

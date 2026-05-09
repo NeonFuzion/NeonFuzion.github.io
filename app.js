@@ -395,6 +395,7 @@ function showCard(idx) {
   document.getElementById('cardMeaning').textContent = v.meaning;
   document.getElementById('cardExample').textContent = v.example;
   document.getElementById('cardExampleEn').textContent = v.exampleEn;
+  document.getElementById('cardPos').textContent = posLabel(v.pos);
   document.getElementById('cardTags').innerHTML = v.tags.map(t => `<span class="tag-chip">${t}</span>`).join('');
 
   setupFaces(studyStartFace);
@@ -486,36 +487,48 @@ document.getElementById('doneNewSetBtn').addEventListener('click', () => {
 });
 
 /* ===== Quiz ===== */
-let quizSettings = { type: 'mc-meaning', content: 'vocab', chapter: 'all', count: 10 };
+let quizSettings = { type: ['mc-meaning'], content: ['vocab'], chapter: ['all'], count: 10 };
 let quizItems = [];
 let quizIdx = 0;
 let quizCorrectCount = 0;
 let quizIncorrectCount = 0;
 
 function renderQuizSetup() {
-  const sel = document.getElementById('quizChapterSelect');
-  sel.innerHTML = '<option value="all">All Chapters</option>';
+  const pills = document.getElementById('quizChapterPills');
   const chapters = [...new Set(VOCABULARY.map(v => v.chapter))].sort((a, b) => a - b);
+  pills.innerHTML = '<button class="option-pill active" data-chapter="all">All</button>';
   chapters.forEach(ch => {
-    sel.innerHTML += `<option value="${ch}">Chapter ${ch}</option>`;
+    pills.innerHTML += `<button class="option-pill" data-chapter="${ch}">Ch ${ch}</button>`;
   });
 }
 
-// Quiz option pills
+// Multi-select toggle helper: at least one must remain active
+function toggleMultiPill(allBtns, clicked, settingArr, value) {
+  const isActive = clicked.classList.contains('active');
+  const activeCount = [...allBtns].filter(b => b.classList.contains('active')).length;
+  if (isActive && activeCount === 1) return; // keep at least one
+  clicked.classList.toggle('active', !isActive);
+  if (!isActive) settingArr.push(value);
+  else { const i = settingArr.indexOf(value); if (i !== -1) settingArr.splice(i, 1); }
+}
+
+// Quiz Type pills (multi-select)
 document.querySelectorAll('[data-quiz]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-quiz]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    quizSettings.type = btn.dataset.quiz;
+    const all = document.querySelectorAll('[data-quiz]');
+    toggleMultiPill(all, btn, quizSettings.type, btn.dataset.quiz);
   });
 });
+
+// Content pills (multi-select)
 document.querySelectorAll('[data-content]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-content]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    quizSettings.content = btn.dataset.content;
+    const all = document.querySelectorAll('[data-content]');
+    toggleMultiPill(all, btn, quizSettings.content, btn.dataset.content);
   });
 });
+
+// Count pills (single-select, unchanged)
 document.querySelectorAll('[data-count]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('[data-count]').forEach(b => b.classList.remove('active'));
@@ -523,8 +536,39 @@ document.querySelectorAll('[data-count]').forEach(btn => {
     quizSettings.count = parseInt(btn.dataset.count);
   });
 });
-document.getElementById('quizChapterSelect').addEventListener('change', e => {
-  quizSettings.chapter = e.target.value;
+
+// Chapter pills (multi-select with "All" logic), delegated since pills are rendered by JS
+document.getElementById('quizChapterPills').addEventListener('click', e => {
+  const btn = e.target.closest('.option-pill');
+  if (!btn) return;
+  const val = btn.dataset.chapter;
+  const allBtns = document.querySelectorAll('#quizChapterPills .option-pill');
+  if (val === 'all') {
+    allBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    quizSettings.chapter = ['all'];
+    return;
+  }
+  // Deactivate "All" when a specific chapter is chosen
+  const allBtn = document.querySelector('#quizChapterPills [data-chapter="all"]');
+  const wasAll = allBtn && allBtn.classList.contains('active');
+  if (wasAll) {
+    allBtn.classList.remove('active');
+    quizSettings.chapter = [];
+  }
+  const isActive = btn.classList.contains('active');
+  const specificBtns = [...allBtns].filter(b => b.dataset.chapter !== 'all');
+  const activeSpecific = specificBtns.filter(b => b.classList.contains('active'));
+  if (isActive && activeSpecific.length === 1) {
+    // Last specific chapter — revert to All
+    btn.classList.remove('active');
+    allBtn.classList.add('active');
+    quizSettings.chapter = ['all'];
+    return;
+  }
+  btn.classList.toggle('active', !isActive);
+  if (!isActive) quizSettings.chapter.push(String(val));
+  else { const i = quizSettings.chapter.indexOf(String(val)); if (i !== -1) quizSettings.chapter.splice(i, 1); }
 });
 
 document.getElementById('startQuizBtn').addEventListener('click', startQuiz);
@@ -541,21 +585,30 @@ document.getElementById('newQuizBtn').addEventListener('click', () => {
 });
 document.getElementById('quizDoneBtn').addEventListener('click', () => showView('dashboard'));
 
+function poolForType(poolType) {
+  if (poolType === 'grammar') return GRAMMAR;
+  if (poolType === 'kanji') return KANJI;
+  return VOCABULARY;
+}
+
 function startQuiz() {
-  const isFillBlank = quizSettings.type === 'fill-blank';
-  const isGrammar = quizSettings.content === 'grammar';
-  let pool;
-  if (isGrammar) pool = GRAMMAR;
-  else if (quizSettings.content === 'vocab' || isFillBlank) pool = VOCABULARY;
-  else pool = KANJI;
+  let pool = [];
+  if (quizSettings.content.includes('vocab'))   pool = pool.concat(VOCABULARY.map(v => Object.assign({}, v, { _poolType: 'vocab' })));
+  if (quizSettings.content.includes('kanji'))   pool = pool.concat(KANJI.map(v => Object.assign({}, v, { _poolType: 'kanji' })));
+  if (quizSettings.content.includes('grammar')) pool = pool.concat(GRAMMAR.map(v => Object.assign({}, v, { _poolType: 'grammar' })));
 
-  let filtered = pool;
-  if ((quizSettings.content === 'vocab' || isFillBlank) && quizSettings.chapter !== 'all') {
-    filtered = pool.filter(v => v.chapter == quizSettings.chapter);
+  if (!quizSettings.chapter.includes('all')) {
+    pool = pool.filter(v => v.chapter !== undefined && quizSettings.chapter.includes(String(v.chapter)));
   }
-  if (filtered.length < 4) { alert('Not enough items for a quiz in this selection.'); return; }
+  if (pool.length < 4) { alert('Not enough items for a quiz in this selection.'); return; }
 
-  quizItems = shuffle([...filtered]).slice(0, quizSettings.count);
+  quizItems = shuffle([...pool]).slice(0, quizSettings.count).map(item => {
+    let types = quizSettings.type.filter(t =>
+      t !== 'fill-blank' || (item._poolType === 'vocab' && item.example)
+    );
+    if (types.length === 0) types = ['mc-meaning'];
+    return Object.assign({}, item, { _quizType: types[Math.floor(Math.random() * types.length)] });
+  });
   quizIdx = 0;
   quizCorrectCount = 0;
   quizIncorrectCount = 0;
@@ -573,12 +626,9 @@ function showQuizQuestion(idx) {
     return;
   }
   const item = quizItems[idx];
-  const isFillBlank = quizSettings.type === 'fill-blank';
-  const isGrammar = quizSettings.content === 'grammar';
-  let pool;
-  if (isGrammar) pool = GRAMMAR;
-  else if (quizSettings.content === 'vocab' || isFillBlank) pool = VOCABULARY;
-  else pool = KANJI;
+  const isFillBlank = item._quizType === 'fill-blank';
+  const isGrammar = item._poolType === 'grammar';
+  const pool = poolForType(item._poolType);
 
   document.getElementById('quizProgressBar').style.width = (idx / quizItems.length * 100) + '%';
   document.getElementById('quizCounter').textContent = `${idx + 1} / ${quizItems.length}`;
@@ -586,55 +636,343 @@ function showQuizQuestion(idx) {
   document.getElementById('quizIncorrect').textContent = `✗ ${quizIncorrectCount}`;
   document.getElementById('quizFeedback').classList.add('hidden');
 
-  const { questionText, questionReading, correctAnswer, questionLabel } = buildQuestion(item);
-  document.getElementById('questionLabel').textContent = questionLabel;
-
   const qWordEl = document.getElementById('questionWord');
   qWordEl.classList.toggle('is-sentence', isFillBlank);
+
+  let correctAnswer, questionLabel;
+
   if (isFillBlank) {
-    const blankHtml = item.example.replace(item.word, '<span class="blank-token">＿＿＿</span>');
+    questionLabel = 'Fill in the blank:';
+    const surface    = findConjugatedForm(item.word, item.pos, item.example) || item.word;
+    const conjType   = detectConjType(item.word, item.pos, surface);
+    correctAnswer    = surface;
+
+    const blankHtml  = item.example.replace(surface, '<span class="blank-token">＿＿＿</span>');
     qWordEl.innerHTML = blankHtml;
+    document.getElementById('questionReading').textContent = '';
+
+    // Wrong answers: same POS first, conjugated to the same form
+    const wrongPool  = VOCABULARY.filter(p => p.id !== item.id);
+    const itemGroup  = getVocabPOS(item);
+    const samePos    = shuffle(wrongPool.filter(p => getVocabPOS(p) === itemGroup));
+    const rest       = shuffle(wrongPool.filter(p => getVocabPOS(p) !== itemGroup));
+    const wrongItems = [...samePos, ...rest].slice(0, 3);
+
+    const wrongs = wrongItems.map(w => {
+      if (conjType && (w.pos === 'v1' || w.pos === 'v2' || w.pos === 'v3')) {
+        return conjugateVerb(w.word, w.pos, conjType);
+      }
+      return w.word;
+    });
+
+    const choices = shuffle([correctAnswer, ...wrongs]);
+    const choicesEl = document.getElementById('quizChoices');
+    choicesEl.innerHTML = '';
+    choices.forEach(choice => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = choice;
+      btn.addEventListener('click', () => handleQuizAnswer(btn, choice, correctAnswer, item));
+      choicesEl.appendChild(btn);
+    });
   } else {
+    const { questionText, questionReading, correctAnswer: ca, questionLabel: ql } = buildQuestion(item, item._quizType, item._poolType);
+    correctAnswer = ca;
+    questionLabel = ql;
     qWordEl.textContent = questionText;
-  }
-  document.getElementById('questionReading').textContent = questionReading;
+    document.getElementById('questionReading').textContent = questionReading;
 
-  // Wrong answers — same POS first, fill remainder from any POS / any chapter
-  const wrongPool = (isFillBlank ? VOCABULARY : pool).filter(p => p.id !== item.id);
-  let wrongs;
-  if (!isGrammar && quizSettings.content !== 'kanji') {
-    const pos = getVocabPOS(item);
-    const samePos = shuffle(wrongPool.filter(p => getVocabPOS(p) === pos));
-    const rest   = shuffle(wrongPool.filter(p => getVocabPOS(p) !== pos));
-    wrongs = [...samePos, ...rest].slice(0, 3).map(p => buildAnswer(p));
-  } else {
-    wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p));
+    // Wrong answers — same POS first, fill remainder from any POS / any chapter
+    const wrongPool = pool.filter(p => p.id !== item.id);
+    let wrongs;
+    if (!isGrammar && item._poolType !== 'kanji') {
+      const pos = getVocabPOS(item);
+      const samePos = shuffle(wrongPool.filter(p => getVocabPOS(p) === pos));
+      const rest    = shuffle(wrongPool.filter(p => getVocabPOS(p) !== pos));
+      wrongs = [...samePos, ...rest].slice(0, 3).map(p => buildAnswer(p, item._quizType, item._poolType));
+    } else {
+      wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p, item._quizType, item._poolType));
+    }
+    const choices = shuffle([correctAnswer, ...wrongs]);
+    const choicesEl = document.getElementById('quizChoices');
+    choicesEl.innerHTML = '';
+    choices.forEach(choice => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = choice;
+      btn.addEventListener('click', () => handleQuizAnswer(btn, choice, correctAnswer, item));
+      choicesEl.appendChild(btn);
+    });
   }
-  const choices = shuffle([correctAnswer, ...wrongs]);
 
-  const choicesEl = document.getElementById('quizChoices');
-  choicesEl.innerHTML = '';
-  choices.forEach(choice => {
-    const btn = document.createElement('button');
-    btn.className = 'choice-btn';
-    btn.textContent = choice;
-    btn.addEventListener('click', () => handleQuizAnswer(btn, choice, correctAnswer, item));
-    choicesEl.appendChild(btn);
-  });
+  document.getElementById('questionLabel').textContent = questionLabel;
+}
+
+// Hiragana range for trailing inflection capture
+const HIRAGANA = /^[\u3040-\u309F]$/;
+
+// Full V1 godan conjugation table: finalKana → { masu-stem, te-form, ta-form, nai-stem, ba-stem }
+const V1_TABLE = {
+  'う': { masu:'い',  te:'って',  ta:'った',  nai:'わ',  ba:'え' },
+  'く': { masu:'き',  te:'いて',  ta:'いた',  nai:'か',  ba:'け' },
+  'ぐ': { masu:'ぎ',  te:'いで',  ta:'いだ',  nai:'が',  ba:'げ' },
+  'す': { masu:'し',  te:'して',  ta:'した',  nai:'さ',  ba:'せ' },
+  'つ': { masu:'ち',  te:'って',  ta:'った',  nai:'た',  ba:'て' },
+  'ぬ': { masu:'に',  te:'んで',  ta:'んだ',  nai:'な',  ba:'ね' },
+  'ぶ': { masu:'び',  te:'んで',  ta:'んだ',  nai:'ば',  ba:'べ' },
+  'む': { masu:'み',  te:'んで',  ta:'んだ',  nai:'ま',  ba:'め' },
+  'る': { masu:'り',  te:'って',  ta:'った',  nai:'ら',  ba:'れ' },
+};
+
+// Ordered suffix → conjugation-type pairs (longest first to avoid partial matches)
+const V2_SUFFIX_DETECT = [
+  ['なければならない','nakereba_naranai'], ['なければいけない','nakereba_ikenai'],
+  ['なくてはならない','nakutewa_naranai'], ['なくてはいけない','nakutewa_ikenai'],
+  ['ながら','nagara'],
+  ['ていません','teimasen'], ['ています','teimasu'], ['ていた','teita'],
+  ['ていない','teinai'],    ['ている','teiru'],
+  ['てしまいました','teshimaimashita'], ['てしまった','teshimatta'], ['てしまう','teshimau'],
+  ['てから','tekara'], ['てもいい','temoii'], ['てもよい','temoii'],
+  ['てもらいました','temoraimashita'], ['てもらう','temorau'],
+  ['てくれました','tekuremashita'], ['てくれる','tekureru'],
+  ['てください','tekudasai'],
+  ['ませんでした','masendeshita'], ['ました','mashita'], ['ません','masen'], ['ます','masu'],
+  ['なかった','nakatta'], ['ない','nai'],
+  ['た','ta'], ['て','te'], ['れば','ba'],
+  ['','plain'],
+];
+
+function detectConjType(word, pos, surface) {
+  if (!surface || surface === word) return null;
+
+  const cleanWord = word.replace(/^[（(][^）)]*[）)]\s*/, '');
+
+  if (pos === 'v2') {
+    const stem = cleanWord.replace(/る$/, '');
+    if (!surface.startsWith(stem)) return null;
+    const suf = surface.slice(stem.length);
+    for (const [ending, type] of V2_SUFFIX_DETECT) {
+      if (suf === ending || suf.startsWith(ending)) return type;
+    }
+    return null;
+  }
+
+  if (pos === 'v3') {
+    let base = cleanWord.replace(/する$/, '').replace(/くる$/, '');
+    if (base === cleanWord && cleanWord.endsWith('る')) base = cleanWord.slice(0, -1);
+    if (!surface.startsWith(base)) return null;
+    const suf = surface.slice(base.length);
+    // Pure kuru (来る): uses V2-like written suffixes (来て, 来た, 来ます…)
+    if (cleanWord === '来る' || cleanWord === 'くる') {
+      for (const [ending, type] of V2_SUFFIX_DETECT) {
+        if (suf === ending || suf.startsWith(ending)) return type;
+      }
+      return null;
+    }
+    // Suru conjugation: map し+V2_suffix or する → type
+    if (suf.startsWith('する') || suf === 'する') return 'plain';
+    if (suf.startsWith('し')) {
+      const v2suf = suf.slice(1); // remove し
+      for (const [ending, type] of V2_SUFFIX_DETECT) {
+        if (v2suf === ending || v2suf.startsWith(ending)) return type;
+      }
+    }
+    if (suf.startsWith('すれば')) return 'ba';
+    if (suf.startsWith('でき')) return 'potential';
+    return null;
+  }
+
+  if (pos === 'v1') {
+    const finalKana = cleanWord.slice(-1);
+    const kanjiStem = cleanWord.slice(0, -1);
+    const t = V1_TABLE[finalKana];
+    if (!t || !surface.startsWith(kanjiStem)) return null;
+    const suf = surface.slice(kanjiStem.length);
+
+    // Build ordered candidates (longest first)
+    const candidates = [
+      [t.nai + 'なければならない', 'nakereba_naranai'],
+      [t.nai + 'なければいけない', 'nakereba_ikenai'],
+      [t.nai + 'なくてはならない', 'nakutewa_naranai'],
+      [t.nai + 'なくてはいけない', 'nakutewa_ikenai'],
+      [t.masu + 'ながら', 'nagara'],
+      [t.masu + 'ません',  'masen'],
+      [t.masu + 'ました',  'mashita'],
+      [t.masu + 'ます',    'masu'],
+      [t.te + 'しまいました', 'teshimaimashita'],
+      [t.te + 'しまった',   'teshimatta'],
+      [t.te + 'しまう',     'teshimau'],
+      [t.te + 'いません',   'teimasen'],
+      [t.te + 'います',     'teimasu'],
+      [t.te + 'いた',       'teita'],
+      [t.te + 'いない',     'teinai'],
+      [t.te + 'いる',       'teiru'],
+      [t.te + 'から',       'tekara'],
+      [t.te + 'もいい',     'temoii'],
+      [t.te + 'もらいました','temoraimashita'],
+      [t.te + 'もらう',     'temorau'],
+      [t.te + 'くれました', 'tekuremashita'],
+      [t.te + 'くれる',     'tekureru'],
+      [t.te + 'ください',   'tekudasai'],
+      [t.te,                'te'],
+      [t.ta,                'ta'],
+      [t.nai + 'なかった',  'nakatta'],
+      [t.nai + 'ない',      'nai'],
+      [t.ba + 'ば',         'ba'],
+      [finalKana,           'plain'],
+    ];
+    for (const [pattern, type] of candidates) {
+      if (suf === pattern || suf.startsWith(pattern)) return type;
+    }
+    return null;
+  }
+
+  return null;
+}
+
+function conjugateVerb(word, pos, conjType) {
+  if (!conjType || conjType === 'plain') return word;
+  const cleanWord = word.replace(/^[（(][^）)]*[）)]\s*/, '');
+
+  if (pos === 'v2') {
+    const stem = cleanWord.replace(/る$/, '');
+    if (stem === cleanWord) return word;
+    const V2_MAP = {
+      masu:'ます', mashita:'ました', masen:'ません', masendeshita:'ませんでした',
+      te:'て', ta:'た', nai:'ない', nakatta:'なかった',
+      teiru:'ている', teita:'ていた', teimasu:'ています', teimasen:'ていません', teinai:'ていない',
+      teshimau:'てしまう', teshimatta:'てしまった', teshimaimashita:'てしまいました',
+      tekara:'てから', nagara:'ながら', temoii:'てもいい',
+      temorau:'てもらう', temoraimashita:'てもらいました',
+      tekureru:'てくれる', tekuremashita:'てくれました', tekudasai:'てください',
+      nakereba_naranai:'なければならない', nakereba_ikenai:'なければいけない',
+      nakutewa_naranai:'なくてはならない', nakutewa_ikenai:'なくてはいけない',
+      ba:'れば', potential:'られる',
+    };
+    return V2_MAP[conjType] !== undefined ? stem + V2_MAP[conjType] : word;
+  }
+
+  if (pos === 'v3') {
+    let base = cleanWord.replace(/する$/, '').replace(/くる$/, '');
+    if (base === cleanWord && cleanWord.endsWith('る')) base = cleanWord.slice(0, -1);
+    // Pure kuru (来る / くる): written conjugation looks like ichidan (来て, 来た, 来ます…)
+    if (cleanWord === '来る' || cleanWord === 'くる') {
+      const KURU_MAP = {
+        masu:'ます', mashita:'ました', masen:'ません', masendeshita:'ませんでした',
+        te:'て', ta:'た', nai:'ない', nakatta:'なかった',
+        teiru:'ている', teita:'ていた', teimasu:'ています', teimasen:'ていません', teinai:'ていない',
+        teshimau:'てしまう', teshimatta:'てしまった', teshimaimashita:'てしまいました',
+        tekara:'てから', nagara:'ながら', temoii:'てもいい',
+        temorau:'てもらう', temoraimashita:'てもらいました',
+        tekureru:'てくれる', tekuremashita:'てくれました', tekudasai:'てください',
+        nakereba_naranai:'なければならない', nakereba_ikenai:'なければいけない',
+        nakutewa_naranai:'なくてはならない', nakutewa_ikenai:'なくてはいけない',
+        ba:'れば',
+      };
+      return KURU_MAP[conjType] !== undefined ? base + KURU_MAP[conjType] : word;
+    }
+    const SURU_MAP = {
+      masu:'します', mashita:'しました', masen:'しません', masendeshita:'しませんでした',
+      te:'して', ta:'した', nai:'しない', nakatta:'しなかった',
+      teiru:'している', teita:'していた', teimasu:'しています', teimasen:'していません', teinai:'していない',
+      teshimau:'してしまう', teshimatta:'してしまった', teshimaimashita:'してしまいました',
+      tekara:'してから', nagara:'しながら', temoii:'してもいい',
+      temorau:'してもらう', temoraimashita:'してもらいました',
+      tekureru:'してくれる', tekuremashita:'してくれました', tekudasai:'してください',
+      nakereba_naranai:'しなければならない', nakereba_ikenai:'しなければいけない',
+      nakutewa_naranai:'しなくてはならない', nakutewa_ikenai:'しなくてはいけない',
+      ba:'すれば', potential:'できる',
+    };
+    return SURU_MAP[conjType] !== undefined ? base + SURU_MAP[conjType] : word;
+  }
+
+  if (pos === 'v1') {
+    const finalKana = cleanWord.slice(-1);
+    const kanjiStem = cleanWord.slice(0, -1);
+    const t = V1_TABLE[finalKana];
+    if (!t) return word;
+    const suf = {
+      masu: t.masu+'ます', mashita: t.masu+'ました', masen: t.masu+'ません',
+      masendeshita: t.masu+'ませんでした',
+      te: t.te, ta: t.ta,
+      nai: t.nai+'ない', nakatta: t.nai+'なかった',
+      teiru: t.te+'いる', teita: t.te+'いた', teimasu: t.te+'います',
+      teimasen: t.te+'いません', teinai: t.te+'いない',
+      teshimau: t.te+'しまう', teshimatta: t.te+'しまった', teshimaimashita: t.te+'しまいました',
+      tekara: t.te+'から', nagara: t.masu+'ながら', temoii: t.te+'もいい',
+      temorau: t.te+'もらう', temoraimashita: t.te+'もらいました',
+      tekureru: t.te+'くれる', tekuremashita: t.te+'くれました', tekudasai: t.te+'ください',
+      nakereba_naranai: t.nai+'なければならない', nakereba_ikenai: t.nai+'なければいけない',
+      nakutewa_naranai: t.te+'はならない', nakutewa_ikenai: t.te+'はいけない',
+      ba: t.ba+'ば', potential: t.ba+'る',
+    };
+    return suf[conjType] !== undefined ? kanjiStem + suf[conjType] : word;
+  }
+
+  return word;
+}
+
+function findConjugatedForm(word, pos, example) {
+  // 1. Direct match — word is already the surface form in the sentence
+  if (example.includes(word)) return word;
+
+  // Strip parenthetical prefixes like （病気に） before stem extraction
+  const cleanWord = word.replace(/^[（(][^）)]*[）)]\s*/, '');
+  if (cleanWord !== word && example.includes(cleanWord)) return cleanWord;
+
+  let stem = '';
+
+  const w = cleanWord;
+  if (pos === 'v3') {
+    // Suru compounds: 勉強する → stem is 勉強
+    stem = w.replace(/する$/, '').replace(/くる$/, '');
+    // 来る: kanji form of kuru — strip the trailing る
+    if (stem === w && w.endsWith('る')) stem = w.slice(0, -1);
+  } else if (pos === 'v2') {
+    // Ichidan: drop る → 食べる → 食べ
+    stem = w.replace(/る$/, '');
+  } else if (pos === 'v1') {
+    // Godan: drop the final う-row kana entirely, leaving the kanji/stem
+    // e.g. 書く → 書,  飲む → 飲,  話す → 話
+    // For the surface form, also try the い-stem (書き, 飲み) since て/た forms
+    // use a sound-changed kana (書いて, 飲んで) — but the kanji is common to all forms.
+    stem = w.replace(/[うくぐすつぬぶむる]$/, '');
+  }
+
+  if (!stem) return null;
+
+  const idx = example.indexOf(stem);
+  if (idx === -1) return null;
+
+  // Capture the stem plus any following hiragana (the conjugated ending)
+  let end = idx + stem.length;
+  while (end < example.length && HIRAGANA.test(example[end])) end++;
+
+  // Safety: don't match an empty or suspiciously short span
+  const match = example.slice(idx, end);
+  if (!match) return null;
+  return match;
+}
+
+function posLabel(pos) {
+  const labels = {
+    'v1': 'Godan [V1]', 'v2': 'Ichidan [V2]', 'v3': 'Irregular [V3]',
+    'noun': 'Noun', 'i-adj': 'I-Adjective', 'na-adj': 'Na-Adjective',
+    'adjective': 'Adjective', 'adverb': 'Adverb',
+    'phrase': 'Expression', 'conjunction': 'Conjunction',
+  };
+  return labels[pos] || (pos || '');
 }
 
 function getVocabPOS(item) {
-  const m = item.meaning.toLowerCase();
-  if (m.includes('(na-adjective)') || m.includes('(na-adj)')) return 'na-adj';
-  if (m.includes('(i-adjective)') || m.includes('(i-adj)')) return 'i-adj';
-  if (/\bto\s+\w/.test(m)) return 'verb';
-  return 'noun';
+  const pos = item.pos;
+  if (pos === 'v1' || pos === 'v2' || pos === 'v3') return 'verb';
+  return pos || 'noun';
 }
 
-function buildQuestion(item) {
-  const type = quizSettings.type;
-  const isVocab = quizSettings.content === 'vocab';
-  const isGrammar = quizSettings.content === 'grammar';
+function buildQuestion(item, type, poolType) {
+  const isVocab = poolType === 'vocab';
+  const isGrammar = poolType === 'grammar';
   let questionText, questionReading = '', correctAnswer, questionLabel;
 
   if (isGrammar) {
@@ -671,10 +1009,9 @@ function buildQuestion(item) {
   return { questionText, questionReading, correctAnswer, questionLabel };
 }
 
-function buildAnswer(item) {
-  const type = quizSettings.type;
-  const isGrammar = quizSettings.content === 'grammar';
-  const isVocab = quizSettings.content === 'vocab' || type === 'fill-blank';
+function buildAnswer(item, type, poolType) {
+  const isGrammar = poolType === 'grammar';
+  const isVocab = poolType === 'vocab' || type === 'fill-blank';
   if (isGrammar) return type === 'mc-word' ? item.pattern : item.meaning;
   if (type === 'mc-meaning') return item.meaning;
   if (type === 'mc-reading') return isVocab ? item.reading : item.onyomi;
@@ -690,8 +1027,8 @@ function handleQuizAnswer(btn, choice, correct, item) {
   });
 
   const isCorrect = choice === correct;
-  const isGrammar = quizSettings.content === 'grammar';
-  const useVocab = !isGrammar && (quizSettings.content === 'vocab' || quizSettings.type === 'fill-blank');
+  const isGrammar = item._poolType === 'grammar';
+  const useVocab = !isGrammar && item._poolType === 'vocab';
   if (!isCorrect) {
     btn.classList.add('wrong');
     quizIncorrectCount++;
@@ -725,7 +1062,7 @@ function handleQuizAnswer(btn, choice, correct, item) {
             ${item.example ? `<div class="reasoning-example">${item.example}</div><div class="reasoning-example-en">${item.exampleEn}</div>` : ''}`;
   } else {
     if (useVocab) {
-      html = `<div class="reasoning-word">${item.word} <span class="reasoning-reading">${item.reading !== item.word ? item.reading : ''}</span></div>
+      html = `<div class="reasoning-word">${item.word} <span class="reasoning-reading">${item.reading !== item.word ? item.reading : ''}</span>${item.pos ? `<span class="reasoning-pos">${posLabel(item.pos)}</span>` : ''}</div>
               <div class="reasoning-meaning">${item.meaning}</div>
               <div class="reasoning-example">${item.example}</div>
               <div class="reasoning-example-en">${item.exampleEn}</div>`;
@@ -850,35 +1187,58 @@ document.getElementById('kanjiModal').addEventListener('click', e => {
 
 /* ===== Vocab View ===== */
 const VOCAB_PAGE_SIZE = 50;
-let vocabFilter = { tag: 'all', search: '' };
+let vocabFilter = { tag: 'all', pos: 'all', search: '' };
+let vocabSort = { key: 'chapter', dir: 1 };
 let vocabFiltered = [];
 let vocabLoaded = 0;
 let vocabObserver = null;
 
+const STATUS_ORDER = { 'New': 0, 'Learning': 1, 'Mastered': 2 };
+const POS_ORDER = { noun: 0, 'na-adj': 1, 'i-adj': 2, adjective: 3, v1: 4, v2: 5, v3: 6, adverb: 7, phrase: 8, conjunction: 9 };
+
+function getVocabStatus(v) {
+  const p = state.vocab[v.id];
+  if (p && p.correct >= 3 && p.interval >= 6) return 'Mastered';
+  if (p && p.correct >= 1) return 'Learning';
+  return 'New';
+}
+
 function getVocabFiltered() {
-  return VOCABULARY.filter(v => {
+  let list = VOCABULARY.filter(v => {
     const matchTag = vocabFilter.tag === 'all' || v.tags.includes(vocabFilter.tag);
+    const matchPos = vocabFilter.pos === 'all' || v.pos === vocabFilter.pos;
     const q = vocabFilter.search.toLowerCase();
     const matchSearch = !q || v.word.includes(q) || v.reading.includes(q) || v.meaning.toLowerCase().includes(q) || v.romaji.includes(q);
-    return matchTag && matchSearch;
+    return matchTag && matchPos && matchSearch;
   });
+
+  const { key, dir } = vocabSort;
+  list.sort((a, b) => {
+    let av, bv;
+    if (key === 'word')    { av = a.word;    bv = b.word; }
+    else if (key === 'pos')    { av = (POS_ORDER[a.pos] !== undefined ? POS_ORDER[a.pos] : 99); bv = (POS_ORDER[b.pos] !== undefined ? POS_ORDER[b.pos] : 99); return (av - bv) * dir; }
+    else if (key === 'chapter'){ av = a.chapter; bv = b.chapter; return (av - bv) * dir; }
+    else if (key === 'status') { av = STATUS_ORDER[getVocabStatus(a)]; bv = STATUS_ORDER[getVocabStatus(b)]; return (av - bv) * dir; }
+    else return 0;
+    return av < bv ? -dir : av > bv ? dir : 0;
+  });
+  return list;
 }
 
 function renderVocabRows(items) {
   const tbody = document.getElementById('vocabTableBody');
   const frag = document.createDocumentFragment();
   items.forEach(v => {
-    const p = state.vocab[v.id];
-    let statusClass = 'status-new', statusText = 'New';
-    if (p && p.correct >= 3 && p.interval >= 6) { statusClass = 'status-mastered'; statusText = 'Mastered'; }
-    else if (p && p.correct >= 1) { statusClass = 'status-learning'; statusText = 'Learning'; }
+    const status = getVocabStatus(v);
+    const statusClass = status === 'Mastered' ? 'status-mastered' : status === 'Learning' ? 'status-learning' : 'status-new';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><span class="vocab-word-jp">${v.word}</span></td>
       <td><span class="vocab-reading">${v.reading}</span></td>
       <td>${v.meaning}</td>
+      <td>${v.pos ? `<span class="pos-chip">${posLabel(v.pos)}</span>` : ''}</td>
       <td>Ch. ${v.chapter}</td>
-      <td><span class="status-badge ${statusClass}">${statusText}</span></td>`;
+      <td><span class="status-badge ${statusClass}">${status}</span></td>`;
     frag.appendChild(tr);
   });
   tbody.appendChild(frag);
@@ -901,6 +1261,17 @@ function renderVocabTable() {
   document.getElementById('vocabTableBody').innerHTML = '';
   vocabFiltered = getVocabFiltered();
   vocabLoaded = 0;
+  // Sync sort header indicators
+  document.querySelectorAll('.th-sortable').forEach(el => {
+    const icon = el.querySelector('.sort-icon');
+    if (el.dataset.sort === vocabSort.key) {
+      el.classList.add('sort-active');
+      icon.textContent = vocabSort.dir === 1 ? '↑' : '↓';
+    } else {
+      el.classList.remove('sort-active');
+      icon.textContent = '↕';
+    }
+  });
   vocabLoadNextPage();
 }
 
@@ -923,6 +1294,39 @@ document.querySelectorAll('#vocabTagFilters .filter-pill').forEach(btn => {
 
 document.getElementById('vocabSearch').addEventListener('input', e => {
   vocabFilter.search = e.target.value;
+  renderVocabTable();
+});
+
+document.getElementById('vocabPosFilters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-pill');
+  if (!btn) return;
+  document.querySelectorAll('#vocabPosFilters .filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  vocabFilter.pos = btn.dataset.pos;
+  renderVocabTable();
+});
+
+document.querySelector('.vocab-table thead').addEventListener('click', e => {
+  const th = e.target.closest('.th-sortable');
+  if (!th) return;
+  const key = th.dataset.sort;
+  if (vocabSort.key === key) {
+    vocabSort.dir *= -1;
+  } else {
+    vocabSort.key = key;
+    vocabSort.dir = 1;
+  }
+  // Update header indicators
+  document.querySelectorAll('.th-sortable').forEach(el => {
+    const icon = el.querySelector('.sort-icon');
+    if (el.dataset.sort === vocabSort.key) {
+      el.classList.add('sort-active');
+      icon.textContent = vocabSort.dir === 1 ? '↑' : '↓';
+    } else {
+      el.classList.remove('sort-active');
+      icon.textContent = '↕';
+    }
+  });
   renderVocabTable();
 });
 
