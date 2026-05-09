@@ -534,6 +534,11 @@ document.getElementById('quizBackBtn').addEventListener('click', () => {
   document.getElementById('quizResults').classList.add('hidden');
 });
 document.getElementById('retryQuizBtn').addEventListener('click', startQuiz);
+document.getElementById('newQuizBtn').addEventListener('click', () => {
+  document.getElementById('quizResults').classList.add('hidden');
+  document.getElementById('quizGame').classList.add('hidden');
+  document.getElementById('quizSetup').style.display = '';
+});
 document.getElementById('quizDoneBtn').addEventListener('click', () => showView('dashboard'));
 
 function startQuiz() {
@@ -594,10 +599,17 @@ function showQuizQuestion(idx) {
   }
   document.getElementById('questionReading').textContent = questionReading;
 
-  // Wrong answers
+  // Wrong answers — same POS first, fill remainder from any POS / any chapter
   const wrongPool = (isFillBlank ? VOCABULARY : pool).filter(p => p.id !== item.id);
-
-  const wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p));
+  let wrongs;
+  if (!isGrammar && quizSettings.content !== 'kanji') {
+    const pos = getVocabPOS(item);
+    const samePos = shuffle(wrongPool.filter(p => getVocabPOS(p) === pos));
+    const rest   = shuffle(wrongPool.filter(p => getVocabPOS(p) !== pos));
+    wrongs = [...samePos, ...rest].slice(0, 3).map(p => buildAnswer(p));
+  } else {
+    wrongs = shuffle(wrongPool).slice(0, 3).map(p => buildAnswer(p));
+  }
   const choices = shuffle([correctAnswer, ...wrongs]);
 
   const choicesEl = document.getElementById('quizChoices');
@@ -609,6 +621,14 @@ function showQuizQuestion(idx) {
     btn.addEventListener('click', () => handleQuizAnswer(btn, choice, correctAnswer, item));
     choicesEl.appendChild(btn);
   });
+}
+
+function getVocabPOS(item) {
+  const m = item.meaning.toLowerCase();
+  if (m.includes('(na-adjective)') || m.includes('(na-adj)')) return 'na-adj';
+  if (m.includes('(i-adjective)') || m.includes('(i-adj)')) return 'i-adj';
+  if (/\bto\s+\w/.test(m)) return 'verb';
+  return 'noun';
 }
 
 function buildQuestion(item) {
@@ -630,7 +650,7 @@ function buildQuestion(item) {
   } else if (type === 'mc-meaning') {
     questionLabel = 'What is the meaning of:';
     questionText = isVocab ? item.word : item.character;
-    questionReading = isVocab ? item.reading : item.onyomi;
+    questionReading = isVocab ? '' : item.onyomi;
     correctAnswer = item.meaning;
   } else if (type === 'mc-reading') {
     questionLabel = 'What is the reading of:';
@@ -703,7 +723,7 @@ function handleQuizAnswer(btn, choice, correct, item) {
             <div class="reasoning-meaning">${item.meaning}</div>
             ${item.usage ? `<div class="reasoning-usage">${item.usage}</div>` : ''}
             ${item.example ? `<div class="reasoning-example">${item.example}</div><div class="reasoning-example-en">${item.exampleEn}</div>` : ''}`;
-  } else if (!isCorrect) {
+  } else {
     if (useVocab) {
       html = `<div class="reasoning-word">${item.word} <span class="reasoning-reading">${item.reading !== item.word ? item.reading : ''}</span></div>
               <div class="reasoning-meaning">${item.meaning}</div>

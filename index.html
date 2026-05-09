@@ -297,21 +297,25 @@
           <span class="quiz-correct" id="quizCorrect">✓ 0</span>
           <span class="quiz-incorrect" id="quizIncorrect">✗ 0</span>
         </div>
-        <div class="quiz-question-card">
-          <div class="question-label" id="questionLabel">What is the meaning of:</div>
-          <div class="question-word" id="questionWord">—</div>
-          <div class="question-reading" id="questionReading"></div>
-        </div>
-        <div class="quiz-choices" id="quizChoices">
-          <!-- filled by JS -->
-        </div>
-        <div class="quiz-feedback hidden" id="quizFeedback">
-          <div class="feedback-top">
-            <div class="feedback-icon" id="feedbackIcon"></div>
-            <div class="feedback-text" id="feedbackText"></div>
+        <div class="quiz-body">
+          <div class="quiz-left">
+            <div class="quiz-question-card">
+              <div class="question-label" id="questionLabel">What is the meaning of:</div>
+              <div class="question-word" id="questionWord">—</div>
+              <div class="question-reading" id="questionReading"></div>
+            </div>
+            <div class="quiz-choices" id="quizChoices">
+              <!-- filled by JS -->
+            </div>
           </div>
-          <div class="feedback-reasoning hidden" id="feedbackReasoning"></div>
-          <button class="btn-primary btn-next" id="nextQuestionBtn">Next →</button>
+          <div class="quiz-feedback hidden" id="quizFeedback">
+            <div class="feedback-top">
+              <div class="feedback-icon" id="feedbackIcon"></div>
+              <div class="feedback-text" id="feedbackText"></div>
+            </div>
+            <div class="feedback-reasoning hidden" id="feedbackReasoning"></div>
+            <button class="btn-primary btn-next" id="nextQuestionBtn">Next →</button>
+          </div>
         </div>
       </div>
 
@@ -328,6 +332,7 @@
         </div>
         <div class="results-actions">
           <button class="btn-secondary" id="retryQuizBtn">Retry</button>
+          <button class="btn-secondary" id="newQuizBtn">New Quiz</button>
           <button class="btn-primary" id="quizDoneBtn">Back to Dashboard</button>
         </div>
       </div>
