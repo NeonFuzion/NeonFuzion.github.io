@@ -604,7 +604,8 @@ function startQuiz() {
 
   quizItems = shuffle([...pool]).slice(0, quizSettings.count).map(item => {
     let types = quizSettings.type.filter(t =>
-      t !== 'fill-blank' || (item._poolType === 'vocab' && item.example)
+      t !== 'fill-blank' ||
+      (item._poolType === 'vocab' && item.example && findConjugatedForm(item.word, item.pos, item.example) !== null)
     );
     if (types.length === 0) types = ['mc-meaning'];
     return Object.assign({}, item, { _quizType: types[Math.floor(Math.random() * types.length)] });
@@ -659,9 +660,12 @@ function showQuizQuestion(idx) {
     const wrongItems = [...samePos, ...rest].slice(0, 3);
 
     const wrongs = wrongItems.map(w => {
-      if (conjType && (w.pos === 'v1' || w.pos === 'v2' || w.pos === 'v3')) {
+      if (conjType && (w.pos === 'v1' || w.pos === 'v2' || w.pos === 'v3' || w.pos === 'i-adj')) {
         return conjugateVerb(w.word, w.pos, conjType);
       }
+      // For phrase/template words: find their own surface from their example
+      const wSurface = findConjugatedForm(w.word, w.pos, w.example);
+      if (wSurface && wSurface !== w.word) return wSurface;
       return w.word;
     });
 
@@ -827,6 +831,21 @@ function detectConjType(word, pos, surface) {
     return null;
   }
 
+  if (pos === 'i-adj') {
+    const stem = cleanWord.replace(/い$/, '');
+    if (!surface.startsWith(stem)) return null;
+    const suf = surface.slice(stem.length);
+    const cands = [
+      ['くなければならない', 'i_nakereba_naranai'], ['くなければいけない', 'i_nakereba_ikenai'],
+      ['くなかった', 'i_nakatta'], ['くてもいい', 'i_temoii'],
+      ['くなる', 'i_naru'], ['くない', 'i_nai'], ['くて', 'i_te'],
+      ['かった', 'i_ta'], ['そうな', 'i_sou_na'], ['そう', 'i_sou'],
+      ['さ', 'i_sa'], ['く', 'i_adv'], ['い', 'plain'],
+    ];
+    for (const [p, t] of cands) { if (suf === p || suf.startsWith(p)) return t; }
+    return null;
+  }
+
   return null;
 }
 
@@ -850,6 +869,17 @@ function conjugateVerb(word, pos, conjType) {
       ba:'れば', potential:'られる',
     };
     return V2_MAP[conjType] !== undefined ? stem + V2_MAP[conjType] : word;
+  }
+
+  if (pos === 'i-adj') {
+    const stem = cleanWord.replace(/い$/, '');
+    const IADJ_MAP = {
+      i_adv: 'く', i_te: 'くて', i_nai: 'くない', i_nakatta: 'くなかった',
+      i_ta: 'かった', i_sou: 'そう', i_sou_na: 'そうな', i_sa: 'さ',
+      i_naru: 'くなる', i_temoii: 'くてもいい',
+      i_nakereba_naranai: 'くなければならない', i_nakereba_ikenai: 'くなければいけない',
+    };
+    return IADJ_MAP[conjType] !== undefined ? stem + IADJ_MAP[conjType] : word;
   }
 
   if (pos === 'v3') {
@@ -912,7 +942,38 @@ function conjugateVerb(word, pos, conjType) {
   return word;
 }
 
+// Japanese character test (hiragana + katakana + CJK)
+const IS_JAPANESE = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/;
+// Standalone particles/punctuation that mark phrase boundaries
+const STOP_CHARS = /^[はがをへとでも、。「」]$/;
+
+// For 〜-template phrase words: find where the invariant Japanese part appears in
+// the example, then extend backward/forward using particle boundary heuristics.
+function findTemplateSurface(word, example) {
+  const segs = word.split(/[〜～]/)
+    .map(s => s.replace(/[^\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/g, ''))
+    .filter(s => s.length > 0);
+  if (segs.length === 0) return null;
+
+  const sorted = [...new Set(segs)].sort((a, b) => b.length - a.length);
+  for (const seg of sorted) {
+    for (let len = seg.length; len >= 1; len--) {
+      const query = seg.slice(0, len);
+      const idx = example.indexOf(query);
+      if (idx === -1) continue;
+      let start = idx;
+      while (start > 0 && IS_JAPANESE.test(example[start - 1]) && !STOP_CHARS.test(example[start - 1])) start--;
+      let end = idx + query.length;
+      while (end < example.length && HIRAGANA.test(example[end]) && !STOP_CHARS.test(example[end])) end++;
+      const match = example.slice(start, end);
+      return match || null;
+    }
+  }
+  return null;
+}
+
 function findConjugatedForm(word, pos, example) {
+  if (!example) return null;
   // 1. Direct match — word is already the surface form in the sentence
   if (example.includes(word)) return word;
 
@@ -920,23 +981,22 @@ function findConjugatedForm(word, pos, example) {
   const cleanWord = word.replace(/^[（(][^）)]*[）)]\s*/, '');
   if (cleanWord !== word && example.includes(cleanWord)) return cleanWord;
 
-  let stem = '';
+  // Template phrase words containing 〜 (e.g. 〜展, 〜が中止になる)
+  if (cleanWord.includes('〜') || cleanWord.includes('～')) {
+    return findTemplateSurface(cleanWord, example);
+  }
 
+  let stem = '';
   const w = cleanWord;
   if (pos === 'v3') {
-    // Suru compounds: 勉強する → stem is 勉強
     stem = w.replace(/する$/, '').replace(/くる$/, '');
-    // 来る: kanji form of kuru — strip the trailing る
     if (stem === w && w.endsWith('る')) stem = w.slice(0, -1);
   } else if (pos === 'v2') {
-    // Ichidan: drop る → 食べる → 食べ
     stem = w.replace(/る$/, '');
   } else if (pos === 'v1') {
-    // Godan: drop the final う-row kana entirely, leaving the kanji/stem
-    // e.g. 書く → 書,  飲む → 飲,  話す → 話
-    // For the surface form, also try the い-stem (書き, 飲み) since て/た forms
-    // use a sound-changed kana (書いて, 飲んで) — but the kanji is common to all forms.
     stem = w.replace(/[うくぐすつぬぶむる]$/, '');
+  } else if (pos === 'i-adj') {
+    stem = w.replace(/い$/, '');
   }
 
   if (!stem) return null;
@@ -944,14 +1004,11 @@ function findConjugatedForm(word, pos, example) {
   const idx = example.indexOf(stem);
   if (idx === -1) return null;
 
-  // Capture the stem plus any following hiragana (the conjugated ending)
   let end = idx + stem.length;
   while (end < example.length && HIRAGANA.test(example[end])) end++;
 
-  // Safety: don't match an empty or suspiciously short span
   const match = example.slice(idx, end);
-  if (!match) return null;
-  return match;
+  return match || null;
 }
 
 function posLabel(pos) {
@@ -1115,7 +1172,7 @@ function renderKanjiGrid() {
   const grid = document.getElementById('kanjiGrid');
   grid.innerHTML = '';
   const filtered = KANJI.filter(k => {
-    const matchLevel = kanjiFilter.level === 'all' || k.level === kanjiFilter.level;
+    const matchLevel = kanjiFilter.level === 'all' || k.chapter === Number(kanjiFilter.level);
     const q = kanjiFilter.search.toLowerCase();
     const matchSearch = !q || k.character.includes(q) || k.meaning.toLowerCase().includes(q) || k.onyomi.includes(q);
     return matchLevel && matchSearch;
@@ -1127,7 +1184,7 @@ function renderKanjiGrid() {
     if (p.correct >= 3 && p.interval >= 6) card.classList.add('mastered');
     else if (p.correct >= 1) card.classList.add('learned');
     card.innerHTML = `
-      <span class="kanji-level-tag">${k.level}</span>
+      <span class="kanji-level-tag">Ch.${k.chapter}</span>
       <div class="kanji-char-big">${k.character}</div>
       <div class="kanji-meaning-sm">${k.meaning}</div>
       <div class="kanji-onyomi-sm">${k.onyomi}</div>
@@ -1157,7 +1214,7 @@ function openKanjiModal(k) {
   document.getElementById('modalKunyomi').textContent = k.kunyomi;
   document.getElementById('modalMeaning').textContent = k.meaning;
   document.getElementById('modalStrokes').textContent = k.strokes;
-  document.getElementById('modalLevel').textContent = k.level;
+  document.getElementById('modalLevel').textContent = 'Chapter ' + k.chapter;
   const exEl = document.getElementById('modalExamples');
   exEl.innerHTML = k.examples.map((ex, i) => `
     <div class="example-item">
