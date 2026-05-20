@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOCFL Study</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-left">
+      <div class="nav-dropdown" id="navDropdown">
+        <button class="nav-toggle" id="navToggle" aria-haspopup="true" aria-expanded="false">
+          <span class="hamburger">☰</span>
+          <span id="currentViewLabel">主頁</span>
+          <span class="caret">▾</span>
+        </button>
+        <ul class="nav-menu" id="navMenu" role="menu">
+          <li role="menuitem"><button class="nav-item active" data-view="dashboard">🏠 主頁</button></li>
+          <li role="menuitem"><button class="nav-item" data-view="study">📚 學習</button></li>
+          <li role="menuitem"><button class="nav-item" data-view="quiz">✏️ 測驗</button></li>
+          <li role="menuitem"><button class="nav-item" data-view="chars">字 漢字</button></li>
+          <li role="menuitem"><button class="nav-item" data-view="vocab">📖 詞彙</button></li>
+          <li role="menuitem"><button class="nav-item" data-view="grammar">文 語法</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="header-center">
+      <h1 class="site-title">華語學習 <span class="subtitle">TOCFL</span></h1>
+    </div>
+    <div class="header-right">
+      <div class="header-stats" id="headerStats">
+        <span id="statsDue" class="stat-badge due" title="Due for review">0 due</span>
+        <span id="statsStreak" class="stat-badge streak" title="Study streak">🔥 0</span>
+      </div>
+      <button class="btn-icon" id="saveBtn" title="Save progress">💾</button>
+      <a href="../index.html" class="site-switch-btn" title="Switch to Japanese site">🇯🇵 JP</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- DASHBOARD -->
+    <section class="view" id="view-dashboard">
+      <div class="dashboard-grid">
+        <div class="dash-card welcome-card">
+          <h2>歡迎回來！</h2>
+          <p class="welcome-sub">今天要學習什麼？</p>
+          <div class="dash-progress">
+            <div class="progress-item">
+              <span class="progress-label">詞彙</span>
+              <div class="progress-bar"><div class="progress-fill" id="vocabProgress"></div></div>
+              <span class="progress-count" id="vocabCount">0/0</span>
+            </div>
+            <div class="progress-item">
+              <span class="progress-label">漢字</span>
+              <div class="progress-bar"><div class="progress-fill" id="charsProgress"></div></div>
+              <span class="progress-count" id="charsCount">0/0</span>
+            </div>
+            <div class="progress-item">
+              <span class="progress-label">語法</span>
+              <div class="progress-bar"><div class="progress-fill" id="grammarProgress"></div></div>
+              <span class="progress-count" id="grammarCount">0/0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-card review-card">
+          <h3>複習到期</h3>
+          <div class="review-counts">
+            <div class="review-item" id="dueVocab">
+              <span class="review-num">0</span>
+              <span class="review-label">詞彙</span>
+            </div>
+            <div class="review-item" id="dueChars">
+              <span class="review-num">0</span>
+              <span class="review-label">漢字</span>
+            </div>
+            <div class="review-item" id="dueGrammar">
+              <span class="review-num">0</span>
+              <span class="review-label">語法</span>
+            </div>
+          </div>
+          <button class="btn-primary" id="startReviewBtn">開始複習</button>
+        </div>
+
+        <div class="dash-card stats-card">
+          <h3>學習統計</h3>
+          <div class="stats-grid">
+            <div class="stat-item"><span class="stat-num" id="statTotal">0</span><span class="stat-label">已學習</span></div>
+            <div class="stat-item"><span class="stat-num" id="statMastered">0</span><span class="stat-label">已掌握</span></div>
+            <div class="stat-item"><span class="stat-num" id="statStreak">0</span><span class="stat-label">連續天數</span></div>
+            <div class="stat-item"><span class="stat-num" id="statAccuracy">0%</span><span class="stat-label">正確率</span></div>
+          </div>
+        </div>
+
+        <div class="dash-card quick-card">
+          <h3>快速開始</h3>
+          <div class="quick-actions">
+            <button class="quick-btn" data-action="study-vocab">📚 詞彙學習</button>
+            <button class="quick-btn" data-action="study-chars">字 漢字學習</button>
+            <button class="quick-btn" data-action="quiz-mc">✏️ 選擇題</button>
+            <button class="quick-btn" data-action="quiz-type">⌨️ 打字測驗</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDY -->
+    <section class="view hidden" id="view-study">
+      <div class="study-controls">
+        <div class="control-group">
+          <label class="control-label">內容</label>
+          <div class="pill-group" id="studyContentPills">
+            <button class="pill active" data-content="vocab">詞彙</button>
+            <button class="pill" data-content="chars">漢字</button>
+            <button class="pill" data-content="grammar">語法</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">章節</label>
+          <div class="pill-group" id="studyChapterPills">
+            <button class="pill active" data-chapter="all">全部</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">排序</label>
+          <div class="pill-group">
+            <button class="pill active" data-sort="chapter" id="sortChapter">章節</button>
+            <button class="pill" data-sort="due" id="sortDue">到期</button>
+            <button class="pill" data-sort="random" id="sortRandom">隨機</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-area" id="flashcardArea">
+        <div class="card-counter" id="cardCounter">1 / 10</div>
+        <div class="flashcard" id="flashcard" tabindex="0">
+          <div class="card-inner" id="cardInner">
+            <div class="card-front" id="cardFront">
+              <div class="card-main" id="cardMain"></div>
+              <div class="card-hint" id="cardHint"></div>
+            </div>
+            <div class="card-back" id="cardBack">
+              <div class="card-answer" id="cardAnswer"></div>
+              <div class="card-details" id="cardDetails"></div>
+              <div class="card-example" id="cardExample"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions" id="cardActions">
+          <button class="btn-flip" id="flipBtn">翻轉 (空格)</button>
+        </div>
+        <div class="rating-row hidden" id="ratingRow">
+          <button class="rate-btn rate-again" data-rating="1">再一次</button>
+          <button class="rate-btn rate-hard" data-rating="2">困難</button>
+          <button class="rate-btn rate-ok" data-rating="3">一般</button>
+          <button class="rate-btn rate-easy" data-rating="4">容易</button>
+        </div>
+      </div>
+
+      <div class="session-complete hidden" id="sessionComplete">
+        <div class="complete-card">
+          <div class="complete-icon">🎉</div>
+          <h2>學習完成！</h2>
+          <div class="complete-stats">
+            <div class="cs-item"><span class="cs-num" id="csCards">0</span><span class="cs-label">卡片</span></div>
+            <div class="cs-item"><span class="cs-num" id="csCorrect">0</span><span class="cs-label">正確</span></div>
+            <div class="cs-item"><span class="cs-num" id="csTime">0</span><span class="cs-label">分鐘</span></div>
+          </div>
+          <button class="btn-primary" id="studyAgainBtn">再學一次</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="view hidden" id="view-quiz">
+      <div class="quiz-setup" id="quizSetup">
+        <h2 class="section-title">測驗設定</h2>
+        <div class="quiz-config">
+          <div class="config-group">
+            <label class="control-label">內容</label>
+            <div class="pill-group" id="quizContentPills">
+              <button class="pill active" data-content="vocab">詞彙</button>
+              <button class="pill" data-content="chars">漢字</button>
+              <button class="pill" data-content="grammar">語法</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">題型</label>
+            <div class="pill-group" id="quizTypePills">
+              <button class="pill active" data-type="meaning">看字選義</button>
+              <button class="pill" data-type="word">看義選字</button>
+              <button class="pill" data-type="type-meaning">打英文</button>
+              <button class="pill" data-type="type-pinyin">打拼音</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">章節</label>
+            <div class="pill-group" id="quizChapterPills">
+              <button class="pill active" data-chapter="all">全部</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">題數</label>
+            <div class="pill-group">
+              <button class="pill active" data-count="10" id="count10">10</button>
+              <button class="pill" data-count="20" id="count20">20</button>
+              <button class="pill" data-count="50" id="count50">50</button>
+              <button class="pill" data-count="all" id="countAll">全部</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary btn-large" id="startQuizBtn">開始測驗</button>
+      </div>
+
+      <div class="quiz-active hidden" id="quizActive">
+        <div class="quiz-header">
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+          <div class="quiz-info">
+            <span id="quizNum">1/10</span>
+            <span id="quizScore">✓ 0 ✗ 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-prompt" id="quizPrompt"></div>
+          <div class="quiz-sub" id="quizSub"></div>
+
+          <div id="quizChoices" class="choices-grid"></div>
+
+          <div id="typingArea" class="typing-area hidden">
+            <input type="text" id="typingInput" class="typing-input" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <button class="btn-primary" id="checkTypingBtn">確認</button>
+          </div>
+
+          <div class="quiz-feedback hidden" id="quizFeedback">
+            <div class="feedback-text" id="feedbackText"></div>
+            <div class="feedback-detail" id="feedbackDetail"></div>
+            <button class="btn-next" id="nextQuizBtn">下一題 →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-results hidden" id="quizResults">
+        <div class="results-card">
+          <div class="results-title" id="resultsTitle">測驗結果</div>
+          <div class="results-score" id="resultsScore"></div>
+          <div class="results-grade" id="resultsGrade"></div>
+          <div class="results-breakdown" id="resultsBreakdown"></div>
+          <div class="results-mistakes" id="resultsMistakes"></div>
+          <div class="results-actions">
+            <button class="btn-secondary" id="retryQuizBtn">重新測驗</button>
+            <button class="btn-primary" id="newQuizBtn">新測驗</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTERS -->
+    <section class="view hidden" id="view-chars">
+      <div class="section-header">
+        <h2 class="section-title">漢字</h2>
+        <div class="filter-row">
+          <div class="pill-group" id="charsChapterPills">
+            <button class="pill active" data-chapter="all">全部</button>
+          </div>
+        </div>
+      </div>
+      <div class="chars-grid" id="charsGrid"></div>
+
+      <div class="modal-overlay hidden" id="charModal">
+        <div class="modal-box char-modal-box">
+          <button class="modal-close" id="charModalClose">✕</button>
+          <div class="char-display" id="charDisplay"></div>
+          <div class="char-pinyin" id="charPinyin"></div>
+          <div class="char-meaning" id="charMeaning"></div>
+          <div class="char-meta">
+            <span class="char-strokes" id="charStrokes"></span>
+            <span class="char-chapter" id="charChapter"></span>
+          </div>
+          <div class="char-examples" id="charExamples"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOCABULARY -->
+    <section class="view hidden" id="view-vocab">
+      <div class="section-header">
+        <h2 class="section-title">詞彙</h2>
+        <div class="filter-row">
+          <div class="search-wrap">
+            <input type="text" id="vocabSearch" class="search-input" placeholder="搜尋詞彙…">
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="pill-group" id="vocabChapterPills">
+            <button class="pill active" data-chapter="all">全部</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="pill-group" id="vocabPosPills">
+            <button class="pill active" data-pos="all">全部</button>
+            <button class="pill" data-pos="noun">名詞</button>
+            <button class="pill" data-pos="verb">動詞</button>
+            <button class="pill" data-pos="adjective">形容詞</button>
+            <button class="pill" data-pos="adverb">副詞</button>
+            <button class="pill" data-pos="pronoun">代名詞</button>
+            <button class="pill" data-pos="interjection">感嘆詞</button>
+            <button class="pill" data-pos="other">其他</button>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-list" id="vocabList"></div>
+    </section>
+
+    <!-- GRAMMAR -->
+    <section class="view hidden" id="view-grammar">
+      <div class="section-header">
+        <h2 class="section-title">語法</h2>
+        <div class="filter-row">
+          <div class="pill-group" id="grammarLevelPills">
+            <button class="pill active" data-level="all">全部</button>
+            <button class="pill" data-level="beginner">初級</button>
+            <button class="pill" data-level="intermediate">中級</button>
+            <button class="pill" data-level="advanced">高級</button>
+          </div>
+        </div>
+      </div>
+      <div class="grammar-list" id="grammarList"></div>
+
+      <div class="modal-overlay hidden" id="grammarModal">
+        <div class="modal-box grammar-modal-box">
+          <button class="modal-close" id="grammarModalClose">✕</button>
+          <div class="gm-pattern" id="gmPattern"></div>
+          <div class="gm-meaning" id="gmMeaning"></div>
+          <div class="gm-usage" id="gmUsage"></div>
+          <div class="gm-example">
+            <div class="gm-ex-zh" id="gmExZh"></div>
+            <div class="gm-ex-en" id="gmExEn"></div>
+          </div>
+          <div class="gm-meta" id="gmMeta"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,893 @@
+'use strict';
+
+// ===== STORAGE =====
+const STORAGE_KEY = 'tocfl_srs_v1';
+const STREAK_KEY = 'tocfl_streak_v1';
+
+function loadSRS() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+function saveSRS(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+function loadStreak() {
+  try { return JSON.parse(localStorage.getItem(STREAK_KEY)) || { streak: 0, lastDate: null, totalCorrect: 0, totalAnswered: 0 }; }
+  catch { return { streak: 0, lastDate: null, totalCorrect: 0, totalAnswered: 0 }; }
+}
+function saveStreak(data) { localStorage.setItem(STREAK_KEY, JSON.stringify(data)); }
+
+// ===== SM2 ALGORITHM =====
+function getDefaultCard() {
+  return { interval: 1, repetitions: 0, easeFactor: 2.5, nextReview: Date.now(), learned: false, mastered: false };
+}
+
+function sm2Update(card, rating) {
+  // rating: 1=again, 2=hard, 3=ok, 4=easy
+  const q = rating; // 1-4
+  let { interval, repetitions, easeFactor } = card;
+  if (q < 2) {
+    repetitions = 0; interval = 1;
+  } else {
+    if (repetitions === 0) interval = 1;
+    else if (repetitions === 1) interval = 6;
+    else interval = Math.round(interval * easeFactor);
+    repetitions++;
+  }
+  easeFactor = Math.max(1.3, easeFactor + 0.1 - (4 - q) * (0.08 + (4 - q) * 0.02));
+  const learned = repetitions >= 1;
+  const mastered = repetitions >= 4 && interval >= 21;
+  const nextReview = Date.now() + interval * 86400000;
+  return { interval, repetitions, easeFactor, nextReview, learned, mastered };
+}
+
+function isDue(card) { return !card || card.nextReview <= Date.now(); }
+
+// ===== PINYIN NORMALIZATION =====
+function normalizePinyin(s) {
+  if (!s) return '';
+  // Map combining diacritics to tone numbers so both ǐ and i3 normalize identically
+  const toneMap = { '\u0304': '1', '\u0301': '2', '\u030c': '3', '\u0300': '4' };
+  return s.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, m => toneMap[m] || '')
+    .replace(/\s+/g, '')
+    .toLowerCase();
+}
+
+// ===== STATE =====
+const state = {
+  currentView: 'dashboard',
+  srs: loadSRS(),
+  streak: loadStreak(),
+  study: {
+    content: 'vocab',
+    chapter: 'all',
+    sort: 'chapter',
+    deck: [],
+    idx: 0,
+    flipped: false,
+    sessionStart: null,
+    sessionCorrect: 0,
+    sessionTotal: 0,
+  },
+  quiz: {
+    content: 'vocab',
+    type: 'meaning',
+    chapter: 'all',
+    count: 10,
+    questions: [],
+    idx: 0,
+    correct: 0,
+    wrong: 0,
+    mistakes: [],
+    active: false,
+  },
+  chars: { chapter: 'all' },
+  vocab: { chapter: 'all', pos: 'all', search: '' },
+  grammar: { level: 'all' },
+};
+
+// ===== HELPERS =====
+function getItems(content) {
+  if (content === 'vocab') return VOCABULARY;
+  if (content === 'chars') return CHARACTERS;
+  if (content === 'grammar') return GRAMMAR;
+  return [];
+}
+
+function filterByChapter(items, chapter) {
+  if (chapter === 'all') return items;
+  return items.filter(i => i.chapter === Number(chapter));
+}
+
+function getCardSRS(type, id) {
+  const key = `${type}_${id}`;
+  return state.srs[key] || getDefaultCard();
+}
+
+function setCardSRS(type, id, card) {
+  const key = `${type}_${id}`;
+  state.srs[key] = card;
+}
+
+function countDue(type) {
+  return getItems(type === 'vocab' ? 'vocab' : type === 'chars' ? 'chars' : 'grammar')
+    .filter(i => isDue(getCardSRS(type, i.id))).length;
+}
+
+function countLearned(type) {
+  return getItems(type === 'vocab' ? 'vocab' : type === 'chars' ? 'chars' : 'grammar')
+    .filter(i => getCardSRS(type, i.id).learned).length;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getChapters(content) {
+  const items = getItems(content);
+  const chapters = [...new Set(items.map(i => i.chapter))].sort((a, b) => a - b);
+  return chapters;
+}
+
+// ===== VIEW NAVIGATION =====
+const viewLabels = {
+  dashboard: '主頁', study: '學習', quiz: '測驗',
+  chars: '漢字', vocab: '詞彙', grammar: '語法'
+};
+
+function showView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+  const target = document.getElementById('view-' + viewId);
+  if (target) target.classList.remove('hidden');
+
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === viewId);
+  });
+
+  document.getElementById('currentViewLabel').textContent = viewLabels[viewId] || viewId;
+  state.currentView = viewId;
+  closeNav();
+
+  if (viewId === 'dashboard') renderDashboard();
+  else if (viewId === 'study') renderStudyControls();
+  else if (viewId === 'chars') renderCharsGrid();
+  else if (viewId === 'vocab') renderVocabList();
+  else if (viewId === 'grammar') renderGrammarList();
+}
+
+// ===== NAV DROPDOWN =====
+function openNav() {
+  document.getElementById('navMenu').classList.add('open');
+  document.getElementById('navToggle').setAttribute('aria-expanded', 'true');
+}
+function closeNav() {
+  document.getElementById('navMenu').classList.remove('open');
+  document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
+}
+
+// ===== CHAPTER PILLS BUILDER =====
+function buildChapterPills(containerId, content, currentChapter, onChange) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const chapters = getChapters(content);
+  container.innerHTML = '<button class="pill' + (currentChapter === 'all' ? ' active' : '') + '" data-chapter="all">全部</button>';
+  chapters.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'pill' + (String(currentChapter) === String(ch) ? ' active' : '');
+    btn.dataset.chapter = ch;
+    btn.textContent = '第' + ch + '章';
+    container.appendChild(btn);
+  });
+  container.addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn) return;
+    container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    onChange(btn.dataset.chapter);
+  });
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const types = ['vocab', 'chars', 'grammar'];
+  const contents = ['vocab', 'chars', 'grammar'];
+
+  // Progress bars
+  types.forEach((t, i) => {
+    const total = getItems(contents[i]).length;
+    const learned = countLearned(t);
+    const pct = total ? (learned / total * 100) : 0;
+    const fillEl = document.getElementById(t === 'vocab' ? 'vocabProgress' : t === 'chars' ? 'charsProgress' : 'grammarProgress');
+    const countEl = document.getElementById(t === 'vocab' ? 'vocabCount' : t === 'chars' ? 'charsCount' : 'grammarCount');
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (countEl) countEl.textContent = learned + '/' + total;
+  });
+
+  // Due counts
+  ['vocab', 'chars', 'grammar'].forEach(t => {
+    const due = countDue(t);
+    const el = document.getElementById('due' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (el) el.querySelector('.review-num').textContent = due;
+  });
+
+  // Header due badge
+  const totalDue = countDue('vocab') + countDue('chars') + countDue('grammar');
+  document.getElementById('statsDue').textContent = totalDue + ' due';
+
+  // Stats
+  const streak = state.streak;
+  const totalLearned = countLearned('vocab') + countLearned('chars') + countLearned('grammar');
+  const totalMastered = ['vocab', 'chars', 'grammar'].reduce((s, t) =>
+    s + getItems(t === 'vocab' ? 'vocab' : t === 'chars' ? 'chars' : 'grammar')
+      .filter(i => getCardSRS(t, i.id).mastered).length, 0);
+  const acc = streak.totalAnswered ? Math.round(streak.totalCorrect / streak.totalAnswered * 100) : 0;
+
+  document.getElementById('statTotal').textContent = totalLearned;
+  document.getElementById('statMastered').textContent = totalMastered;
+  document.getElementById('statStreak').textContent = streak.streak;
+  document.getElementById('statAccuracy').textContent = acc + '%';
+  document.getElementById('statsStreak').textContent = '🔥 ' + streak.streak;
+}
+
+// ===== STUDY VIEW =====
+function renderStudyControls() {
+  buildChapterPills('studyChapterPills', state.study.content, state.study.chapter, ch => {
+    state.study.chapter = ch;
+    startStudySession();
+  });
+  startStudySession();
+}
+
+function startStudySession() {
+  const { content, chapter, sort } = state.study;
+  let items = filterByChapter(getItems(content), chapter);
+
+  if (sort === 'due') {
+    items = items.filter(i => isDue(getCardSRS(content, i.id)));
+    items.sort((a, b) => getCardSRS(content, a.id).nextReview - getCardSRS(content, b.id).nextReview);
+  } else if (sort === 'random') {
+    items = shuffle(items);
+  }
+
+  state.study.deck = items;
+  state.study.idx = 0;
+  state.study.flipped = false;
+  state.study.sessionStart = Date.now();
+  state.study.sessionCorrect = 0;
+  state.study.sessionTotal = 0;
+
+  document.getElementById('sessionComplete').classList.add('hidden');
+  document.getElementById('flashcardArea').classList.remove('hidden');
+  renderStudyCard();
+}
+
+function renderStudyCard() {
+  const { deck, idx, content } = state.study;
+  if (!deck.length) {
+    showSessionComplete();
+    return;
+  }
+  if (idx >= deck.length) {
+    showSessionComplete();
+    return;
+  }
+
+  const item = deck[idx];
+  document.getElementById('cardCounter').textContent = (idx + 1) + ' / ' + deck.length;
+
+  const cardInner = document.getElementById('cardInner');
+  cardInner.classList.remove('flipped');
+  state.study.flipped = false;
+
+  document.getElementById('ratingRow').classList.add('hidden');
+  document.getElementById('cardActions').classList.remove('hidden');
+
+  if (content === 'vocab') {
+    document.getElementById('cardMain').textContent = item.word;
+    document.getElementById('cardHint').textContent = item.pinyin;
+    document.getElementById('cardAnswer').textContent = item.meaning;
+    document.getElementById('cardDetails').textContent = item.pos + ' · Ch.' + item.chapter;
+    document.getElementById('cardExample').innerHTML = item.example + '<br><em>' + item.exampleEn + '</em>';
+  } else if (content === 'chars') {
+    document.getElementById('cardMain').textContent = item.character;
+    document.getElementById('cardHint').textContent = item.strokes + ' strokes';
+    document.getElementById('cardAnswer').textContent = item.meaning;
+    document.getElementById('cardDetails').textContent = item.pinyin + ' · Ch.' + item.chapter;
+    const exStr = item.examples.map((e, i) => e + ' (' + item.examplesEn[i] + ')').join(' · ');
+    document.getElementById('cardExample').textContent = exStr;
+  } else if (content === 'grammar') {
+    document.getElementById('cardMain').textContent = item.pattern;
+    document.getElementById('cardHint').textContent = item.category;
+    document.getElementById('cardAnswer').textContent = item.meaning;
+    document.getElementById('cardDetails').textContent = item.level;
+    document.getElementById('cardExample').innerHTML = item.example + '<br><em>' + item.exampleEn + '</em>';
+  }
+}
+
+function flipCard() {
+  if (state.study.flipped) return;
+  state.study.flipped = true;
+  document.getElementById('cardInner').classList.add('flipped');
+  document.getElementById('cardActions').classList.add('hidden');
+  document.getElementById('ratingRow').classList.remove('hidden');
+}
+
+function rateCard(rating) {
+  const { deck, idx, content } = state.study;
+  const item = deck[idx];
+  const oldCard = getCardSRS(content, item.id);
+  const newCard = sm2Update(oldCard, rating);
+  setCardSRS(content, item.id, newCard);
+
+  state.study.sessionTotal++;
+  if (rating >= 3) state.study.sessionCorrect++;
+
+  // Update streak stats
+  state.streak.totalAnswered++;
+  if (rating >= 3) state.streak.totalCorrect++;
+
+  state.study.idx++;
+  saveSRS(state.srs);
+  saveStreak(state.streak);
+  renderStudyCard();
+}
+
+function showSessionComplete() {
+  const elapsed = Math.round((Date.now() - state.study.sessionStart) / 60000);
+  document.getElementById('flashcardArea').classList.add('hidden');
+  document.getElementById('sessionComplete').classList.remove('hidden');
+  document.getElementById('csCards').textContent = state.study.sessionTotal;
+  document.getElementById('csCorrect').textContent = state.study.sessionCorrect;
+  document.getElementById('csTime').textContent = elapsed || '<1';
+}
+
+// ===== QUIZ VIEW =====
+function buildQuizChapterPills(content) {
+  buildChapterPills('quizChapterPills', content, state.quiz.chapter, ch => {
+    state.quiz.chapter = ch;
+  });
+}
+
+function startQuiz() {
+  const { content, type, chapter, count } = state.quiz;
+  let pool = filterByChapter(getItems(content), chapter);
+  pool = shuffle(pool);
+  if (count !== 'all') pool = pool.slice(0, Number(count));
+
+  state.quiz.questions = pool.map(item => buildQuestion(item, content, type, pool));
+  state.quiz.idx = 0;
+  state.quiz.correct = 0;
+  state.quiz.wrong = 0;
+  state.quiz.mistakes = [];
+  state.quiz.active = true;
+
+  document.getElementById('quizSetup').classList.add('hidden');
+  document.getElementById('quizResults').classList.add('hidden');
+  document.getElementById('quizActive').classList.remove('hidden');
+  renderQuizQuestion();
+}
+
+function buildQuestion(item, content, type, pool) {
+  const q = { item, content, type, answered: false };
+  if (type === 'type-meaning' || type === 'type-pinyin') return q;
+
+  // Multiple choice — pick 3 wrong answers
+  const wrongs = shuffle(pool.filter(i => i.id !== item.id)).slice(0, 3);
+  const options = shuffle([item, ...wrongs]);
+  q.options = options;
+  return q;
+}
+
+function renderQuizQuestion() {
+  const { questions, idx } = state.quiz;
+  if (idx >= questions.length) { showQuizResults(); return; }
+
+  const q = questions[idx];
+  const total = questions.length;
+  const pct = (idx / total * 100) + '%';
+
+  document.getElementById('quizProgressFill').style.width = pct;
+  document.getElementById('quizNum').textContent = (idx + 1) + '/' + total;
+  document.getElementById('quizScore').textContent = '✓ ' + state.quiz.correct + ' ✗ ' + state.quiz.wrong;
+  document.getElementById('quizFeedback').classList.add('hidden');
+  document.getElementById('typingArea').classList.add('hidden');
+  document.getElementById('quizChoices').classList.add('hidden');
+  document.getElementById('quizChoices').innerHTML = '';
+
+  const typingInput = document.getElementById('typingInput');
+  typingInput.value = '';
+  typingInput.className = 'typing-input';
+  typingInput.disabled = false;
+
+  const { item, content, type } = q;
+
+  if (type === 'meaning') {
+    // Show word/char, pick meaning
+    document.getElementById('quizPrompt').textContent = content === 'grammar' ? item.pattern : (content === 'chars' ? item.character : item.word);
+    document.getElementById('quizSub').textContent = '';
+    renderMCChoices(q, opt => opt.meaning);
+  } else if (type === 'word') {
+    // Show meaning, pick word/char
+    document.getElementById('quizPrompt').textContent = item.meaning;
+    document.getElementById('quizSub').textContent = content === 'grammar' ? item.category : '';
+    renderMCChoices(q, opt => content === 'chars' ? opt.character : (content === 'grammar' ? opt.pattern : opt.word));
+  } else if (type === 'type-meaning') {
+    document.getElementById('quizPrompt').textContent = content === 'grammar' ? item.pattern : (content === 'chars' ? item.character : item.word);
+    document.getElementById('quizSub').textContent = content === 'grammar' ? item.category : '輸入英文意思';
+    document.getElementById('typingArea').classList.remove('hidden');
+    document.getElementById('typingInput').placeholder = 'type the meaning…';
+    document.getElementById('typingInput').focus();
+  } else if (type === 'type-pinyin') {
+    document.getElementById('quizPrompt').textContent = content === 'chars' ? item.character : (content === 'vocab' ? item.word : item.pattern);
+    document.getElementById('quizSub').textContent = content === 'vocab' ? item.meaning : '輸入拼音';
+    document.getElementById('typingArea').classList.remove('hidden');
+    document.getElementById('typingInput').placeholder = 'type pinyin…';
+    document.getElementById('typingInput').focus();
+  }
+}
+
+function renderMCChoices(q, labelFn) {
+  const container = document.getElementById('quizChoices');
+  container.classList.remove('hidden');
+  container.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = labelFn(opt);
+    btn.addEventListener('click', () => handleMCAnswer(q, opt, btn));
+    container.appendChild(btn);
+  });
+}
+
+function handleMCAnswer(q, chosen, btn) {
+  if (q.answered) return;
+  q.answered = true;
+
+  const correct = chosen.id === q.item.id;
+  const allBtns = document.querySelectorAll('.choice-btn');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === getMCCorrectLabel(q)) b.classList.add('correct');
+  });
+
+  if (correct) {
+    btn.classList.add('correct');
+    state.quiz.correct++;
+  } else {
+    btn.classList.add('wrong');
+    state.quiz.wrong++;
+    state.quiz.mistakes.push(q.item);
+  }
+
+  state.streak.totalAnswered++;
+  if (correct) state.streak.totalCorrect++;
+  saveSRS(state.srs);
+  saveStreak(state.streak);
+
+  showQuizFeedback(correct, q.item);
+}
+
+function getMCCorrectLabel(q) {
+  const { item, content, type } = q;
+  if (type === 'meaning') return item.meaning;
+  if (type === 'word') return content === 'chars' ? item.character : (content === 'grammar' ? item.pattern : item.word);
+  return item.meaning;
+}
+
+function checkTypingAnswer() {
+  const q = state.quiz.questions[state.quiz.idx];
+  if (!q || q.answered) return;
+  q.answered = true;
+
+  const input = document.getElementById('typingInput');
+  const userRaw = input.value.trim();
+  const { item, type } = q;
+
+  let correct = false;
+  let correctAnswer = '';
+
+  if (type === 'type-meaning') {
+    const user = userRaw.toLowerCase().trim();
+    const ans = item.meaning.toLowerCase().trim();
+    correct = user === ans || ans.split(',').map(s => s.trim()).includes(user) || ans.split('/').map(s => s.trim()).includes(user);
+    correctAnswer = item.meaning;
+  } else if (type === 'type-pinyin') {
+    const userNorm = normalizePinyin(userRaw);
+    const answerPin = item.pinyin || '';
+    const ansNorm = normalizePinyin(answerPin);
+    correct = userNorm === ansNorm;
+    correctAnswer = answerPin;
+  }
+
+  input.className = 'typing-input ' + (correct ? 'correct' : 'wrong');
+  input.disabled = true;
+
+  if (correct) state.quiz.correct++;
+  else { state.quiz.wrong++; state.quiz.mistakes.push(item); }
+
+  state.streak.totalAnswered++;
+  if (correct) state.streak.totalCorrect++;
+  saveSRS(state.srs);
+  saveStreak(state.streak);
+
+  showQuizFeedback(correct, item, correctAnswer);
+}
+
+function showQuizFeedback(correct, item, correctAnswer) {
+  const feedbackEl = document.getElementById('quizFeedback');
+  const textEl = document.getElementById('feedbackText');
+  const detailEl = document.getElementById('feedbackDetail');
+
+  // Reveal pinyin now that the question is answered
+  if (item.pinyin) document.getElementById('quizSub').textContent = item.pinyin;
+
+  feedbackEl.classList.remove('hidden');
+  textEl.className = 'feedback-text ' + (correct ? 'correct-text' : 'wrong-text');
+  textEl.textContent = correct ? '正確！✓' : '錯誤 ✗';
+
+  if (!correct && correctAnswer) {
+    detailEl.textContent = '正確答案：' + correctAnswer;
+  } else if (item.example) {
+    detailEl.textContent = item.example + ' — ' + item.exampleEn;
+  } else {
+    detailEl.textContent = '';
+  }
+}
+
+function nextQuizQuestion() {
+  state.quiz.idx++;
+  renderQuizQuestion();
+}
+
+function showQuizResults() {
+  document.getElementById('quizActive').classList.add('hidden');
+  document.getElementById('quizResults').classList.remove('hidden');
+
+  const total = state.quiz.questions.length;
+  const correct = state.quiz.correct;
+  const pct = total ? Math.round(correct / total * 100) : 0;
+
+  document.getElementById('resultsScore').textContent = correct + ' / ' + total;
+  document.getElementById('resultsGrade').textContent = pct + '%  ' + getGrade(pct);
+
+  const breakdownEl = document.getElementById('resultsBreakdown');
+  breakdownEl.textContent = '正確 ' + correct + ' · 錯誤 ' + state.quiz.wrong;
+
+  const mistakesEl = document.getElementById('resultsMistakes');
+  if (state.quiz.mistakes.length) {
+    mistakesEl.innerHTML = '<div class="mistakes-title">需要複習</div>';
+    state.quiz.mistakes.slice(0, 8).forEach(item => {
+      const d = document.createElement('div');
+      d.className = 'mistake-item';
+      const word = item.word || item.character || item.pattern;
+      const pin = item.pinyin || '';
+      d.innerHTML = '<span class="mistake-word">' + word + '</span><span class="mistake-info">' + pin + (pin ? ' · ' : '') + item.meaning + '</span>';
+      mistakesEl.appendChild(d);
+    });
+  } else {
+    mistakesEl.innerHTML = '<div style="color:var(--correct);text-align:center;padding:12px;">完美！🎉</div>';
+  }
+}
+
+function getGrade(pct) {
+  if (pct >= 90) return '優秀 🌟';
+  if (pct >= 75) return '良好 👍';
+  if (pct >= 60) return '及格 📚';
+  return '繼續加油 💪';
+}
+
+// ===== CHARACTERS =====
+function renderCharsGrid() {
+  buildChapterPills('charsChapterPills', 'chars', state.chars.chapter, ch => {
+    state.chars.chapter = ch;
+    renderCharsGrid();
+  });
+
+  const items = filterByChapter(CHARACTERS, state.chars.chapter);
+  const grid = document.getElementById('charsGrid');
+  grid.innerHTML = '';
+  items.forEach(item => {
+    const card = document.createElement('div');
+    const srs = getCardSRS('chars', item.id);
+    let srsClass = srs.mastered ? ' srs-mastered' : srs.learned ? ' srs-learned' : '';
+    card.className = 'char-card' + srsClass;
+    card.innerHTML = '<span class="ch-char">' + item.character + '</span><div class="ch-pin">' + item.pinyin + '</div><div class="ch-num">' + item.strokes + ' 劃</div>';
+    card.addEventListener('click', () => openCharModal(item));
+    grid.appendChild(card);
+  });
+}
+
+function openCharModal(item) {
+  document.getElementById('charDisplay').textContent = item.character;
+  document.getElementById('charPinyin').textContent = item.pinyin;
+  document.getElementById('charMeaning').textContent = item.meaning;
+  document.getElementById('charStrokes').textContent = item.strokes + ' strokes';
+  document.getElementById('charChapter').textContent = 'Ch. ' + item.chapter;
+  const exEl = document.getElementById('charExamples');
+  exEl.innerHTML = '';
+  item.examples.forEach((ex, i) => {
+    const tag = document.createElement('span');
+    tag.className = 'char-ex-tag';
+    tag.title = item.examplesEn[i] || '';
+    tag.textContent = ex;
+    exEl.appendChild(tag);
+  });
+  document.getElementById('charModal').classList.remove('hidden');
+}
+
+// ===== VOCABULARY =====
+function renderVocabList() {
+  buildChapterPills('vocabChapterPills', 'vocab', state.vocab.chapter, ch => {
+    state.vocab.chapter = ch;
+    renderVocabList();
+  });
+
+  const search = state.vocab.search.toLowerCase();
+  let items = filterByChapter(VOCABULARY, state.vocab.chapter);
+  if (state.vocab.pos !== 'all') items = items.filter(i => i.pos === state.vocab.pos);
+  if (search) items = items.filter(i =>
+    i.word.includes(search) || i.pinyin.toLowerCase().includes(search) ||
+    i.meaning.toLowerCase().includes(search)
+  );
+
+  const list = document.getElementById('vocabList');
+  list.innerHTML = '';
+  items.forEach(item => {
+    const srs = getCardSRS('vocab', item.id);
+    let srsClass = srs.mastered ? ' srs-mastered' : srs.learned ? ' srs-learned' : '';
+    const row = document.createElement('div');
+    row.className = 'vocab-item' + srsClass;
+    row.innerHTML = `
+      <div>
+        <div class="vocab-word">${item.word}</div>
+        <div class="vocab-pin">${item.pinyin}</div>
+      </div>
+      <div class="vocab-mid">
+        <div class="vocab-meaning">${item.meaning}</div>
+        <div class="vocab-pos">${item.pos}</div>
+      </div>
+      <div class="vocab-chapter-badge">Ch.${item.chapter}</div>
+    `;
+    // Toggle example on click
+    row.addEventListener('click', () => {
+      const existing = row.nextElementSibling;
+      if (existing && existing.classList.contains('vocab-expanded')) {
+        existing.remove();
+      } else {
+        const exp = document.createElement('div');
+        exp.className = 'vocab-expanded';
+        exp.innerHTML = '<div class="vocab-ex-zh">' + (item.example || '') + '</div><div class="vocab-ex-en">' + (item.exampleEn || '') + '</div>';
+        row.insertAdjacentElement('afterend', exp);
+      }
+    });
+    list.appendChild(row);
+  });
+}
+
+// ===== GRAMMAR =====
+function renderGrammarList() {
+  let items = GRAMMAR;
+  if (state.grammar.level !== 'all') items = items.filter(i => i.level === state.grammar.level);
+
+  const list = document.getElementById('grammarList');
+  list.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'grammar-item';
+    div.innerHTML = `
+      <div class="grammar-pattern">${item.pattern}</div>
+      <div class="grammar-meaning">${item.meaning}</div>
+      <div class="grammar-example">${item.example}</div>
+      <span class="grammar-level-badge level-${item.level}">${getLevelZh(item.level)}</span>
+    `;
+    div.addEventListener('click', () => openGrammarModal(item));
+    list.appendChild(div);
+  });
+}
+
+function getLevelZh(level) {
+  if (level === 'beginner') return '初級';
+  if (level === 'intermediate') return '中級';
+  if (level === 'advanced') return '高級';
+  return level;
+}
+
+function openGrammarModal(item) {
+  document.getElementById('gmPattern').textContent = item.pattern;
+  document.getElementById('gmMeaning').textContent = item.meaning;
+  document.getElementById('gmUsage').textContent = item.usage;
+  document.getElementById('gmExZh').textContent = item.example;
+  document.getElementById('gmExEn').textContent = item.exampleEn;
+  document.getElementById('gmMeta').textContent = item.category + ' · ' + getLevelZh(item.level);
+  document.getElementById('grammarModal').classList.remove('hidden');
+}
+
+// ===== SAVE / STREAK =====
+function updateDailyStreak() {
+  const today = new Date().toDateString();
+  const s = state.streak;
+  if (s.lastDate === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (s.lastDate === yesterday) s.streak++;
+  else if (s.lastDate !== today) s.streak = 1;
+  s.lastDate = today;
+  saveStreak(s);
+}
+
+// ===== INIT =====
+function init() {
+  updateDailyStreak();
+
+  // Nav toggle
+  document.getElementById('navToggle').addEventListener('click', e => {
+    e.stopPropagation();
+    const menu = document.getElementById('navMenu');
+    if (menu.classList.contains('open')) closeNav(); else openNav();
+  });
+  document.addEventListener('click', e => {
+    if (!document.getElementById('navDropdown').contains(e.target)) closeNav();
+  });
+
+  // Nav items
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.view));
+  });
+
+  // Save button
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    saveSRS(state.srs);
+    saveStreak(state.streak);
+    document.getElementById('saveBtn').textContent = '✅';
+    setTimeout(() => { document.getElementById('saveBtn').textContent = '💾'; }, 1200);
+  });
+
+  // Dashboard buttons
+  document.getElementById('startReviewBtn').addEventListener('click', () => {
+    state.study.sort = 'due';
+    showView('study');
+  });
+  document.querySelectorAll('.quick-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      if (action === 'study-vocab') { state.study.content = 'vocab'; showView('study'); }
+      else if (action === 'study-chars') { state.study.content = 'chars'; showView('study'); }
+      else if (action === 'quiz-mc') { state.quiz.type = 'meaning'; showView('quiz'); }
+      else if (action === 'quiz-type') { state.quiz.type = 'type-pinyin'; showView('quiz'); }
+    });
+  });
+
+  // Study controls
+  document.getElementById('studyContentPills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.content) return;
+    document.querySelectorAll('#studyContentPills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.study.content = btn.dataset.content;
+    state.study.chapter = 'all';
+    buildChapterPills('studyChapterPills', state.study.content, 'all', ch => {
+      state.study.chapter = ch;
+      startStudySession();
+    });
+    startStudySession();
+  });
+
+  document.querySelectorAll('[data-sort]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-sort]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.study.sort = btn.dataset.sort;
+      startStudySession();
+    });
+  });
+
+  document.getElementById('flashcard').addEventListener('click', flipCard);
+  document.getElementById('flashcard').addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+  });
+  document.getElementById('flipBtn').addEventListener('click', e => { e.stopPropagation(); flipCard(); });
+
+  document.getElementById('ratingRow').addEventListener('click', e => {
+    const btn = e.target.closest('.rate-btn');
+    if (btn) rateCard(Number(btn.dataset.rating));
+  });
+  document.getElementById('studyAgainBtn').addEventListener('click', startStudySession);
+
+  // Quiz setup
+  document.getElementById('quizContentPills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.content) return;
+    document.querySelectorAll('#quizContentPills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.quiz.content = btn.dataset.content;
+    state.quiz.chapter = 'all';
+    buildQuizChapterPills(state.quiz.content);
+  });
+
+  document.getElementById('quizTypePills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.type) return;
+    document.querySelectorAll('#quizTypePills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.quiz.type = btn.dataset.type;
+  });
+
+  document.querySelectorAll('[data-count]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-count]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.quiz.count = btn.dataset.count === 'all' ? 'all' : Number(btn.dataset.count);
+    });
+  });
+
+  document.getElementById('startQuizBtn').addEventListener('click', startQuiz);
+
+  // Quiz active
+  document.getElementById('checkTypingBtn').addEventListener('click', checkTypingAnswer);
+  document.getElementById('typingInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const q = state.quiz.questions[state.quiz.idx];
+      if (q && q.answered) nextQuizQuestion();
+      else checkTypingAnswer();
+    }
+  });
+  document.getElementById('nextQuizBtn').addEventListener('click', nextQuizQuestion);
+  document.getElementById('retryQuizBtn').addEventListener('click', startQuiz);
+  document.getElementById('newQuizBtn').addEventListener('click', () => {
+    document.getElementById('quizResults').classList.add('hidden');
+    document.getElementById('quizSetup').classList.remove('hidden');
+    buildQuizChapterPills(state.quiz.content);
+  });
+
+  // Chars modal
+  document.getElementById('charModalClose').addEventListener('click', () => {
+    document.getElementById('charModal').classList.add('hidden');
+  });
+  document.getElementById('charModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('charModal')) document.getElementById('charModal').classList.add('hidden');
+  });
+
+  // Grammar modal
+  document.getElementById('grammarModalClose').addEventListener('click', () => {
+    document.getElementById('grammarModal').classList.add('hidden');
+  });
+  document.getElementById('grammarModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('grammarModal')) document.getElementById('grammarModal').classList.add('hidden');
+  });
+
+  // Vocab search & filters
+  document.getElementById('vocabSearch').addEventListener('input', e => {
+    state.vocab.search = e.target.value;
+    renderVocabList();
+  });
+  document.getElementById('vocabPosPills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.pos) return;
+    document.querySelectorAll('#vocabPosPills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.vocab.pos = btn.dataset.pos;
+    renderVocabList();
+  });
+
+  // Grammar level filter
+  document.getElementById('grammarLevelPills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.level) return;
+    document.querySelectorAll('#grammarLevelPills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.grammar.level = btn.dataset.level;
+    renderGrammarList();
+  });
+
+  // Build initial quiz chapter pills
+  buildQuizChapterPills(state.quiz.content);
+
+  // Show dashboard
+  showView('dashboard');
+}
+
+document.addEventListener('DOMContentLoaded', init);
