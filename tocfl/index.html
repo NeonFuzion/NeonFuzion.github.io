@@ -193,6 +193,8 @@
               <button class="pill" data-type="word">看義選字</button>
               <button class="pill" data-type="type-meaning">打英文</button>
               <button class="pill" data-type="type-pinyin">打拼音</button>
+              <button class="pill" data-type="type-word">打中文</button>
+              <button class="pill" data-type="sentence-mc">句子填空</button>
             </div>
           </div>
           <div class="config-group">
@@ -220,6 +222,7 @@
           <div class="quiz-info">
             <span id="quizNum">1/10</span>
             <span id="quizScore">✓ 0 ✗ 0</span>
+            <button class="quiz-quit-btn" id="quitQuizBtn" title="Quit quiz">✕</button>
           </div>
         </div>
 
@@ -228,6 +231,13 @@
           <div class="quiz-sub" id="quizSub"></div>
 
           <div id="quizChoices" class="choices-grid"></div>
+
+          <div id="sentenceArea" class="sentence-area hidden">
+            <div class="sentence-line">
+              <span id="sentenceBefore"></span><input type="text" id="sentenceInput" class="sentence-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><span id="sentenceAfter"></span>
+            </div>
+            <button class="btn-primary" id="checkSentenceBtn">確認</button>
+          </div>
 
           <div id="typingArea" class="typing-area hidden">
             <input type="text" id="typingInput" class="typing-input" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -296,18 +306,6 @@
         <div class="filter-row">
           <div class="pill-group" id="vocabChapterPills">
             <button class="pill active" data-chapter="all">全部</button>
-          </div>
-        </div>
-        <div class="filter-row">
-          <div class="pill-group" id="vocabPosPills">
-            <button class="pill active" data-pos="all">全部</button>
-            <button class="pill" data-pos="noun">名詞</button>
-            <button class="pill" data-pos="verb">動詞</button>
-            <button class="pill" data-pos="adjective">形容詞</button>
-            <button class="pill" data-pos="adverb">副詞</button>
-            <button class="pill" data-pos="pronoun">代名詞</button>
-            <button class="pill" data-pos="interjection">感嘆詞</button>
-            <button class="pill" data-pos="other">其他</button>
           </div>
         </div>
       </div>

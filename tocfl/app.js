@@ -358,7 +358,8 @@ function startQuiz() {
   pool = shuffle(pool);
   if (count !== 'all') pool = pool.slice(0, Number(count));
 
-  state.quiz.questions = pool.map(item => buildQuestion(item, content, type, pool));
+  const fullPool = getItems(content);
+  state.quiz.questions = pool.map(item => buildQuestion(item, content, type, pool, fullPool));
   state.quiz.idx = 0;
   state.quiz.correct = 0;
   state.quiz.wrong = 0;
@@ -371,14 +372,30 @@ function startQuiz() {
   renderQuizQuestion();
 }
 
-function buildQuestion(item, content, type, pool) {
+function buildQuestion(item, content, type, pool, fullPool) {
   const q = { item, content, type, answered: false };
-  if (type === 'type-meaning' || type === 'type-pinyin') return q;
+  if (type === 'type-meaning' || type === 'type-pinyin' || type === 'type-word') return q;
 
-  // Multiple choice — pick 3 wrong answers
-  const wrongs = shuffle(pool.filter(i => i.id !== item.id)).slice(0, 3);
-  const options = shuffle([item, ...wrongs]);
-  q.options = options;
+  // Draw distractors from the full content list for variety, one from each of
+  // 3 different chapters (excluding the correct item's chapter where possible).
+  const otherChapters = [...new Set(fullPool.map(i => i.chapter))].filter(ch => ch !== item.chapter);
+  const wrongs = [];
+
+  // One distractor per different chapter, shuffled
+  const chapterPick = shuffle(otherChapters);
+  for (const ch of chapterPick) {
+    if (wrongs.length >= 3) break;
+    const candidates = fullPool.filter(i => i.chapter === ch && i.id !== item.id);
+    if (candidates.length) wrongs.push(candidates[Math.floor(Math.random() * candidates.length)]);
+  }
+
+  // Top up from full pool if we still need more (e.g. only one chapter exists)
+  if (wrongs.length < 3) {
+    const extra = shuffle(fullPool.filter(i => i.id !== item.id && !wrongs.find(w => w.id === i.id)));
+    wrongs.push(...extra.slice(0, 3 - wrongs.length));
+  }
+
+  q.options = shuffle([item, ...wrongs.slice(0, 3)]);
   return q;
 }
 
@@ -395,8 +412,11 @@ function renderQuizQuestion() {
   document.getElementById('quizScore').textContent = '✓ ' + state.quiz.correct + ' ✗ ' + state.quiz.wrong;
   document.getElementById('quizFeedback').classList.add('hidden');
   document.getElementById('typingArea').classList.add('hidden');
+  document.getElementById('sentenceArea').classList.add('hidden');
   document.getElementById('quizChoices').classList.add('hidden');
   document.getElementById('quizChoices').innerHTML = '';
+  document.getElementById('quizPrompt').classList.remove('sentence-prompt');
+  document.getElementById('quizPrompt').textContent = '';
 
   const typingInput = document.getElementById('typingInput');
   typingInput.value = '';
@@ -427,6 +447,44 @@ function renderQuizQuestion() {
     document.getElementById('typingArea').classList.remove('hidden');
     document.getElementById('typingInput').placeholder = 'type pinyin…';
     document.getElementById('typingInput').focus();
+  } else if (type === 'type-word') {
+    const correctWord = (item.word || item.character || item.pattern || '').trim();
+    const sentence = item.example || '';
+    const idx = sentence.indexOf(correctWord);
+    const sentenceInput = document.getElementById('sentenceInput');
+    sentenceInput.value = '';
+    sentenceInput.className = 'sentence-input';
+    sentenceInput.disabled = false;
+    sentenceInput.style.width = Math.max(2, correctWord.length + 1) + 'em';
+    if (idx !== -1) {
+      document.getElementById('sentenceBefore').textContent = sentence.slice(0, idx);
+      document.getElementById('sentenceAfter').textContent = sentence.slice(idx + correctWord.length);
+    } else {
+      document.getElementById('sentenceBefore').textContent = sentence || item.meaning;
+      document.getElementById('sentenceAfter').textContent = '';
+    }
+    document.getElementById('quizPrompt').textContent = '';
+    document.getElementById('quizSub').textContent = '';
+    document.getElementById('sentenceArea').classList.remove('hidden');
+    sentenceInput.focus();
+  } else if (type === 'sentence-mc') {
+    const correctWord = (item.word || item.character || item.pattern || '').trim();
+    const sentence = item.example || item.meaning;
+    const idx = sentence.indexOf(correctWord);
+    const promptEl = document.getElementById('quizPrompt');
+    promptEl.classList.add('sentence-prompt');
+    if (idx !== -1) {
+      const before = document.createTextNode(sentence.slice(0, idx));
+      const blank = document.createElement('span');
+      blank.className = 'quiz-blank';
+      const after = document.createTextNode(sentence.slice(idx + correctWord.length));
+      promptEl.innerHTML = '';
+      promptEl.append(before, blank, after);
+    } else {
+      promptEl.textContent = sentence;
+    }
+    document.getElementById('quizSub').textContent = '';
+    renderMCChoices(q, opt => opt.word || opt.character || opt.pattern || '');
   }
 }
 
@@ -476,6 +534,7 @@ function getMCCorrectLabel(q) {
   const { item, content, type } = q;
   if (type === 'meaning') return item.meaning;
   if (type === 'word') return content === 'chars' ? item.character : (content === 'grammar' ? item.pattern : item.word);
+  if (type === 'sentence-mc') return item.word || item.character || item.pattern || '';
   return item.meaning;
 }
 
@@ -484,9 +543,10 @@ function checkTypingAnswer() {
   if (!q || q.answered) return;
   q.answered = true;
 
-  const input = document.getElementById('typingInput');
-  const userRaw = input.value.trim();
   const { item, type } = q;
+  const isSentenceMode = type === 'type-word';
+  const input = document.getElementById(isSentenceMode ? 'sentenceInput' : 'typingInput');
+  const userRaw = input.value.trim();
 
   let correct = false;
   let correctAnswer = '';
@@ -502,9 +562,13 @@ function checkTypingAnswer() {
     const ansNorm = normalizePinyin(answerPin);
     correct = userNorm === ansNorm;
     correctAnswer = answerPin;
+  } else if (type === 'type-word') {
+    const correctWord = (item.word || item.character || item.pattern || '').trim();
+    correct = userRaw === correctWord;
+    correctAnswer = correctWord;
   }
 
-  input.className = 'typing-input ' + (correct ? 'correct' : 'wrong');
+  input.className = (isSentenceMode ? 'sentence-input' : 'typing-input') + ' ' + (correct ? 'correct' : 'wrong');
   input.disabled = true;
 
   if (correct) state.quiz.correct++;
@@ -523,17 +587,28 @@ function showQuizFeedback(correct, item, correctAnswer) {
   const textEl = document.getElementById('feedbackText');
   const detailEl = document.getElementById('feedbackDetail');
 
-  // Reveal pinyin now that the question is answered
-  if (item.pinyin) document.getElementById('quizSub').textContent = item.pinyin;
+  const activeType = state.quiz.questions[state.quiz.idx] && state.quiz.questions[state.quiz.idx].type;
+  if (activeType === 'type-word') {
+    // Restore the correct word in the inline input and reveal meaning + pinyin
+    const word = item.word || item.character || item.pattern || '';
+    document.getElementById('sentenceInput').value = word;
+    document.getElementById('quizSub').textContent = word + (item.pinyin ? '  ' + item.pinyin : '') + '  —  ' + item.meaning;
+  } else if (activeType === 'sentence-mc') {
+    // Fill the blank with the correct word and reveal meaning
+    document.getElementById('quizPrompt').textContent = item.example || '';
+    document.getElementById('quizSub').textContent = (item.word || item.character || item.pattern || '') + (item.pinyin ? '  ' + item.pinyin : '') + '  —  ' + item.meaning;
+  } else if (item.pinyin) {
+    document.getElementById('quizSub').textContent = item.pinyin;
+  }
 
   feedbackEl.classList.remove('hidden');
   textEl.className = 'feedback-text ' + (correct ? 'correct-text' : 'wrong-text');
   textEl.textContent = correct ? '正確！✓' : '錯誤 ✗';
 
   if (!correct && correctAnswer) {
-    detailEl.textContent = '正確答案：' + correctAnswer;
-  } else if (item.example) {
-    detailEl.textContent = item.example + ' — ' + item.exampleEn;
+    detailEl.textContent = '正確答案：' + correctAnswer + (item.exampleEn ? '  —  ' + item.exampleEn : '');
+  } else if (item.exampleEn) {
+    detailEl.textContent = item.exampleEn;
   } else {
     detailEl.textContent = '';
   }
@@ -629,7 +704,6 @@ function renderVocabList() {
 
   const search = state.vocab.search.toLowerCase();
   let items = filterByChapter(VOCABULARY, state.vocab.chapter);
-  if (state.vocab.pos !== 'all') items = items.filter(i => i.pos === state.vocab.pos);
   if (search) items = items.filter(i =>
     i.word.includes(search) || i.pinyin.toLowerCase().includes(search) ||
     i.meaning.toLowerCase().includes(search)
@@ -828,6 +902,7 @@ function init() {
 
   // Quiz active
   document.getElementById('checkTypingBtn').addEventListener('click', checkTypingAnswer);
+  document.getElementById('checkSentenceBtn').addEventListener('click', checkTypingAnswer);
   document.getElementById('typingInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       const q = state.quiz.questions[state.quiz.idx];
@@ -835,7 +910,20 @@ function init() {
       else checkTypingAnswer();
     }
   });
+  document.getElementById('sentenceInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const q = state.quiz.questions[state.quiz.idx];
+      if (q && q.answered) nextQuizQuestion();
+      else checkTypingAnswer();
+    }
+  });
   document.getElementById('nextQuizBtn').addEventListener('click', nextQuizQuestion);
+  document.getElementById('quitQuizBtn').addEventListener('click', () => {
+    document.getElementById('quizActive').classList.add('hidden');
+    document.getElementById('quizResults').classList.add('hidden');
+    document.getElementById('quizSetup').classList.remove('hidden');
+    buildQuizChapterPills(state.quiz.content);
+  });
   document.getElementById('retryQuizBtn').addEventListener('click', startQuiz);
   document.getElementById('newQuizBtn').addEventListener('click', () => {
     document.getElementById('quizResults').classList.add('hidden');
@@ -862,14 +950,6 @@ function init() {
   // Vocab search & filters
   document.getElementById('vocabSearch').addEventListener('input', e => {
     state.vocab.search = e.target.value;
-    renderVocabList();
-  });
-  document.getElementById('vocabPosPills').addEventListener('click', e => {
-    const btn = e.target.closest('.pill');
-    if (!btn || !btn.dataset.pos) return;
-    document.querySelectorAll('#vocabPosPills .pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    state.vocab.pos = btn.dataset.pos;
     renderVocabList();
   });
 
