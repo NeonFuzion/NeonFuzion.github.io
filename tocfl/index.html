@@ -148,14 +148,22 @@
             </div>
           </div>
         </div>
-        <div class="card-actions" id="cardActions">
-          <button class="btn-flip" id="flipBtn">翻轉 (空格)</button>
-        </div>
+
         <div class="rating-row hidden" id="ratingRow">
-          <button class="rate-btn rate-again" data-rating="1">再一次</button>
-          <button class="rate-btn rate-hard" data-rating="2">困難</button>
-          <button class="rate-btn rate-ok" data-rating="3">一般</button>
-          <button class="rate-btn rate-easy" data-rating="4">容易</button>
+          <div class="star-label" id="starLabel">信心程度</div>
+          <div class="star-group" id="starGroup" role="group" aria-label="Confidence rating">
+            <button class="star-btn" data-stars="1" aria-label="1 star – Don't remember">★</button>
+            <button class="star-btn" data-stars="2" aria-label="2 stars – Very hard">★</button>
+            <button class="star-btn" data-stars="3" aria-label="3 stars – So-so">★</button>
+            <button class="star-btn" data-stars="4" aria-label="4 stars – Confident">★</button>
+            <button class="star-btn" data-stars="5" aria-label="5 stars – Mastered">★</button>
+          </div>
+          <div class="star-hint" id="starHint"></div>
+        </div>
+        <div class="card-nav">
+          <button class="btn-nav" id="prevBtn">← 上一張</button>
+          <button class="btn-shuffle" id="shuffleBtn" title="Shuffle remaining cards">🔀</button>
+          <button class="btn-nav" id="nextBtn">下一張 →</button>
         </div>
       </div>
 
@@ -306,6 +314,13 @@
         <div class="filter-row">
           <div class="pill-group" id="vocabChapterPills">
             <button class="pill active" data-chapter="all">全部</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="pill-group" id="vocabSortPills">
+            <button class="pill active" data-vocab-sort="chapter">章節</button>
+            <button class="pill" data-vocab-sort="stars-desc">★ 高→低</button>
+            <button class="pill" data-vocab-sort="stars-asc">★ 低→高</button>
           </div>
         </div>
       </div>

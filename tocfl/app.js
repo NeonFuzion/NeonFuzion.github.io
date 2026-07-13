@@ -81,7 +81,7 @@ const state = {
     active: false,
   },
   chars: { chapter: 'all' },
-  vocab: { chapter: 'all', pos: 'all', search: '' },
+  vocab: { chapter: 'all', pos: 'all', search: '', sort: 'chapter' },
   grammar: { level: 'all' },
 };
 
@@ -278,19 +278,27 @@ function renderStudyCard() {
 
   const item = deck[idx];
   document.getElementById('cardCounter').textContent = (idx + 1) + ' / ' + deck.length;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = false;
 
   const cardInner = document.getElementById('cardInner');
   cardInner.classList.remove('flipped');
   state.study.flipped = false;
 
-  document.getElementById('ratingRow').classList.add('hidden');
-  document.getElementById('cardActions').classList.remove('hidden');
+  document.getElementById('ratingRow').classList.remove('hidden');
+  const lastStars = getCardSRS(content, deck[idx].id).lastStars || 0;
+  document.querySelectorAll('.star-btn').forEach((b, i) => {
+    b.classList.toggle('selected', i < lastStars);
+    b.classList.remove('hovered');
+  });
+  const sh = document.getElementById('starHint');
+  if (sh) sh.textContent = lastStars ? STAR_HINTS[lastStars - 1] : '';
 
   if (content === 'vocab') {
     document.getElementById('cardMain').textContent = item.word;
-    document.getElementById('cardHint').textContent = item.pinyin;
+    document.getElementById('cardHint').textContent = '';
     document.getElementById('cardAnswer').textContent = item.meaning;
-    document.getElementById('cardDetails').textContent = item.pos + ' · Ch.' + item.chapter;
+    document.getElementById('cardDetails').textContent = item.pinyin + ' · ' + item.pos + ' · Ch.' + item.chapter;
     document.getElementById('cardExample').innerHTML = item.example + '<br><em>' + item.exampleEn + '</em>';
   } else if (content === 'chars') {
     document.getElementById('cardMain').textContent = item.character;
@@ -308,32 +316,49 @@ function renderStudyCard() {
   }
 }
 
-function flipCard() {
-  if (state.study.flipped) return;
-  state.study.flipped = true;
-  document.getElementById('cardInner').classList.add('flipped');
-  document.getElementById('cardActions').classList.add('hidden');
-  document.getElementById('ratingRow').classList.remove('hidden');
+function shuffleRemaining() {
+  const { deck, idx } = state.study;
+  if (idx >= deck.length - 1) return;
+  const done = deck.slice(0, idx);
+  const remaining = shuffle(deck.slice(idx));
+  state.study.deck = [...done, ...remaining];
+  renderStudyCard();
 }
 
-function rateCard(rating) {
+function flipCard() {
+  state.study.flipped = !state.study.flipped;
+  document.getElementById('cardInner').classList.toggle('flipped', state.study.flipped);
+}
+
+function rateCard(rating, stars) {
   const { deck, idx, content } = state.study;
   const item = deck[idx];
   const oldCard = getCardSRS(content, item.id);
   const newCard = sm2Update(oldCard, rating);
+  if (stars) newCard.lastStars = stars;
   setCardSRS(content, item.id, newCard);
-
   state.study.sessionTotal++;
   if (rating >= 3) state.study.sessionCorrect++;
-
-  // Update streak stats
   state.streak.totalAnswered++;
   if (rating >= 3) state.streak.totalCorrect++;
-
-  state.study.idx++;
   saveSRS(state.srs);
   saveStreak(state.streak);
-  renderStudyCard();
+}
+
+function nextCard() {
+  state.study.idx++;
+  if (state.study.idx >= state.study.deck.length) {
+    showSessionComplete();
+  } else {
+    renderStudyCard();
+  }
+}
+
+function prevCard() {
+  if (state.study.idx > 0) {
+    state.study.idx--;
+    renderStudyCard();
+  }
 }
 
 function showSessionComplete() {
@@ -709,11 +734,21 @@ function renderVocabList() {
     i.meaning.toLowerCase().includes(search)
   );
 
+  if (state.vocab.sort === 'stars-desc') {
+    items = [...items].sort((a, b) => (getCardSRS('vocab', b.id).lastStars || 0) - (getCardSRS('vocab', a.id).lastStars || 0));
+  } else if (state.vocab.sort === 'stars-asc') {
+    items = [...items].sort((a, b) => (getCardSRS('vocab', a.id).lastStars || 0) - (getCardSRS('vocab', b.id).lastStars || 0));
+  }
+
   const list = document.getElementById('vocabList');
   list.innerHTML = '';
   items.forEach(item => {
     const srs = getCardSRS('vocab', item.id);
     let srsClass = srs.mastered ? ' srs-mastered' : srs.learned ? ' srs-learned' : '';
+    const stars = srs.lastStars || 0;
+    const starsHtml = Array.from({length: 5}, (_, i) =>
+      `<span class="vocab-star${i < stars ? ' filled' : ''}">★</span>`
+    ).join('');
     const row = document.createElement('div');
     row.className = 'vocab-item' + srsClass;
     row.innerHTML = `
@@ -725,6 +760,7 @@ function renderVocabList() {
         <div class="vocab-meaning">${item.meaning}</div>
         <div class="vocab-pos">${item.pos}</div>
       </div>
+      <div class="vocab-stars">${starsHtml}</div>
       <div class="vocab-chapter-badge">Ch.${item.chapter}</div>
     `;
     // Toggle example on click
@@ -792,6 +828,10 @@ function updateDailyStreak() {
   s.lastDate = today;
   saveStreak(s);
 }
+
+// ===== STAR RATING CONSTANTS =====
+const STAR_HINTS = ['完全不記得', '很困難', '還可以', '有把握', '非常熟悉'];
+const STAR_TO_SM2 = [1, 2, 3, 4, 4]; // 1-5 stars → SM2 1-4
 
 // ===== INIT =====
 function init() {
@@ -863,11 +903,38 @@ function init() {
   document.getElementById('flashcard').addEventListener('keydown', e => {
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
   });
-  document.getElementById('flipBtn').addEventListener('click', e => { e.stopPropagation(); flipCard(); });
+  document.getElementById('shuffleBtn').addEventListener('click', e => { e.stopPropagation(); shuffleRemaining(); });
+  document.getElementById('prevBtn').addEventListener('click', prevCard);
+  document.getElementById('nextBtn').addEventListener('click', nextCard);
 
-  document.getElementById('ratingRow').addEventListener('click', e => {
-    const btn = e.target.closest('.rate-btn');
-    if (btn) rateCard(Number(btn.dataset.rating));
+  const starGroup = document.getElementById('starGroup');
+  const starHintEl = document.getElementById('starHint');
+
+  starGroup.addEventListener('mouseover', e => {
+    const btn = e.target.closest('.star-btn');
+    if (!btn) return;
+    const n = Number(btn.dataset.stars);
+    starGroup.querySelectorAll('.star-btn').forEach((b, i) => {
+      b.classList.toggle('hovered', i < n);
+    });
+    starHintEl.textContent = STAR_HINTS[n - 1];
+  });
+
+  starGroup.addEventListener('mouseleave', () => {
+    starGroup.querySelectorAll('.star-btn').forEach(b => b.classList.remove('hovered'));
+    starHintEl.textContent = '';
+  });
+
+  starGroup.addEventListener('click', e => {
+    const btn = e.target.closest('.star-btn');
+    if (!btn) return;
+    const stars = Number(btn.dataset.stars);
+    starGroup.querySelectorAll('.star-btn').forEach((b, i) => {
+      b.classList.toggle('selected', i < stars);
+      b.classList.remove('hovered');
+    });
+    starHintEl.textContent = STAR_HINTS[stars - 1];
+    rateCard(STAR_TO_SM2[stars - 1], stars);
   });
   document.getElementById('studyAgainBtn').addEventListener('click', startStudySession);
 
@@ -950,6 +1017,15 @@ function init() {
   // Vocab search & filters
   document.getElementById('vocabSearch').addEventListener('input', e => {
     state.vocab.search = e.target.value;
+    renderVocabList();
+  });
+
+  document.getElementById('vocabSortPills').addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || !btn.dataset.vocabSort) return;
+    document.querySelectorAll('#vocabSortPills .pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.vocab.sort = btn.dataset.vocabSort;
     renderVocabList();
   });
 
