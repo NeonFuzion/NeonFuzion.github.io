@@ -61,6 +61,7 @@ const state = {
     content: 'vocab',
     chapter: 'all',
     sort: 'chapter',
+    selectedStars: 'all',
     deck: [],
     idx: 0,
     flipped: false,
@@ -73,6 +74,7 @@ const state = {
     type: 'meaning',
     chapter: 'all',
     count: 10,
+    selectedStars: 'all',
     questions: [],
     idx: 0,
     correct: 0,
@@ -81,7 +83,7 @@ const state = {
     active: false,
   },
   chars: { chapter: 'all' },
-  vocab: { chapter: 'all', pos: 'all', search: '', sort: 'chapter' },
+  vocab: { chapter: 'all', pos: 'all', search: '', sort: 'chapter', selectedStars: 'all' },
   grammar: { level: 'all' },
 };
 
@@ -93,9 +95,15 @@ function getItems(content) {
   return [];
 }
 
-function filterByChapter(items, chapter) {
-  if (chapter === 'all') return items;
-  return items.filter(i => i.chapter === Number(chapter));
+function filterByChapter(items, chapters) {
+  if (chapters === 'all' || (Array.isArray(chapters) && chapters.length === 0)) return items;
+  if (Array.isArray(chapters)) return items.filter(i => chapters.includes(i.chapter));
+  return items.filter(i => i.chapter === Number(chapters));
+}
+
+function filterByStars(items, selectedStars, contentType) {
+  if (selectedStars === 'all' || (Array.isArray(selectedStars) && selectedStars.length === 0)) return items;
+  return items.filter(i => selectedStars.includes(getCardSRS(contentType, i.id).lastStars || 0));
 }
 
 function getCardSRS(type, id) {
@@ -153,7 +161,7 @@ function showView(viewId) {
   closeNav();
 
   if (viewId === 'dashboard') renderDashboard();
-  else if (viewId === 'study') renderStudyControls();
+  else if (viewId === 'study') renderStudySetup();
   else if (viewId === 'chars') renderCharsGrid();
   else if (viewId === 'vocab') renderVocabList();
   else if (viewId === 'grammar') renderGrammarList();
@@ -169,25 +177,97 @@ function closeNav() {
   document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
 }
 
-// ===== CHAPTER PILLS BUILDER =====
-function buildChapterPills(containerId, content, currentChapter, onChange) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+// ===== CHAPTER PILLS BUILDER (multi-select) =====
+function buildChapterPills(containerId, content, currentChapters, onChange) {
+  const old = document.getElementById(containerId);
+  if (!old) return;
+  // Clone to strip stale listeners
+  const container = old.cloneNode(false);
+  old.parentNode.replaceChild(container, old);
+
   const chapters = getChapters(content);
-  container.innerHTML = '<button class="pill' + (currentChapter === 'all' ? ' active' : '') + '" data-chapter="all">全部</button>';
+  const isAll = currentChapters === 'all' || (Array.isArray(currentChapters) && currentChapters.length === 0);
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pill' + (isAll ? ' active' : '');
+  allBtn.dataset.chapter = 'all';
+  allBtn.textContent = '全部';
+  container.appendChild(allBtn);
+
   chapters.forEach(ch => {
     const btn = document.createElement('button');
-    btn.className = 'pill' + (String(currentChapter) === String(ch) ? ' active' : '');
+    const isActive = !isAll && Array.isArray(currentChapters) && currentChapters.includes(ch);
+    btn.className = 'pill' + (isActive ? ' active' : '');
     btn.dataset.chapter = ch;
     btn.textContent = '第' + ch + '章';
     container.appendChild(btn);
   });
+
   container.addEventListener('click', e => {
     const btn = e.target.closest('.pill');
     if (!btn) return;
-    container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    onChange(btn.dataset.chapter);
+    if (btn.dataset.chapter === 'all') {
+      container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      onChange('all');
+    } else {
+      container.querySelector('[data-chapter="all"]').classList.remove('active');
+      btn.classList.toggle('active');
+      const selected = [...container.querySelectorAll('.pill.active')]
+        .map(b => Number(b.dataset.chapter)).filter(n => !isNaN(n));
+      if (selected.length === 0) {
+        container.querySelector('[data-chapter="all"]').classList.add('active');
+        onChange('all');
+      } else {
+        onChange(selected);
+      }
+    }
+  });
+}
+
+// ===== STAR FILTER PILLS BUILDER (multi-select) =====
+function buildStarFilterPills(containerId, currentSelected, onChange) {
+  const old = document.getElementById(containerId);
+  if (!old) return;
+  const container = old.cloneNode(false);
+  old.parentNode.replaceChild(container, old);
+
+  const isAll = currentSelected === 'all' || (Array.isArray(currentSelected) && currentSelected.length === 0);
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pill' + (isAll ? ' active' : '');
+  allBtn.dataset.starVal = 'all';
+  allBtn.textContent = '全部';
+  container.appendChild(allBtn);
+
+  [1, 2, 3, 4, 5].forEach(val => {
+    const btn = document.createElement('button');
+    const isActive = !isAll && Array.isArray(currentSelected) && currentSelected.includes(val);
+    btn.className = 'pill star-filter-pill' + (isActive ? ' active' : '');
+    btn.dataset.starVal = val;
+    btn.textContent = '★'.repeat(val);
+    container.appendChild(btn);
+  });
+
+  container.addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn || btn.dataset.starVal === undefined) return;
+    if (btn.dataset.starVal === 'all') {
+      container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      onChange('all');
+    } else {
+      container.querySelector('[data-star-val="all"]').classList.remove('active');
+      btn.classList.toggle('active');
+      const selected = [...container.querySelectorAll('.pill.active')]
+        .map(b => Number(b.dataset.starVal)).filter(n => !isNaN(n));
+      if (selected.length === 0) {
+        container.querySelector('[data-star-val="all"]').classList.add('active');
+        onChange('all');
+      } else {
+        onChange(selected);
+      }
+    }
   });
 }
 
@@ -234,17 +314,32 @@ function renderDashboard() {
 }
 
 // ===== STUDY VIEW =====
-function renderStudyControls() {
+function renderStudySetup() {
+  document.getElementById('studySetup').classList.remove('hidden');
+  document.getElementById('flashcardArea').classList.add('hidden');
+  document.getElementById('sessionComplete').classList.add('hidden');
+
+  // Sync content pills
+  document.querySelectorAll('#studyContentPills .pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.content === state.study.content);
+  });
+  // Sync sort pills
+  document.querySelectorAll('[data-sort]').forEach(b => {
+    b.classList.toggle('active', b.dataset.sort === state.study.sort);
+  });
+
   buildChapterPills('studyChapterPills', state.study.content, state.study.chapter, ch => {
     state.study.chapter = ch;
-    startStudySession();
   });
-  startStudySession();
+  buildStarFilterPills('studyStarPills', state.study.selectedStars, sel => {
+    state.study.selectedStars = sel;
+  });
 }
 
 function startStudySession() {
-  const { content, chapter, sort } = state.study;
+  const { content, chapter, sort, selectedStars } = state.study;
   let items = filterByChapter(getItems(content), chapter);
+  items = filterByStars(items, selectedStars, content);
 
   if (sort === 'due') {
     items = items.filter(i => isDue(getCardSRS(content, i.id)));
@@ -260,6 +355,7 @@ function startStudySession() {
   state.study.sessionCorrect = 0;
   state.study.sessionTotal = 0;
 
+  document.getElementById('studySetup').classList.add('hidden');
   document.getElementById('sessionComplete').classList.add('hidden');
   document.getElementById('flashcardArea').classList.remove('hidden');
   renderStudyCard();
@@ -363,6 +459,7 @@ function prevCard() {
 
 function showSessionComplete() {
   const elapsed = Math.round((Date.now() - state.study.sessionStart) / 60000);
+  document.getElementById('studySetup').classList.add('hidden');
   document.getElementById('flashcardArea').classList.add('hidden');
   document.getElementById('sessionComplete').classList.remove('hidden');
   document.getElementById('csCards').textContent = state.study.sessionTotal;
@@ -371,15 +468,19 @@ function showSessionComplete() {
 }
 
 // ===== QUIZ VIEW =====
-function buildQuizChapterPills(content) {
+function buildQuizControls(content) {
   buildChapterPills('quizChapterPills', content, state.quiz.chapter, ch => {
     state.quiz.chapter = ch;
+  });
+  buildStarFilterPills('quizStarPills', state.quiz.selectedStars, sel => {
+    state.quiz.selectedStars = sel;
   });
 }
 
 function startQuiz() {
-  const { content, type, chapter, count } = state.quiz;
+  const { content, type, chapter, count, selectedStars } = state.quiz;
   let pool = filterByChapter(getItems(content), chapter);
+  pool = filterByStars(pool, selectedStars, content);
   pool = shuffle(pool);
   if (count !== 'all') pool = pool.slice(0, Number(count));
 
@@ -726,9 +827,14 @@ function renderVocabList() {
     state.vocab.chapter = ch;
     renderVocabList();
   });
+  buildStarFilterPills('vocabStarPills', state.vocab.selectedStars, sel => {
+    state.vocab.selectedStars = sel;
+    renderVocabList();
+  });
 
   const search = state.vocab.search.toLowerCase();
   let items = filterByChapter(VOCABULARY, state.vocab.chapter);
+  items = filterByStars(items, state.vocab.selectedStars, 'vocab');
   if (search) items = items.filter(i =>
     i.word.includes(search) || i.pinyin.toLowerCase().includes(search) ||
     i.meaning.toLowerCase().includes(search)
@@ -883,11 +989,9 @@ function init() {
     btn.classList.add('active');
     state.study.content = btn.dataset.content;
     state.study.chapter = 'all';
-    buildChapterPills('studyChapterPills', state.study.content, 'all', ch => {
-      state.study.chapter = ch;
-      startStudySession();
-    });
-    startStudySession();
+    state.study.selectedStars = 'all';
+    buildChapterPills('studyChapterPills', state.study.content, 'all', ch => { state.study.chapter = ch; });
+    buildStarFilterPills('studyStarPills', 'all', sel => { state.study.selectedStars = sel; });
   });
 
   document.querySelectorAll('[data-sort]').forEach(btn => {
@@ -895,7 +999,6 @@ function init() {
       document.querySelectorAll('[data-sort]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       state.study.sort = btn.dataset.sort;
-      startStudySession();
     });
   });
 
@@ -936,7 +1039,10 @@ function init() {
     starHintEl.textContent = STAR_HINTS[stars - 1];
     rateCard(STAR_TO_SM2[stars - 1], stars);
   });
+  document.getElementById('startStudyBtn').addEventListener('click', startStudySession);
+  document.getElementById('quitStudyBtn').addEventListener('click', renderStudySetup);
   document.getElementById('studyAgainBtn').addEventListener('click', startStudySession);
+  document.getElementById('newStudyBtn').addEventListener('click', renderStudySetup);
 
   // Quiz setup
   document.getElementById('quizContentPills').addEventListener('click', e => {
@@ -946,7 +1052,8 @@ function init() {
     btn.classList.add('active');
     state.quiz.content = btn.dataset.content;
     state.quiz.chapter = 'all';
-    buildQuizChapterPills(state.quiz.content);
+    state.quiz.selectedStars = 'all';
+    buildQuizControls(state.quiz.content);
   });
 
   document.getElementById('quizTypePills').addEventListener('click', e => {
@@ -989,13 +1096,13 @@ function init() {
     document.getElementById('quizActive').classList.add('hidden');
     document.getElementById('quizResults').classList.add('hidden');
     document.getElementById('quizSetup').classList.remove('hidden');
-    buildQuizChapterPills(state.quiz.content);
+    buildQuizControls(state.quiz.content);
   });
   document.getElementById('retryQuizBtn').addEventListener('click', startQuiz);
   document.getElementById('newQuizBtn').addEventListener('click', () => {
     document.getElementById('quizResults').classList.add('hidden');
     document.getElementById('quizSetup').classList.remove('hidden');
-    buildQuizChapterPills(state.quiz.content);
+    buildQuizControls(state.quiz.content);
   });
 
   // Chars modal
@@ -1040,7 +1147,7 @@ function init() {
   });
 
   // Build initial quiz chapter pills
-  buildQuizChapterPills(state.quiz.content);
+  buildQuizControls(state.quiz.content);
 
   // Show dashboard
   showView('dashboard');

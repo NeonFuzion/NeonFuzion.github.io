@@ -108,33 +108,44 @@
 
     <!-- STUDY -->
     <section class="view hidden" id="view-study">
-      <div class="study-controls">
-        <div class="control-group">
-          <label class="control-label">內容</label>
-          <div class="pill-group" id="studyContentPills">
-            <button class="pill active" data-content="vocab">詞彙</button>
-            <button class="pill" data-content="chars">漢字</button>
-            <button class="pill" data-content="grammar">語法</button>
+      <div class="quiz-setup" id="studySetup">
+        <h2 class="section-title">學習設定</h2>
+        <div class="quiz-config">
+          <div class="config-group">
+            <label class="control-label">內容</label>
+            <div class="pill-group" id="studyContentPills">
+              <button class="pill active" data-content="vocab">詞彙</button>
+              <button class="pill" data-content="chars">漢字</button>
+              <button class="pill" data-content="grammar">語法</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">章節</label>
+            <div class="pill-group" id="studyChapterPills">
+              <button class="pill active" data-chapter="all">全部</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">星級</label>
+            <div class="pill-group" id="studyStarPills"></div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">排序</label>
+            <div class="pill-group">
+              <button class="pill active" data-sort="chapter" id="sortChapter">章節</button>
+              <button class="pill" data-sort="due" id="sortDue">到期</button>
+              <button class="pill" data-sort="random" id="sortRandom">隨機</button>
+            </div>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label">章節</label>
-          <div class="pill-group" id="studyChapterPills">
-            <button class="pill active" data-chapter="all">全部</button>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">排序</label>
-          <div class="pill-group">
-            <button class="pill active" data-sort="chapter" id="sortChapter">章節</button>
-            <button class="pill" data-sort="due" id="sortDue">到期</button>
-            <button class="pill" data-sort="random" id="sortRandom">隨機</button>
-          </div>
-        </div>
+        <button class="btn-primary btn-large" id="startStudyBtn">開始學習</button>
       </div>
 
-      <div class="flashcard-area" id="flashcardArea">
-        <div class="card-counter" id="cardCounter">1 / 10</div>
+      <div class="flashcard-area hidden" id="flashcardArea">
+        <div class="quiz-info" style="margin-bottom:8px;">
+          <div class="card-counter" id="cardCounter">1 / 10</div>
+          <button class="quiz-quit-btn" id="quitStudyBtn" title="Back to settings">✕</button>
+        </div>
         <div class="flashcard" id="flashcard" tabindex="0">
           <div class="card-inner" id="cardInner">
             <div class="card-front" id="cardFront">
@@ -176,7 +187,10 @@
             <div class="cs-item"><span class="cs-num" id="csCorrect">0</span><span class="cs-label">正確</span></div>
             <div class="cs-item"><span class="cs-num" id="csTime">0</span><span class="cs-label">分鐘</span></div>
           </div>
-          <button class="btn-primary" id="studyAgainBtn">再學一次</button>
+          <div class="results-actions">
+            <button class="btn-secondary" id="newStudyBtn">新設定</button>
+            <button class="btn-primary" id="studyAgainBtn">再學一次</button>
+          </div>
         </div>
       </div>
     </section>
@@ -210,6 +224,10 @@
             <div class="pill-group" id="quizChapterPills">
               <button class="pill active" data-chapter="all">全部</button>
             </div>
+          </div>
+          <div class="config-group">
+            <label class="control-label">星級</label>
+            <div class="pill-group" id="quizStarPills"></div>
           </div>
           <div class="config-group">
             <label class="control-label">題數</label>
@@ -315,6 +333,9 @@
           <div class="pill-group" id="vocabChapterPills">
             <button class="pill active" data-chapter="all">全部</button>
           </div>
+        </div>
+        <div class="filter-row">
+          <div class="pill-group" id="vocabStarPills"></div>
         </div>
         <div class="filter-row">
           <div class="pill-group" id="vocabSortPills">

@@ -211,6 +211,9 @@ body {
 }
 .pill:hover { background: var(--surface2); color: var(--text); }
 .pill.active { background: var(--red); color: #fff; border-color: var(--red); }
+.star-filter-pill { color: var(--gold); }
+.star-filter-pill:hover { color: var(--gold-light); }
+.star-filter-pill.active { background: var(--gold); color: #1a0a0a; border-color: var(--gold); }
 
 /* ===== DASHBOARD ===== */
 .dashboard-grid {
