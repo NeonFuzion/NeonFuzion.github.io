@@ -240,12 +240,13 @@ function buildStarFilterPills(containerId, currentSelected, onChange) {
   allBtn.textContent = '全部';
   container.appendChild(allBtn);
 
-  [1, 2, 3, 4, 5].forEach(val => {
+  [{ val: 0, label: '☆' }, { val: 1, label: '★' }, { val: 2, label: '★★' },
+   { val: 3, label: '★★★' }, { val: 4, label: '★★★★' }, { val: 5, label: '★★★★★' }].forEach(({ val, label }) => {
     const btn = document.createElement('button');
     const isActive = !isAll && Array.isArray(currentSelected) && currentSelected.includes(val);
     btn.className = 'pill star-filter-pill' + (isActive ? ' active' : '');
     btn.dataset.starVal = val;
-    btn.textContent = '★'.repeat(val);
+    btn.textContent = label;
     container.appendChild(btn);
   });
 
